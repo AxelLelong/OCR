@@ -1,13 +1,14 @@
 #include "Maths.h"
+#include <math.h>
 
 /// <summary>
 /// The sigmoid function
 /// </summary>
 /// <param name="x"> : a double</param>
 /// <returns>the sigmoid of x</returns>
-double sigmoid(double x)
+float sigmoid(float x)
 {
-	return 1.0 / (1.0 + Math.Exp(-x));
+	return 1.0 / (1.0 + expf(-x));
 }
 
 /// <summary>
@@ -15,7 +16,7 @@ double sigmoid(double x)
 /// </summary>
 /// <param name="x">is already a sigmoid</param>
 /// <returns>the derivate of x</returns>
-double der_sigmoid(double x)
+float der_sigmoid(float x)
 {
 	return x * (1 - x);
 }
