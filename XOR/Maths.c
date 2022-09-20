@@ -1,5 +1,5 @@
 #include "Maths.h"
-#include <maths.h>
+#include <math.h>
 
 /// <summary>
 /// The sigmoid function
@@ -8,7 +8,7 @@
 /// <returns>the sigmoid of x</returns>
 float sigmoid(float x)
 {
-	return 1.0 / (1.0 + expf(-x));
+  return 1.0 / (1.0 + exp(-x));
 }
 
 /// <summary>
