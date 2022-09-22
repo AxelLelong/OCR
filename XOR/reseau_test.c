@@ -4,7 +4,7 @@
 
 float NeuralNet(float Input[], float Output[])
 {
-    float lr = 0.2;
+    float lr = 0.1;
 
     float W1 = (float)rand()/RAND_MAX;
     float W2 = (float)rand()/RAND_MAX;
@@ -21,7 +21,7 @@ float NeuralNet(float Input[], float Output[])
     float N2 = sigmoid(Input[0] * W3 + Input[1] * W4 + BW2);
     float N3 = sigmoid(N1 * W5 + N2 * W6 + BW3);
 
-    for (int i = 0; i < 5000; i++)
+    for (int i = 0; i < 100; i++)
     {
         float TargetCalculated = Output[0] - N3;
 
@@ -52,7 +52,7 @@ float NeuralNet(float Input[], float Output[])
         N3 = sigmoid(N1 * W5 + N2 * W6 + BW3);
 
         printf("Iteration number: %i\n", i+1);
-        printf("Input: %f | Output: %f\n", Input, N3);
+        printf("Input: %f | Output: %f\n", Input[1], N3);
     }
     return N3;
 }
