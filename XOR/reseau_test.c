@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "Maths.h"
 
-float NeuralNet(float Input[], float Output[])
+float NeuralNet(float Input[], float Output[], long iteration)
 {
     float lr = 0.1;
 
@@ -21,16 +21,16 @@ float NeuralNet(float Input[], float Output[])
     float N2 = sigmoid(Input[0] * W3 + Input[1] * W4 + BW2);
     float N3 = sigmoid(N1 * W5 + N2 * W6 + BW3);
 
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < iteration; i++)
     {
         float TargetCalculated = Output[0] - N3;
 
-        float eW6 = TargetCalculated * der_sigmoid(N1 * W5 + N2 * W6 + BW3) * N2 * lr;
-        float eW5 = TargetCalculated * der_sigmoid(N1 * W5 + N2 * W6 + BW3) * N1 * lr;
-        float eW4 = TargetCalculated * W6 * der_sigmoid(Input[0] * W3 + Input[1] * W4 + BW2) * Input[1] * lr;
-        float eW3 = TargetCalculated * W6 * der_sigmoid(Input[0] * W3 + Input[1] * W4 + BW1) * Input[0] * lr;
-        float eW2 = TargetCalculated * W5 * der_sigmoid(Input[0] * W1 + Input[1] * W2 + BW2) * Input[1] * lr;
-        float eW1 = TargetCalculated * W5 * der_sigmoid(Input[0] * W1 + Input[1] * W2 + BW1) * Input[0] * lr;
+        float eW6 = TargetCalculated * der_sigmoid(N1 * W5 + N2 * W6 + BW3) /** N2 */ * lr;
+        float eW5 = TargetCalculated * der_sigmoid(N1 * W5 + N2 * W6 + BW3) /** N1 */ * lr;
+        float eW4 = TargetCalculated * W6 * der_sigmoid(Input[0] * W3 + Input[1] * W4 + BW2) /* Input[1]*/ * lr;
+        float eW3 = TargetCalculated * W6 * der_sigmoid(Input[0] * W3 + Input[1] * W4 + BW1) /* Input[0]*/ * lr;
+        float eW2 = TargetCalculated * W5 * der_sigmoid(Input[0] * W1 + Input[1] * W2 + BW2) /* Input[1]*/ * lr;
+        float eW1 = TargetCalculated * W5 * der_sigmoid(Input[0] * W1 + Input[1] * W2 + BW1) /* Input[0]*/ * lr;
 
         float eBW3 = TargetCalculated * der_sigmoid(N1 * W5 + N2 * W6 + BW3) * lr;
         float eBW2 = TargetCalculated * W4 * der_sigmoid(Input[0] * W3 + Input[1] * W4 + BW2) * lr;
@@ -57,7 +57,12 @@ float NeuralNet(float Input[], float Output[])
     return N3;
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    long n = 100;
+    if (argc != 2)
+        n = 100;
+    else
+        n = (long)atoi(argv[1]);
     float Input[][2] = {{0, 0},
                         {0, 1},
                         {1, 0},
@@ -66,5 +71,5 @@ int main() {
                          {1},
                          {1},
                          {0}};
-    NeuralNet(Input[1], Output[1]);
+    NeuralNet(Input[1], Output[1],n);
 }
