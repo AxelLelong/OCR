@@ -1,7 +1,7 @@
 #include "sudoLoader.h"
 #include "stdio.h"
 
-int[][] Loader(char path[])
+int** Loader(char path[])
 {
     //initialize the sudoku
     int sudoku[9][9];
@@ -49,6 +49,6 @@ int[][] Loader(char path[])
         j++;
 
     }
-    return
+    return sudoku;
 }
 
