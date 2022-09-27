@@ -1,11 +1,11 @@
 #include "sudoSolver.h"
 #include <stdio.h>
 
-int IsBoardValid(int sudoku[9][9])
+int IsBoardValid(int sudoku[81])
 {
     int isValid = 1;
 
-    // Verification colonnes -------------------------------------------------------
+    // Verification lignes -------------------------------------------------------
 
     size_t i = 0;
     while(isValid == 1 && i < 9)
@@ -14,7 +14,7 @@ int IsBoardValid(int sudoku[9][9])
         size_t j = 0;
         while(isValid == 1 && j < 9)
         {
-            int n = sudoku[i][j] - 1;
+            int n = sudoku[i*9+j] - 1;
 
             if (n != -1)
             {
@@ -32,18 +32,19 @@ int IsBoardValid(int sudoku[9][9])
         }
 
         i++;
-    }
+     }
 
-    // Verification lignes ---------------------------------------------------------
+
+    // Verification colonnes ---------------------------------------------------------
 
     i = 0;
     while(isValid == 1 && i < 9)
     {
         int occ[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
         size_t j = 0;
-        while(isValid ==0 && j < 9)
+        while(isValid ==1 && j < 9)
         {
-            int n = sudoku[j][i] - 1;
+            int n = sudoku[j*9+i] - 1;
 
             if (n != -1)
             {
@@ -67,19 +68,19 @@ int IsBoardValid(int sudoku[9][9])
 
     i = 0;
 
-    while (isValid == 0 && i<3)
+    while (isValid == 1 && i<3)
     {
         size_t j = 0;
-        while (isValid == 0 && j<3)
+        while (isValid == 1 && j<3)
         {
             int occ[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
             size_t k = 0;
-            while (isValid == 0 && k<3)
+            while (isValid == 1 && k<3)
             {
                 size_t l = 0;
-                while (isValid == 0 && l<3)
+                while (isValid == 1 && l<3)
                 {
-                    int n = sudoku[3 * i + k][3 * j + l]-1;
+                    int n = sudoku[(3 * i + k)*9+3 * j + l]-1;
                     if (n != -1)
                     {
                         if (occ[n] != 1)
@@ -106,14 +107,14 @@ int IsBoardValid(int sudoku[9][9])
     return isValid;
 }
 
-int IsSolved(int sudoku[9][9])
+int IsSolved(int sudoku[81])
 {
     int isFull = 1;
     size_t i = 0;
     while (isFull == 1 && i < 9)
     {
         size_t j = 0;
-        while (j<9 && sudoku[i][j] != 0)
+        while (j<9 && sudoku[i*9+j] != 0)
         {
             j++;
         }
@@ -127,9 +128,9 @@ int IsSolved(int sudoku[9][9])
     return (isFull + IsBoardValid(sudoku))/2;
 }
 
-int Solve(int sudoku[9][9])
+int Solve(int sudoku[81])
 {
-    if (IsBoardValid(sudoku))
+    if (!IsBoardValid(sudoku))
     {
         return 0;
     }
@@ -140,7 +141,7 @@ int Solve(int sudoku[9][9])
     while (i < 9)
     {
         j = 0;
-        while (j<9 && sudoku[i][j]!=0)
+        while (j<9 && sudoku[i*9+j]!=0)
         {
             j++;
         }
@@ -158,14 +159,14 @@ int Solve(int sudoku[9][9])
     int isSolve = 0;
     while (!isSolve && k<=9)
     {
-        sudoku[i][j] = k;
+        sudoku[i*9+j] = k;
         isSolve = Solve(sudoku);
         k += 1;
     }
 
     if (!isSolve)
     {
-        sudoku[i][j] = 0;
+        sudoku[i*9+j] = 0;
     }
     return isSolve;
 }

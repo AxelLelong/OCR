@@ -5,4 +5,6 @@
 #ifndef OCR_SUDOSOLVER_H
 #define OCR_SUDOSOLVER_H
 
+int Solve(int sudoku[81]);
+
 #endif //OCR_SUDOSOLVER_H

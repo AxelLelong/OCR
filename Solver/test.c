@@ -2,17 +2,17 @@
 #include "sudoSolver.h"
 #include "stdio.h"
 
-void sudoPrint(int sudo[9][9])
+void sudoPrint(int sudo[81])
 {
     for (size_t i = 0; i<9; i++)
     {
         for (size_t j = 0; j<9;j++)
         {
-            if (sudo[i][j] == 0)
+            if (sudo[i*9+j] == 0)
                 printf("   |");
 
             else
-                printf(" %i |",sudo[i][j]);
+                printf(" %i |",sudo[i*9+j]);
         }
         printf("\n");
 
@@ -20,15 +20,9 @@ void sudoPrint(int sudo[9][9])
 }
 
 int main() {
-    int sudoku[9][9];
+    int sudoku[81];
     Loader("./testFileSudo", sudoku);
     sudoPrint(sudoku);
-
-    for (int i = 0; i < 9; ++i)
-    {
-        for (int j = 0; j < 9; ++j) {
-            printf("%d", sudoku[i][j]);
-        }
-        printf("\n");
-    }
+    Solve(sudoku);
+    sudoPrint(sudoku);
 }

@@ -3,7 +3,7 @@
 
 //int sudoku[9][9];
 
-void Loader(char path[], int sudoku[9][9])
+void Loader(char path[], int sudoku[81])
 {
     //initialize the sudoku
 
@@ -11,58 +11,22 @@ void Loader(char path[], int sudoku[9][9])
     //open the text file
     FILE* txt = fopen(path,"r");
 
-    int j = 0;
-    while (j<11)
+    size_t i = 0;
+    char tmp[4];
+    while (fscanf(txt,"%s*", tmp)!=EOF)
     {
-        //read a line
-        char s[11];
-        char tmp[3];
-
-        //3 char per 3 char
-        for (int i = 0; i < 3; ++i) {
-            fscanf(txt,"%s*", tmp);
-
-        }
-        //just to see : NEED TO BE DELETED
-        printf("line == %s\n",s);
-
-
-        //for space between boxes
-        if (j==3 || j == 6)
+        for (size_t acc = 0;acc<3;acc++)
         {
-            j++;
-            continue;
-        }
-
-        int i = 0;
-        while (i<11)
-        {
-            //for space between boxes
-            if (i == 3 || i == 6)
-            {
-                i++;
-                continue;
-            }
-
-            //testing if it is a number
-            if (s[i]<58 && s[i]>48)
-            {
-                //add the value to the sudoku
-                sudoku[i][j] = s[i] - '0';
-            }
-            //it's a dot
+            if (tmp[acc] == '.')
+                sudoku[i+acc] = 0;
             else
-            {
-                sudoku[i][j] = 0;
-            }
-            i++;
+                sudoku[i+acc] = tmp[0+acc]-'0';
         }
-        j++;
-
+        i+=3;
     }
 }
 
-/*int IsBoardValid()
+/*int IsBoardValid(int sudoku[81])
 {
     int isValid = 1;
 
@@ -75,7 +39,7 @@ void Loader(char path[], int sudoku[9][9])
         size_t j = 0;
         while(isValid == 1 && j < 9)
         {
-            int n = sudoku[i][j] - 1;
+            int n = sudoku[i*9+j] - 1;
 
             if (n != -1)
             {
@@ -104,7 +68,7 @@ void Loader(char path[], int sudoku[9][9])
         size_t j = 0;
         while(isValid ==0 && j < 9)
         {
-            int n = sudoku[j][i] - 1;
+            int n = sudoku[j*9+i] - 1;
 
             if (n != -1)
             {
@@ -140,7 +104,7 @@ void Loader(char path[], int sudoku[9][9])
                 size_t l = 0;
                 while (isValid == 0 && l<3)
                 {
-                    int n = sudoku[3 * i + k][3 * j + l]-1;
+                    int n = sudoku[(3 * i + k)*9+3 * j + l]-1;
                     if (n != -1)
                     {
                         if (occ[n] != 1)
@@ -167,14 +131,14 @@ void Loader(char path[], int sudoku[9][9])
     return isValid;
 }
 
-    int IsSolved()
+int IsSolved(int sudoku[81])
 {
     int isFull = 1;
     size_t i = 0;
     while (isFull == 1 && i < 9)
     {
         size_t j = 0;
-        while (j<9 && sudoku[i][j] != 0)
+        while (j<9 && sudoku[i*9+j] != 0)
         {
             j++;
         }
@@ -188,8 +152,9 @@ void Loader(char path[], int sudoku[9][9])
     return (isFull + IsBoardValid(sudoku))/2;
 }
 
-int Solve()
+int Solve(void* P_sudo)
 {
+    int sudoku[81] = *P_sudo;
     if (IsBoardValid(sudoku))
     {
         return 0;
@@ -201,7 +166,7 @@ int Solve()
     while (i < 9)
     {
         j = 0;
-        while (j<9 && sudoku[i][j]!=0)
+        while (j<9 && sudoku[i*9+j]!=0)
         {
             j++;
         }
@@ -219,14 +184,15 @@ int Solve()
     int isSolve = 0;
     while (!isSolve && k<=9)
     {
-        sudoku[i][j] = k;
+        sudoku[i*9+j] = k;
         isSolve = Solve(sudoku);
         k += 1;
     }
 
     if (!isSolve)
     {
-        sudoku[i][j] = 0;
+        sudoku[i*9+j] = 0;
     }
     return isSolve;
-}*/
+    }*/
+
