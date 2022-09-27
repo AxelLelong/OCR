@@ -19,10 +19,22 @@ void sudoPrint(int sudo[81])
     }
 }
 
-int main() {
+int main(int argc, char** argv)
+{
+    if (argc!=2)
+    {
+        return 1;
+    }
+    //initialize the array of the sudoku
     int sudoku[81];
-    Loader("./testFileSudo", sudoku);
-    sudoPrint(sudoku);
-    Solve(sudoku);
-    sudoPrint(sudoku);
+
+    //Convert the file in an array
+    //argv[1] is the path of the file
+    Loader(argv[1], sudoku);
+
+    //Solve the sudoku
+    int isSolve = Solve(sudoku);
+    if (isSolve)
+        Writer(argv[1],sudoku);
+    return 0;
 }

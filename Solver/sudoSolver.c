@@ -1,6 +1,7 @@
 #include "sudoSolver.h"
 #include <stdio.h>
 
+//test if the board is valid (if there aren't same numbers on the same line/cols/square)
 int IsBoardValid(int sudoku[81])
 {
     int isValid = 1;
@@ -107,6 +108,7 @@ int IsBoardValid(int sudoku[81])
     return isValid;
 }
 
+//test if the board is full and valid
 int IsSolved(int sudoku[81])
 {
     int isFull = 1;
@@ -128,6 +130,8 @@ int IsSolved(int sudoku[81])
     return (isFull + IsBoardValid(sudoku))/2;
 }
 
+
+//Solve the sudoku by testing all possibilities recursively
 int Solve(int sudoku[81])
 {
     if (!IsBoardValid(sudoku))
@@ -136,7 +140,7 @@ int Solve(int sudoku[81])
     }
 
     int i = 0;
-    int j = 0;
+    int j;
 
     while (i < 9)
     {
