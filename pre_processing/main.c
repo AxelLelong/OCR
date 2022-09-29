@@ -1,6 +1,7 @@
 #include <err.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
+#include "filters.h"
 
 // Updates the display.
 //
@@ -71,34 +72,6 @@ SDL_Surface* load_image(const char* path)
     return surface;
 }
 
-// Converts a colored pixel into grayscale.
-//
-// pixel_color: Color of the pixel to convert in the RGB format.
-// format: Format of the pixel used by the surface.
-Uint32 pixel_to_grayscale(Uint32 pixel_color, SDL_PixelFormat* format)
-{
-    Uint8 r, g, b;
-    SDL_GetRGB(pixel_color, format, &r, &g, &b);
-    Uint8 average = 0.3*r + 0.59*g + 0.11*b;
-    Uint32 color = SDL_MapRGB(format, average, average, average);
-    return color;
-}
-
-Uint32 pixel_to_negative(Uint32 pixel_color, SDL_PixelFormat* format)
-{
-    Uint8 r, g, b;
-    SDL_GetRGB(pixel_color, format, &r, &g, &b);
-    Uint8 average = 0.3*r + 0.59*g + 0.11*b;
-    Uint32 color = SDL_MapRGB(format, average, average, average);
-    return color;
-    for(i = 0; i < h; i++)
-      for(j = 0; j < w; j++)
-	{
-	  color = SDL_GetRGB(p[i * w + j], s->format, &color.r, &color.g, &color.b);
-	  pixels[i * w + j] = SDL_MapRGB(s->format, 255 - color.r, 255 - color.g, 255 - color.b);
-	}
-}
-
 
 void surface_to_grayscale(SDL_Surface* surface)
 {
@@ -112,7 +85,8 @@ void surface_to_grayscale(SDL_Surface* surface)
     SDL_LockSurface(surface);
     for(int i = 0;i<len;i++)
     {
-        pixels[i] = pixel_to_grayscale(pixels[i],format);
+        Uint32 tmp = pixel_to_grayscale(pixels[i],format);
+        pixels[i] = negativefilter(tmp,format);
     }
     SDL_UnlockSurface(surface);
 }

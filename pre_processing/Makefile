@@ -6,18 +6,21 @@ CFLAGS = -Wall -Wextra -O3 `pkg-config --cflags sdl2 SDL2_image`
 LDFLAGS =
 LDLIBS = `pkg-config --libs sdl2 SDL2_image`
 
-all: filters
+all: main
 
-SRC = filters.c
+SRC = filters.c main.c
 OBJ = ${SRC:.c=.o}
-EXE = ${SRC:.c=}
+DEP = ${SRC:.c=.d}
 
-filters: filters.o
+main : ${OBJ}
+
+-include ${DEP} 
 
 .PHONY: clean
 
 clean:
 	${RM} ${OBJ}
-	${RM} ${EXE}
+	${RM} ${DEP}
+	${RM} main
 
 # END
