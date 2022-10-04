@@ -95,8 +95,8 @@ void surface_to_grayscale(SDL_Surface* surface)
 
     for(int i = 0;i<len;i++)
     {
-        pixels[i] = NormLight(pixels[i],format,max);
-        new_pixels[i] = medianfilter(pixels,i,format,surface->w,surface->h);
+      pixels[i] = NormLight(pixels[i],format,max);
+      new_pixels[i] = medianfilter(pixels,i,format,surface->w,surface->h);
     }
 
     surface->pixels = new_pixels;

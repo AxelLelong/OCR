@@ -2,13 +2,14 @@
 
 CC = gcc
 CPPFLAGS =
-CFLAGS = -Wall -Wextra -Werror -lm
-LDFLAGS =
+CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lm
 LDLIBS =
+EXEC = main
 
 all: main
 
-SRC = reseau_test.c Maths.c
+SRC = reseau_test1.c Maths.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 

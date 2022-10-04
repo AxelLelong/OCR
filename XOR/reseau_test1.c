@@ -125,4 +125,6 @@ int main(int argc, char *argv[]) {
                          {1},
                          {0}};
     NeuralNet(Input, Output,n);
+
+    return 1;
 }

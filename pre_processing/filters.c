@@ -36,7 +36,6 @@ Uint32 contrastefilter(Uint32 pixel_color, SDL_PixelFormat* format)
 {
     Uint8 r, g, b;
     SDL_GetRGB(pixel_color, format, &r, &g, &b);
-    int fact = 10;
     for (int i = 0; i<10;i++)
     {
         if (i * 25 <= r && r <= (i + 1) * 25)
@@ -66,19 +65,21 @@ Uint32 NormLight(Uint32 pixel_color, SDL_PixelFormat* format, Uint8 m)
     return color;
 }
 
-Uint32 take_median(Uint8 neigh,SDL_PixelFormat* format)
+Uint32 take_median(Uint8* neigh,SDL_PixelFormat* format)
 {
     for(int i=1 ; i < 9; i++)
     {
         int j = i;
+	Uint8 v = neigh[i];
 
-        while (j > 0 && neigh[j - 1] > neigh[j]) {
+        while (j > 0 && neigh[j - 1] > v) {
             Uint8 tmp = neigh[j];
             neigh[j] = neigh[j - 1];
             neigh[j - 1] = tmp;
 
             j--;
         }
+	neigh[j] = v;
     }
     return SDL_MapRGB(format, neigh[4], neigh[4], neigh[4]);
 }
