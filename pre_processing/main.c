@@ -89,7 +89,7 @@ void surface_to_grayscale(SDL_Surface* surface)
         pixels[i] = contrastefilter(tmp,format);
 
     }
-    Uint8 max = get_max(pixels,len);
+    Uint8 max = get_max(pixels,len,format);
 
     Uint32 new_pixels[len];
 

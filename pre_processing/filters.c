@@ -45,7 +45,7 @@ Uint32 contrastefilter(Uint32 pixel_color, SDL_PixelFormat* format)
     return SDL_MapRGB(format, 255-r, 255-g, 255-b);
 }
 
-Uint8 get_max(Uint32* pixels, int len)
+Uint8 get_max(Uint32* pixels, int len,SDL_PixelFormat* format)
 {
     Uint8 max = 0;
     for (int i = 0; i < len; ++i)
@@ -66,7 +66,7 @@ Uint32 NormLight(Uint32 pixel_color, SDL_PixelFormat* format, Uint8 m)
     return color;
 }
 
-Uint8 take_median(Uint8* neigh)
+Uint32 take_median(Uint8 neigh,SDL_PixelFormat* format)
 {
     for(int i=1 ; i < 9; i++)
     {
@@ -80,12 +80,12 @@ Uint8 take_median(Uint8* neigh)
             j--;
         }
     }
-    return neigh[4];
+    return SDL_MapRGB(format, neigh[4], neigh[4], neigh[4]);
 }
 
 Uint32 medianfilter(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h)
 {
-    Uint8* neigh[9];
+    Uint8 neigh[9];
     int inDaList = 0;
     for (int j = -1; j < 2; ++j)
     {
@@ -102,5 +102,5 @@ Uint32 medianfilter(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h)
             inDaList++;
         }
     }
-    return take_median(neigh);
+    return take_median(neigh,format);
 }
