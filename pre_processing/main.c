@@ -91,12 +91,19 @@ void surface_to_grayscale(SDL_Surface* surface)
     }
     Uint8 max = get_max(pixels,len,format);
 
-    Uint32 new_pixels[len];
+    Uint32 pixels1[len];
 
     for(int i = 0;i<len;i++)
     {
       pixels[i] = NormLight(pixels[i],format,max);
-      new_pixels[i] = medianfilter(pixels,i,format,surface->w,surface->h);
+      pixels1[i] = medianfilter(pixels,i,format,surface->w,surface->h);
+    }
+
+    Uint32 pixels2[len];
+
+    for(int i = 0;i<len;i++)
+    {
+        pixels2[i] = GaussianFlou(pixels,i,format,surface->w,surface->h);
     }
 
     surface->pixels = new_pixels;
