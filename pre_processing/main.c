@@ -102,21 +102,24 @@ void surface_to_grayscale(SDL_Surface* surface)
 
     medianfilter(pixels,pixels1,format,w,h);
 
-    Uint32* pixels2 = malloc(len*sizeof(Uint32));
+    /*Uint32* pixels2 = malloc(len*sizeof(Uint32));
     if (pixels2 == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de pixels2 pendant le mallocul");
 
-    /*Uint32 pixels2[len];
+    Uint32 pixels2[len];
 
     for(int i = 0 ; i < len ; i++)
     {
         pixels2[i] = GaussianFlou(pixels,i,format,w,h);
     }
     int* pixelsLisses =  lissage(pixels2,w,h);*/
-
-    surface->pixels = pixels1;
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels2[i];
+    }
+    //surface->pixels = pixels1;
     free(pixels1);
-    free(pixels2);
+    //free(pixels2);
     SDL_UnlockSurface(surface);
 }
 
