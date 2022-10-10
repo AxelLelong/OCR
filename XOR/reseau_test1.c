@@ -9,7 +9,7 @@ float NeuralNet(float Inputs[][2], float Outputs[][1], long iteration)
     time_t t;
     srand((unsigned) time(&t));
 
-    float alpha = 0.01;
+    float alpha = 0.1;
 
 
     //IF POSITIVE GR, TETA ++, ELSE TETA--
@@ -22,12 +22,12 @@ float NeuralNet(float Inputs[][2], float Outputs[][1], long iteration)
     float gr3 = 0;
 
 
-    float W1 = (float)rand()/RAND_MAX;
-    float W2 = (float)rand()/RAND_MAX;
-    float W3 = (float)rand()/RAND_MAX;
-    float W4 = (float)rand()/RAND_MAX;
-    float W5 = (float)rand()/RAND_MAX;
-    float W6 = (float)rand()/RAND_MAX;
+    float W1 = 0.5;//(float)rand()/RAND_MAX;
+    float W2 = 0.9;//(float)rand()/RAND_MAX;
+    float W3 = -0.4;//(float)rand()/RAND_MAX;
+    float W4 = 1;//(float)rand()/RAND_MAX;
+    float W5 = -1.2;//(float)rand()/RAND_MAX;
+    float W6 = 1.1;//(float)rand()/RAND_MAX;
     float Lw[6] = {W1,W2,W3,W4,W5,W6};
 
     float N1, N2, N3 = 0;

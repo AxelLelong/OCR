@@ -7,15 +7,16 @@ LDFLAGS = -lm
 LDLIBS =
 EXEC = main
 
-all: main
-
+#all: main
+all :
+	gcc -Wall -Wextra -Werror -lm -o main *.c *.h
 SRC = reseau_test1.c Maths.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 
-main : ${OBJ}
+#main : ${OBJ}
 
--include ${DEP} 
+#-include ${DEP} 
 
 .PHONY: clean
 
