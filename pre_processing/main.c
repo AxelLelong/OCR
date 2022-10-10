@@ -78,9 +78,9 @@ void surface_to_grayscale(SDL_Surface* surface)
     Uint32* pixels = surface->pixels;
     if (pixels == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    int len = surface->w * surface->h;
     int w = surface->w;
     int h = surface->h;
+    int len = w * h;
     SDL_PixelFormat* format = surface->format;
     if (format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
@@ -94,6 +94,8 @@ void surface_to_grayscale(SDL_Surface* surface)
     Uint8 max = get_max(pixels,len,format);
 
     Uint32* pixels1 = malloc(len);
+    if (pixels1 == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
 
     for(int i = 0;i<len;i++)
     {
@@ -113,6 +115,55 @@ void surface_to_grayscale(SDL_Surface* surface)
     free(pixels1);
     SDL_UnlockSurface(surface);
 }
+
+
+void surface_to_grayscale(SDL_Surface* surface)
+{
+
+    Uint32* pixels = surface->pixels;
+    if (pixels == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+    int w = surface->w;
+    int h = surface->h;
+    int len = w * h;
+    SDL_PixelFormat* format = surface->format;
+    if (format == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+    SDL_LockSurface(surface);
+    for(int i = 0;i<len;i++)
+    {
+        Uint32 tmp = pixel_to_grayscale(pixels[i],format);
+        pixels[i] = contrastefilter(tmp,format);
+    }
+
+    Uint8 max = get_max(pixels,len,format);
+    NormLight(pixels, format, len, max);
+
+    Uint32* pixels1 = malloc(len);
+    if (pixels1 == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+
+    medianfilter(pixels,pixels1,format,w,h);
+
+    Uint32* pixels2 = malloc(len);
+    if (pixels2 == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+    /*Uint32 pixels2[len];
+
+    for(int i = 0 ; i < len ; i++)
+    {
+        pixels2[i] = GaussianFlou(pixels,i,format,w,h);
+    }
+    int* pixelsLisses =  lissage(pixels2,w,h);*/
+
+    surface->pixels = pixels1;
+    free(pixels1);
+    free(pixels2);
+    SDL_UnlockSurface(surface);
+}
+
 
 int main(int argc, char** argv)
 {

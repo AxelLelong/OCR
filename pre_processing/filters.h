@@ -4,8 +4,8 @@
 Uint32 pixel_to_grayscale(Uint32 pixel_color, SDL_PixelFormat* format);
 Uint32 negativefilter(Uint32 pixel_color, SDL_PixelFormat* format);
 Uint32 contrastefilter(Uint32 pixel_color, SDL_PixelFormat* format);
-Uint32 NormLight(Uint32 pixel_color, SDL_PixelFormat* format, Uint8 m);
-Uint32 medianfilter(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h);
+void NormLight(Uint32* pixels, SDL_PixelFormat* format, int len, Uint8 m);
+void medianfilter(Uint32* pixels,SDL_PixelFormat* format,int w, int h);
 Uint8 get_max(Uint32* pixels, int len, SDL_PixelFormat* format);
 int* lissage(int* pixels,int w, int h);
 

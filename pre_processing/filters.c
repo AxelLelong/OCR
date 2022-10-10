@@ -57,12 +57,15 @@ Uint8 get_max(Uint32* pixels, int len,SDL_PixelFormat* format)
     return max;
 }
 
-Uint32 NormLight(Uint32 pixel_color, SDL_PixelFormat* format, Uint8 m)
+void NormLight(Uint32* pixels, SDL_PixelFormat* format, int len, Uint8 m)
 {
-    Uint8 r, g, b;
-    SDL_GetRGB(pixel_color, format, &r, &g, &b);
-    Uint32 color = SDL_MapRGB(format, 255-r*(255/m), 255-g*(255/m), 255-b*(255/m));
-    return color;
+    for (int i = 0; i < len; ++i)
+    {
+        Uint8 r, g, b;
+        SDL_GetRGB(pixels[i], format, &r, &g, &b);
+        pixels[i] = SDL_MapRGB(format, 255-r*(255/m), 255-g*(255/m), 255-b*(255/m));
+    }
+
 }
 
 Uint32 take_median(Uint8* neigh,SDL_PixelFormat* format)
@@ -84,49 +87,37 @@ Uint32 take_median(Uint8* neigh,SDL_PixelFormat* format)
     return SDL_MapRGB(format, neigh[4], neigh[4], neigh[4]);
 }
 
-Uint32 take_median(Uint8* neigh,SDL_PixelFormat* format)
+
+void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w, int h)
 {
-    for(int i=1 ; i < 9; i++)
+    Uint8* neigh = malloc(9);
+    for (int i = 0; i < ; ++i)
     {
-        int j = i;
-        Uint8 v = neigh[i];
+        int inDaList = 0;
 
-        while (j > 0 && neigh[j - 1] > v) {
-            Uint8 tmp = neigh[j];
-            neigh[j] = neigh[j - 1];
-            neigh[j - 1] = tmp;
-
-            j--;
-        }
-        neigh[j] = v;
-    }
-    return SDL_MapRGB(format, neigh[4], neigh[4], neigh[4]);
-}
-
-Uint32 medianfilter(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h)
-{
-    Uint8 neigh[9];
-    int inDaList = 0;
-    for (int j = -1; j < 2; ++j)
-    {
-        for (int k = -1; k < 2; ++k)
+        for (int j = -1; j < 2; ++j)
         {
-            Uint8 r, g, b;
-            if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
-                neigh[inDaList] = 0;
-            else
+            for (int k = -1; k < 2; ++k)
             {
-                SDL_GetRGB(pixels[i+j*w+k], format, &r, &g, &b);
-                neigh[inDaList] = r;
+                Uint8 r, g, b;
+                if ((i % w == 0 && k == -1) || (i % w == w - 1 && k == 1) || (i < w && j == -1) ||
+                    (i >= w * (h - 1) && j == 1))
+                    neigh[inDaList] = 0;
+                else
+                {
+                    SDL_GetRGB(pixels[i + j * w + k], format, &r, &g, &b);
+                    neigh[inDaList] = r;
+                }
+                inDaList++;
             }
-            inDaList++;
         }
+        pixels1[i] = take_median(neigh, format);
     }
-    return take_median(neigh,format);
+    free(neigh);
 }
 
 
-Uint32 multiMat(Uint* m1, Uint8* m2,SDL_PixelFormat* format)
+Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
 {
     Uint8 mat[9];
     for (int i = 0 ; i < 3 ; i++)
@@ -181,7 +172,7 @@ int* lissage(int* pixels,int w, int h)
             int k = -1;
             while (isNoWhite && k<2)
             {
-                if (j==k||(i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
+                if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
                     continue;
                 else
                 {
