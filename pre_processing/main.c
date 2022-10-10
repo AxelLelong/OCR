@@ -79,6 +79,8 @@ void surface_to_grayscale(SDL_Surface* surface)
     if (pixels == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
     int len = surface->w * surface->h;
+    int w = surface->w;
+    int h = surface->h;
     SDL_PixelFormat* format = surface->format;
     if (format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
@@ -91,22 +93,24 @@ void surface_to_grayscale(SDL_Surface* surface)
     }
     Uint8 max = get_max(pixels,len,format);
 
-    Uint32 pixels1[len];
+    Uint32* pixels1 = malloc(len);
 
     for(int i = 0;i<len;i++)
     {
       pixels[i] = NormLight(pixels[i],format,max);
-      pixels1[i] = medianfilter(pixels,i,format,surface->w,surface->h);
+      pixels1[i] = medianfilter(pixels,i,format,w,h);
     }
 
-    Uint32 pixels2[len];
+    /*Uint32 pixels2[len];
 
-    for(int i = 0;i<len;i++)
+    for(int i = 0 ; i < len ; i++)
     {
-        pixels2[i] = GaussianFlou(pixels,i,format,surface->w,surface->h);
+        pixels2[i] = GaussianFlou(pixels,i,format,w,h);
     }
+    int* pixelsLisses =  lissage(pixels2,w,h);*/
 
-    surface->pixels = new_pixels;
+    surface->pixels = pixels1;
+    free(pixels1);
     SDL_UnlockSurface(surface);
 }
 

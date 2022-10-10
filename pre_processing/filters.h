@@ -7,4 +7,6 @@ Uint32 contrastefilter(Uint32 pixel_color, SDL_PixelFormat* format);
 Uint32 NormLight(Uint32 pixel_color, SDL_PixelFormat* format, Uint8 m);
 Uint32 medianfilter(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h);
 Uint8 get_max(Uint32* pixels, int len, SDL_PixelFormat* format);
+int* lissage(int* pixels,int w, int h);
+
 #endif

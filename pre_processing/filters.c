@@ -164,3 +164,37 @@ Uint32 GaussianFlou(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h)
     }
     return multiMat([1,2,1,2,4,2,1,2,1],neigh,format);
 }
+
+
+int* lissage(int* pixels,int w, int h)
+{
+    //New picture
+    int newPix[w*h];
+    for (int i = 0; i < w*h ; ++i)
+    {
+
+        //To verify if it isn't a white in neighbors
+        int isNoWhite = !pixels[i];
+        int j = -1;
+        while (isNoWhite && j<2)
+        {
+            int k = -1;
+            while (isNoWhite && k<2)
+            {
+                if (j==k||(i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
+                    continue;
+                else
+                {
+                    //if we find a white pixel
+                    if (pixels[i+j*w+k]!=0)
+                        isNoWhite = 0;
+                }
+                k++;
+            }
+            j++;
+        }
+        newPix[i] = !isNoWhite;
+    }
+
+    return newPix;
+}
