@@ -160,7 +160,7 @@ int main()
       for(int j = 0; j < numHiddenNodes; j++){
 	hiddenLayerBias[j] += deltaHidden[j] * lr;
 	for(int k = 0; k < numInputs; k++){
-	  hiddenWeights[k][j] += hiddenLayer[k] * deltaHidden[j] * lr;
+	  hiddenWeights[k][j] += training_inputs[i][k] * deltaHidden[j] * lr;
 	}
       }
 
