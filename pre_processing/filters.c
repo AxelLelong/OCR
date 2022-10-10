@@ -94,7 +94,7 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
     if (neigh == NULL)
         errx(EXIT_FAILURE, "Ca bug dans medianFilter");
 
-    for (int i = 0; i < ; ++i)
+    for (int i = 0; i < w*h; ++i)
     {
         int inDaList = 0;
 
@@ -120,7 +120,7 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
 }
 
 
-Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
+/*Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
 {
     Uint8 mat[9];
     for (int i = 0 ; i < 3 ; i++)
@@ -191,4 +191,4 @@ int* lissage(int* pixels,int w, int h)
     }
 
     return newPix;
-}
+}*/
