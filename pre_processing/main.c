@@ -139,16 +139,16 @@ void surface_to_grayscale(SDL_Surface* surface)
     Uint8 max = get_max(pixels,len,format);
     NormLight(pixels, format, len, max);
 
-    Uint32* pixels1 = malloc(len);
+    Uint32* pixels1 = malloc(len*sizeof(Uint32));
     if (pixels1 == NULL)
-        errx(EXIT_FAILURE, "%s", SDL_GetError());
+        errx(EXIT_FAILURE, "C'est de la faute de pixels1 pendant le mallocul");
 
 
     medianfilter(pixels,pixels1,format,w,h);
 
-    Uint32* pixels2 = malloc(len);
+    Uint32* pixels2 = malloc(len*sizeof(Uint32));
     if (pixels2 == NULL)
-        errx(EXIT_FAILURE, "%s", SDL_GetError());
+        errx(EXIT_FAILURE, "C'est de la faute de pixels2 pendant le mallocul");
 
     /*Uint32 pixels2[len];
 

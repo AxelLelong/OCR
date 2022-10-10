@@ -90,7 +90,10 @@ Uint32 take_median(Uint8* neigh,SDL_PixelFormat* format)
 
 void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w, int h)
 {
-    Uint8* neigh = malloc(9);
+    Uint8* neigh = malloc(9*sizeof(Uint8));
+    if (neigh == NULL)
+        errx(EXIT_FAILURE, "Ca bug dans medianFilter");
+
     for (int i = 0; i < ; ++i)
     {
         int inDaList = 0;
