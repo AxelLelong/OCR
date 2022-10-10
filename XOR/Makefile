@@ -9,7 +9,7 @@ EXEC = main
 
 #all: main
 all :
-	gcc -Wall -Wextra -Werror -lm -o main *.c *.h
+	gcc -Wall -Wextra -Werror -lm -o main NeuralNetwork.c Maths.c Maths.h
 SRC = reseau_test1.c Maths.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
