@@ -121,7 +121,7 @@ void surface_to_grayscale(SDL_Surface* surface)
     else
         seuil = 0.15;
 
-    adaptativeThreshold(pixels2,pixels3,seuil,w,h, format);
+    adaptativeThreshold(pixels2,seuil,w,h, format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {
@@ -129,7 +129,6 @@ void surface_to_grayscale(SDL_Surface* surface)
     }
     free(pixels1);
     free(pixels2);
-    free(pixels3);
     SDL_UnlockSurface(surface);
 }
 
