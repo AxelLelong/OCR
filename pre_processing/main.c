@@ -109,15 +109,15 @@ void surface_to_grayscale(SDL_Surface* surface)
     GaussianFlou(pixels1,pixels2,format,w,h);
 
     //global noise of the picture
-    float noise = noiseLevel(pixels2,w,h);
-
+    float noise = noiseLevel(pixels2,w,h, format);
+    double seuil;
     //seuil adaptatif
     if(noise>300)
-        double seuil = 0.5;
+        seuil = 0.5;
     else
-        double seuil = 0.15;
+        seuil = 0.15;
 
-    adaptativeThreshold(pixels2,seuil,w,h);
+    adaptativeThreshold(pixels2,seuil,w,h, format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {

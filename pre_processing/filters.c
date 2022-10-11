@@ -161,7 +161,7 @@ void GaussianFlou(Uint32* pixels,Uint32* pixels1,SDL_PixelFormat* format,int w, 
     free(neigh);
 }
 
-void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h)
+void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFormat* format)
 {
     Uint32* integral_image = malloc(w*h*sizeof(Uint32));
     if (integral_image == NULL)
@@ -183,7 +183,7 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h)
     for (int i = 1; i < w; i++)
     {
         sum = 0;
-        for (unsigned int j = 0; j < h; j++)
+        for (int j = 0; j < h; j++)
         {
             Uint8 r, g, b;
             SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
@@ -219,7 +219,7 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h)
     free(integral_image);
 }
 
-float noiseLevel(Uint32* pixels,int w, int h)
+float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)
 {
     float count = 0.0;
     double medium = 0.0;

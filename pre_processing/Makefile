@@ -8,7 +8,7 @@ LDLIBS = `pkg-config --libs sdl2 SDL2_image`
 
 all: main
 
-SRC = filters.c sobel.c main.c
+SRC = filters.c main.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 
