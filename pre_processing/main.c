@@ -106,12 +106,7 @@ void surface_to_grayscale(SDL_Surface* surface)
     if (pixels2 == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de pixels2 pendant le mallocul");
 
-    Uint32 pixels2[len];
-
-    for(int i = 0 ; i < len ; i++)
-    {
-        pixels2[i] = GaussianFlou(pixels,i,format,w,h);
-    }
+    GaussianFlou(pixels1,pixels2,format,w,h);
     int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {
@@ -119,7 +114,7 @@ void surface_to_grayscale(SDL_Surface* surface)
     }
     //surface->pixels = pixels1;
     free(pixels1);
-    //free(pixels2);
+    free(pixels2);
     SDL_UnlockSurface(surface);
 }
 

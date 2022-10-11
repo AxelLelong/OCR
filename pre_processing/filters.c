@@ -122,41 +122,54 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
 
 /*Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
 {
-    Uint8 mat[9];
+    Uint8 mat[9] = {0,0,0,0,0,0,0,0,0};
     for (int i = 0 ; i < 3 ; i++)
     {
         for (int j = 0 ; j < 3 ; j++)
         {
             for (int k = 0 ; k < 3 ; k++)
             {
-                mat[i][j]=m1[i][k]*m2[k][j]+mat[i][j];
+                mat[i*3+j]=m2[k*3+j]/m1[i*3+k]+mat[i*3+j];
             }
         }
     }
-    return SDL_MapRGB(format, mat[4], mat[4], mat[4]);
+    Uint8 sum = 0;
+    for (int i = 0 ; i < 9 ; i++)
+    {
+        sum += mat[i];
+    }
+    return SDL_MapRGB(format, sum, sum,sum);
 }
 
 
-Uint32 GaussianFlou(Uint32* pixels,int i,SDL_PixelFormat* format,int w, int h)
+void GaussianFlou(Uint32* pixels,Uint32* pixels1,SDL_PixelFormat* format,int w, int h)
 {
-    Uint8 neigh[9];
-    int inDaList = 0;
-    for (int j = -1; j < 2; ++j)
+    Uint8* neigh = malloc(9*sizeof(Uint8));
+    if (neigh == NULL)
+        errx(EXIT_FAILURE, "Ca bug dans medianFilter");
+
+    for (int i = 0; i < w*h; ++i)
     {
-        for (int k = -1; k < 2; ++k)
+        int inDaList = 0;
+        for (int j = -1; j < 2; ++j)
         {
-            Uint8 r, g, b;
-            if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
-                neigh[inDaList] = 0;
-            else
+            for (int k = -1; k < 2; ++k)
             {
-                SDL_GetRGB(pixels[i+j*w+k], format, &r, &g, &b);
-                neigh[inDaList] = r;
+                Uint8 r, g, b;
+                if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
+                    neigh[inDaList] = 0;
+                else
+                {
+                    SDL_GetRGB(pixels[i+j*w+k], format, &r, &g, &b);
+                    neigh[inDaList] = r;
+                }
+                inDaList++;
             }
-            inDaList++;
         }
+        Uint8 m1[9] = {16,8,16,8,4,8,16,8,16};
+        pixels1[i] =  multiMat(m1,neigh,format);
     }
-    return multiMat([1,2,1,2,4,2,1,2,1],neigh,format);
+    free(neigh);
 }
 
 
