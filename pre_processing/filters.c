@@ -119,10 +119,20 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
     free(neigh);
 }
 
-
-/*Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
+unsigned int AverageFilter(Pixel *matrix)
 {
-    Uint8 mat[9] = {0,0,0,0,0,0,0,0,0};
+    float filter[9] = { 1 / 16,        (1 / 16.) * 2, (1 / 16.) * 1,
+                        (1 / 16.) * 2, (1 / 16.) * 4, (1 / 16.) * 2,
+                        (1 / 16.) * 1, (1 / 16.) * 2, (1 / 16.) * 1 };
+    float result = 0;
+    for (int i = 0; i < 9; ++i)
+        result += matrix[i].b * filter[i];
+    return (unsigned int)result;
+}
+
+Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
+{
+    /*Uint8 mat[9] = {0,0,0,0,0,0,0,0,0};
     for (int i = 0 ; i < 3 ; i++)
     {
         for (int j = 0 ; j < 3 ; j++)
@@ -132,11 +142,11 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
                 mat[i*3+j]=m2[k*3+j]/m1[i*3+k]+mat[i*3+j];
             }
         }
-    }
+    }*/
     Uint8 sum = 0;
     for (int i = 0 ; i < 9 ; i++)
     {
-        sum += mat[i];
+        sum += m2[i]/m1[i];
     }
     return SDL_MapRGB(format, sum, sum,sum);
 }
@@ -173,7 +183,7 @@ void GaussianFlou(Uint32* pixels,Uint32* pixels1,SDL_PixelFormat* format,int w, 
 }
 
 
-int* lissage(int* pixels,int w, int h)
+/*int* lissage(int* pixels,int w, int h)
 {
     //New picture
     int newPix[w*h];
