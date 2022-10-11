@@ -119,17 +119,6 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
     free(neigh);
 }
 
-unsigned int AverageFilter(Pixel *matrix)
-{
-    float filter[9] = { 1 / 16,        (1 / 16.) * 2, (1 / 16.) * 1,
-                        (1 / 16.) * 2, (1 / 16.) * 4, (1 / 16.) * 2,
-                        (1 / 16.) * 1, (1 / 16.) * 2, (1 / 16.) * 1 };
-    float result = 0;
-    for (int i = 0; i < 9; ++i)
-        result += matrix[i].b * filter[i];
-    return (unsigned int)result;
-}
-
 Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
 {
     /*Uint8 mat[9] = {0,0,0,0,0,0,0,0,0};
