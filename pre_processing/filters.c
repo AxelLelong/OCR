@@ -161,12 +161,12 @@ void GaussianFlou(Uint32* pixels,Uint32* pixels1,SDL_PixelFormat* format,int w, 
     free(neigh);
 }
 
-void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFormat* format)
+void adaptativeThreshold(Uint32* pixels, Uint32* integral_image,double seuil, int w ,int h, SDL_PixelFormat* format)
 {
-    Uint32* integral_image = malloc(w*h*sizeof(Uint32));
+  /*Uint32* integral_image = malloc(w*h*sizeof(Uint32));
     if (integral_image == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de integral_image pendant le mallocul");
-
+  */
     int s2 = fmax(w, h) / 16;
     long sum = 0;
     int count = 0;
@@ -216,7 +216,7 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFor
             }
         }
     }
-    free(integral_image);
+    //free(integral_image);
 }
 
 float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)

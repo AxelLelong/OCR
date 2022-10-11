@@ -108,6 +108,10 @@ void surface_to_grayscale(SDL_Surface* surface)
 
     GaussianFlou(pixels1,pixels2,format,w,h);
 
+    Uint32* pixels3 = malloc(len*sizeof(Uint32));
+    if (pixels3 == NULL)
+        errx(EXIT_FAILURE, "C'est de la faute de pixels3 pendant le mallocul");
+
     //global noise of the picture
     float noise = noiseLevel(pixels2,w,h, format);
     double seuil;
@@ -117,7 +121,7 @@ void surface_to_grayscale(SDL_Surface* surface)
     else
         seuil = 0.15;
 
-    adaptativeThreshold(pixels2,seuil,w,h, format);
+    adaptativeThreshold(pixels2,pixels3,seuil,w,h, format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {
@@ -125,6 +129,7 @@ void surface_to_grayscale(SDL_Surface* surface)
     }
     free(pixels1);
     free(pixels2);
+    free(pixels3);
     SDL_UnlockSurface(surface);
 }
 
