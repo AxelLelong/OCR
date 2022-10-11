@@ -172,7 +172,7 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFor
     int count = 0;
     int x1, y1, x2, y2;
 
-    for (int y = 0; y < h; y++)
+    for (int y = 0; y < w; y++)
     {
         Uint8 r, g, b;
         SDL_GetRGB(pixels[y], format, &r, &g, &b);
@@ -180,30 +180,30 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFor
         integral_image[y] = sum;
     }
 
-    for (int i = 1; i < w; i++)
+    for (int i = 1; i < h; i++)
     {
         sum = 0;
-        for (int j = 0; j < h; j++)
+        for (int j = 0; j < w; j++)
         {
             Uint8 r, g, b;
             SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
             sum += r;
-            integral_image[i * h + j] = integral_image[(i - 1) * h + j] + sum;
+            integral_image[i * w + j] = integral_image[(i - 1) * w + j] + sum;
         }
     }
-    for (int i = 0; i < w; i++)
+    for (int i = 0; i < h; i++)
     {
-        for (int j = 0; j < h; j++)
+        for (int j = 0; j < w; j++)
         {
             x1 = fmax(i - s2, 1);
-            x2 = fmin(i + s2, w - 1);
+            x2 = fmin(i + s2, h - 1);
             y1 = fmax(j - s2, 1);
-            y2 = fmin(j + s2, h - 1);
+            y2 = fmin(j + s2, w - 1);
             count = (x2 - x1) * (y2 - y1);
-            sum = integral_image[x2 * h + y2]
-                  - integral_image[x2 * h + (y1 - 1)]
-                  - integral_image[(x1 - 1) * h + y2]
-                  + integral_image[(x1 - 1) * h + (y1 - 1)];
+            sum = integral_image[x2 * w + y2]
+                  - integral_image[x2 * w + (y1 - 1)]
+                  - integral_image[(x1 - 1) * w + y2]
+                  + integral_image[(x1 - 1) * w + (y1 - 1)];
             Uint8 r, g, b;
             SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
             if (r * count < sum * (1.0 - seuil))
