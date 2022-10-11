@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
+#include <math.h>
 #include <SDL2/SDL_image.h>
 #include "filters.h"
 
@@ -160,6 +161,111 @@ void GaussianFlou(Uint32* pixels,Uint32* pixels1,SDL_PixelFormat* format,int w, 
     free(neigh);
 }
 
+void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h)
+{
+    Uint32* integral_image = malloc(w*h*sizeof(Uint32));
+    if (integral_image == NULL)
+        errx(EXIT_FAILURE, "C'est de la faute de integral_image pendant le mallocul");
+
+    int s2 = fmax(w, h) / 16;
+    long sum = 0;
+    int count = 0;
+    int x1, y1, x2, y2;
+
+    for (int y = 0; y < h; y++)
+    {
+        Uint8 r, g, b;
+        SDL_GetRGB(pixels[y], format, &r, &g, &b);
+        sum += r;
+        integral_image[y] = sum;
+    }
+
+    for (int i = 1; i < w; i++)
+    {
+        sum = 0;
+        for (unsigned int j = 0; j < h; j++)
+        {
+            Uint8 r, g, b;
+            SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
+            sum += r;
+            integral_image[i * h + j] = integral_image[(i - 1) * h + j] + sum;
+        }
+    }
+    for (int i = 0; i < w; i++)
+    {
+        for (int j = 0; j < h; j++)
+        {
+            x1 = fmax(i - s2, 1);
+            x2 = fmin(i + s2, w - 1);
+            y1 = fmax(j - s2, 1);
+            y2 = fmin(j + s2, h - 1);
+            count = (x2 - x1) * (y2 - y1);
+            sum = integral_image[x2 * h + y2]
+                  - integral_image[x2 * h + (y1 - 1)]
+                  - integral_image[(x1 - 1) * h + y2]
+                  + integral_image[(x1 - 1) * h + (y1 - 1)];
+            Uint8 r, g, b;
+            SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
+            if (r * count < sum * (1.0 - seuil))
+            {
+                pixels[i*w+j] = 0;
+            }
+            else
+            {
+                pixels[i*w+j] = 255;
+            }
+        }
+    }
+    free(integral_image);
+}
+
+float noiseLevel(Uint32* pixels,int w, int h)
+{
+    float count = 0.0;
+    double medium = 0.0;
+    Uint8* neigh = malloc(9*sizeof(Uint8));
+    if (neigh == NULL)
+        errx(EXIT_FAILURE, "Ca bug dans medianFilter");
+
+    for (int i = 0; i < w*h; ++i)
+    {
+        int inDaList = 0;
+        for (int j = -1; j < 2; ++j)
+        {
+            for (int k = -1; k < 2; ++k)
+            {
+                Uint8 r, g, b;
+                if ((i % w == 0 && k == -1) || (i % w == w - 1 && k == 1) || (i < w && j == -1) ||
+                    (i >= w * (h - 1) && j == 1))
+                    neigh[inDaList] = 0;
+                else
+                {
+                    SDL_GetRGB(pixels[i + j * w + k], format, &r, &g, &b);
+                    neigh[inDaList] = r;
+                }
+                inDaList++;
+            }
+        }
+        medium = 0.0;
+        for (int k = 0; k < 9; k++)
+        {
+            medium += neigh[k];
+        }
+        medium /= 9;
+        Uint8 rd, gr, bl;
+        SDL_GetRGB(pixels[i], format, &rd, &gr, &bl);
+        double val = 1 - (rd / medium);
+        if (val < 0)
+        {
+            val *= -1;
+        }
+        if (val > 0.5)
+        {
+            count++;
+        }
+    }
+    return count;
+}
 
 /*int* lissage(int* pixels,int w, int h)
 {
