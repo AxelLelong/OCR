@@ -208,11 +208,11 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFor
             SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
             if (r * count < sum * (1.0 - seuil))
             {
-                pixels[i*w+j] = 0;
+                pixels[i*w+j] = SDL_MapRGB(format, 0, 0, 0);
             }
             else
             {
-                pixels[i*w+j] = 255;
+                pixels[i*w+j] = SDL_MapRGB(format, 255, 255, 255);
             }
         }
     }
