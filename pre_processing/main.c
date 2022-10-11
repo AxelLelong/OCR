@@ -107,11 +107,7 @@ void surface_to_grayscale(SDL_Surface* surface)
         errx(EXIT_FAILURE, "C'est de la faute de pixels2 pendant le mallocul");
 
     GaussianFlou(pixels1,pixels2,format,w,h);
-
-    Uint32* pixels3 = malloc(len*sizeof(Uint32));
-    if (pixels3 == NULL)
-        errx(EXIT_FAILURE, "C'est de la faute de pixels3 pendant le mallocul");
-
+    
     //global noise of the picture
     float noise = noiseLevel(pixels2,w,h, format);
     double seuil;
