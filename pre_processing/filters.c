@@ -121,17 +121,6 @@ void medianfilter(Uint32* pixels, Uint32* pixels1,SDL_PixelFormat* format,int w,
 
 Uint32 multiMat(Uint8* m1, Uint8* m2,SDL_PixelFormat* format)
 {
-    /*Uint8 mat[9] = {0,0,0,0,0,0,0,0,0};
-    for (int i = 0 ; i < 3 ; i++)
-    {
-        for (int j = 0 ; j < 3 ; j++)
-        {
-            for (int k = 0 ; k < 3 ; k++)
-            {
-                mat[i*3+j]=m2[k*3+j]/m1[i*3+k]+mat[i*3+j];
-            }
-        }
-    }*/
     Uint8 sum = 0;
     for (int i = 0 ; i < 9 ; i++)
     {
