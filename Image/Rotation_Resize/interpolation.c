@@ -13,7 +13,7 @@
 
 Uint32 interpolation(unsigned int top,unsigned int bottom,unsigned int left,unsigned int right,
                      double horizontal_position,double vertical_position,
-                     Uint32* pixels,SDL_PixelFormat* format,int w);
+                     Uint32* pixels,SDL_PixelFormat* format,int w)
 {
     // Determine the values of the corners.
     Uint8 r, g, b;
