@@ -268,15 +268,16 @@ float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)
     return count;
 }
 
-/*int* lissage(int* pixels,int w, int h)
+void lissage(Uint32* pixels,Uint32* pixels1,int w, int h)
 {
     //New picture
-    int newPix[w*h];
     for (int i = 0; i < w*h ; ++i)
     {
 
         //To verify if it isn't a white in neighbors
-        int isNoWhite = !pixels[i];
+        Uint8 rm, gm, bm;
+        SDL_GetRGB(pixels[i], format, &rm, &gm, &bm);
+        int isNoWhite = (rm==0);
         int j = -1;
         while (isNoWhite && j<2)
         {
@@ -287,16 +288,19 @@ float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)
                     continue;
                 else
                 {
+                    Uint8 r, g, b;
+                    SDL_GetRGB(pixels[i+j*w+k], format, &r, &g, &b);
                     //if we find a white pixel
-                    if (pixels[i+j*w+k]!=0)
+                    if (r!=0)
                         isNoWhite = 0;
                 }
                 k++;
             }
             j++;
         }
-        newPix[i] = !isNoWhite;
+        if (!isNoWhite)
+            pixels1[i] = SDL_MapRGB(format, 0, 0, 0);
+        else
+            pixels1[i] = SDL_MapRGB(format, 255, 255, 255);
     }
-
-    return newPix;
-}*/
+}

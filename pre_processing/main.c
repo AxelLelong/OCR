@@ -118,6 +118,7 @@ void surface_to_grayscale(SDL_Surface* surface)
         seuil = 0.15;
 
     adaptativeThreshold(pixels2,seuil,w,h, format);
+    lissage(pixels2,pixels1,format,w,h);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {
