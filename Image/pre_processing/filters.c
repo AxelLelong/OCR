@@ -268,7 +268,7 @@ float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)
     return count;
 }
 
-void lissage(Uint32* pixels,Uint32* pixels1,int w, int h)
+void lissage(Uint32* pixels,Uint32* pixels1,int w, int h,SDL_PixelFormat* format)
 {
     //New picture
     for (int i = 0; i < w*h ; ++i)

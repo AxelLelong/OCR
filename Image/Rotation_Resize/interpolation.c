@@ -2,34 +2,37 @@
 // Created by mathieu on 12/10/2022.
 //
 
-#inclune "interpolation.h"
 #include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <math.h>
 #include <SDL2/SDL_image.h>
+#include "interpolation.h"
 
 
-Uint32 interpolation(Uint32 top, Uint32 bottom,Uint32 left, Uint32 right,
+Uint32 interpolation(unsigned int top,unsigned int bottom,unsigned int left,unsigned int right,
                      double horizontal_position,double vertical_position,
-                     Uint32* pixels,SDL_PixelFormat* format)
+                     Uint32* pixels,SDL_PixelFormat* format,int w);
 {
     // Determine the values of the corners.
     Uint8 r, g, b;
     SDL_GetRGB(pixels[left*w+top], format, &r, &g, &b);
     double top_left = r;
-    SDL_GetRGB(pixels[right*w+top], format, &r, &g, &b);
+    Uint8 r1, g1, b1;
+    SDL_GetRGB(pixels[right*w+top], format, &r1, &g1, &b1);
     double top_right = r;
-    SDL_GetRGB(pixels[left*w+bottom], format, &r, &g, &b);
+    Uint8 r2, g2, b2;
+    SDL_GetRGB(pixels[left*w+bottom], format, &r2, &g2, &b2);
     double bottom_left = r;
-    SDL_GetRGB(pixels[right*w+bottom], format, &r, &g, &b);
+    Uint8 r3, g3, b3;
+    SDL_GetRGB(pixels[right*w+bottom], format, &r3, &g3, &b3);
     double bottom_right = r;
 
     // Figure out "how far" the output pixel being considered is
     // between *_left and *_right.
-    double horizontal_progress = newX - (double)left;
-    double vertical_progress = newY - (double)top;
+    double horizontal_progress = horizontal_position - (double)left;
+    double vertical_progress = vertical_position - (double)top;
 
     // Combine top_left and top_right into one large, horizontal
     // block.

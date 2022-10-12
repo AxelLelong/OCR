@@ -6,7 +6,6 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "filters.h"
-#include "../Dispay/display.h"
 #include "transformation.h"
 
 void transformation(SDL_Surface* surface)
@@ -51,10 +50,10 @@ void transformation(SDL_Surface* surface)
     if(noise>300)
         seuil = 0.5;
     else
-        seuil = 0.15;
+        seuil = 0.375;
 
     adaptativeThreshold(pixels2,seuil,w,h, format);
-    lissage(pixels2,pixels1,format,w,h);
+    //lissage(pixels2,pixels1,w,h,format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {

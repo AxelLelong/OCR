@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <math.h>
-#inclune "interpolation.h"
-#inclune "rotation.h"
+#include "interpolation.h"
+#include "rotation.h"
 #include <SDL2/SDL_image.h>
 
 void rotate(SDL_Surface* surface, double degree)
@@ -15,8 +15,8 @@ void rotate(SDL_Surface* surface, double degree)
     Uint32* pixels = surface->pixels;
     if (pixels == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    int w = surface->w;
-    int h = surface->h;
+    unsigned int w = surface->w;
+    unsigned int h = surface->h;
     SDL_PixelFormat* format = surface->format;
     if (format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
@@ -34,14 +34,18 @@ void rotate(SDL_Surface* surface, double degree)
     {
         _pixels[i] = pixels[i];
     }
+    for (int i = 0; i < w*h; ++i)
+    {
+        pixels[i] = SDL_MapRGB(format,0,0,0);
+    }
 
     double newX;
     double newY;
     // Four pixels around
-    Uint32 top;
-    Uint32 bottom;
-    Uint32 left;
-    Uint32 right
+    unsigned int top;
+    unsigned int bottom;
+    unsigned int left;
+    unsigned int right;
 
     for (int i = 0; i < w*h; ++i)
     {
@@ -59,15 +63,11 @@ void rotate(SDL_Surface* surface, double degree)
         left = floor(newX);
         right = left + 1;
 
-        if (top < height && bottom < height && left < width
-            && right < width)
+        if (top < h && bottom < h && left < w
+            && right < w)
         {
-            _pixels[i] = interpolation(top,bottom,left,right,newX,newY,pixels,format)
+            pixels[i] = interpolation(top,bottom,left,right,newX,newY,_pixels,format,h);
         }
-    }
-    for (int i = 0; i < w*h; ++i)
-    {
-        pixels[i] = _pixels[i];
     }
     free(_pixels);
     SDL_UnlockSurface(surface);

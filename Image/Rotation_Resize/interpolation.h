@@ -5,8 +5,8 @@
 #ifndef INTERPOLATION_H
 #define INTERPOLATION_H
 
-Uint32 interpolation(Uint32 top, Uint32 bottom,Uint32 left, Uint32 right,
+Uint32 interpolation(unsigned int top,unsigned int bottom,unsigned int left,unsigned int right,
                      double horizontal_position,double vertical_position,
-                     Uint32* pixels,SDL_PixelFormat* format);
+                     Uint32* pixels,SDL_PixelFormat* format,int w);
 
 #endif //INTERPOLATION_H

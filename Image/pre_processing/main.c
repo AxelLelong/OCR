@@ -1,7 +1,9 @@
 #include <err.h>
 #include <SDL2/SDL.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <SDL2/SDL_image.h>
-#include "../Dispay/display.h"
+#include "display.h"
 #include "transformation.h"
 
 int main(int argc, char** argv)
@@ -41,7 +43,7 @@ int main(int argc, char** argv)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
     
     // - Dispatch the events.
-    event_loop(renderer,texturegrayscale,surface,argv[2]);
+    event_loop(renderer,newtexture,surface,argv[2]);
 
     // - Free the surface.
     SDL_FreeSurface(surface);
