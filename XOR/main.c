@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <err.h>
+#include <string.h>
 #include "Maths.h"
 #include "NeuralNetwork.h"
 
@@ -24,8 +25,11 @@ int main (int argc, char** argv)
   int train = 0;
 
   for(int i = 0; i < argc; i++)
-    if (argv[i] == "-train")
-      train = 1;
+    if(strcmp(argv[i],"-train"))
+      train=1;
+
+  if(train)
+    printf("TRAIN\n");
 
   //definition of tables
   double hiddenLayer[numHiddenNodes];
@@ -33,7 +37,7 @@ int main (int argc, char** argv)
 
   double hiddenLayerBias[numHiddenNodes];
   double outputLayerBias[numOutputs];
-
+  
   double hiddenWeights[numInputs * numHiddenNodes];
   double outputWeights[numHiddenNodes * numOutputs];
 
@@ -53,7 +57,8 @@ int main (int argc, char** argv)
     };
   
   //random setup
-  setup_Weight(numInputs, numHiddenNodes, hiddenWeights);
+  
+  hiddenWeights = setup_Weight(numInputs, numHiddenNodes, hiddenWeights);
   setup_Weight(numHiddenNodes, numOutputs, outputWeights);
   setup_Output_Bias(numOutputs, outputLayerBias);
 

@@ -39,7 +39,6 @@ void setup_Weight(int numFirstLayer,int numSecondLayer,double* WeightLayer)
       WeightLayer[i * numSecondLayer + j] = init_weights();
     }
   }
-  
 }
 
 void setup_Output_Bias(int numOutputs, double* Layer)
