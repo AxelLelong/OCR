@@ -30,11 +30,11 @@ void rotate(SDL_Surface* surface, double degree)
     Uint32* _pixels = malloc(w*h*sizeof(Uint32));
     if (_pixels == NULL)
         errx(EXIT_FAILURE, "Ca bug dans rotate");
-    for (int i = 0; i < w*h; ++i)
+    for (unsigned int i = 0; i < w*h; ++i)
     {
         _pixels[i] = pixels[i];
     }
-    for (int i = 0; i < w*h; ++i)
+    for (unsigned int i = 0; i < w*h; ++i)
     {
         pixels[i] = SDL_MapRGB(format,0,0,0);
     }
@@ -47,7 +47,7 @@ void rotate(SDL_Surface* surface, double degree)
     unsigned int left;
     unsigned int right;
 
-    for (int i = 0; i < w*h; ++i)
+    for (unsigned int i = 0; i < w*h; ++i)
     {
         // Calculate new position with matrix rotation
         newX = ((double)(cos(angle) * ((double)(i/w) - midX)
