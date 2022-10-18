@@ -98,33 +98,29 @@ void rotate(SDL_Surface* surface, double degree)
         for (int y = 0; y < w; y++)
         {
             double newX, newY;
+            int top,bottom,left,right;
             // Calculate new position with matrix rotation
-
             newX = ((double)(cos(angle) * ((double)x - midX) - sin(angle) * ((double)y - midY)));
             newY = ((double)(cos(angle) * ((double)x - midY) + sin(angle) * ((double)y - midX)));
 
+            //Calculate the new four pixels around
+            top = floor(newX);
+            bottom = top + 1;
+            left = floor(newY);
+            right = left + 1;
 
-            if (0 <= newX && newX < h && 0 <= newY && newY < w)
+            //if (0 <= newX && newX < h && 0 <= newY && newY < w)
+            if (0 <= top && top < h && 0 <= bottom && bottom < h && 0 <= left && left < w && 0 <= right && right < w)
             {
-                Uint8 r, g, b;
-                SDL_GetRGB(_pixels[(int)newX*w+(int)newY], format, &r, &g, &b);
-                pixels[x*w+y] = SDL_MapRGB(format, r, g, b);
+                //Uint8 r, g, b;
+                //SDL_GetRGB(_pixels[(int)newX*w+(int)newY], format, &r, &g, &b);
+                //pixels[x*w+y] = SDL_MapRGB(format, r, g, b);
+                pixels[i] = interpolation(top,bottom,left,right,newX,newY,_pixels,format,w);
             }
             else
             {
                 pixels[x*w+y] = SDL_MapRGB(format, 0, 0, 0);
             }
-
-	    top = floor(newY);
-	    bottom = top + 1;
-	    left = floor(newX);
-	    right = left + 1;
-
-	    if (top < h && bottom < h && left < w
-		&& right < w)
-	      {
-		pixels[i] = interpolation(top,bottom,left,right,newX,newY,_pixels,format,h);
-	      }
         }
     }
     free(_pixels);
