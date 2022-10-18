@@ -8,7 +8,7 @@ LDLIBS = `pkg-config --libs sdl2 SDL2_image` -lm
 
 all: main
 
-SRC = rotation.c interpolation.c main.c display.c
+SRC = rotation.c main.c display.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 

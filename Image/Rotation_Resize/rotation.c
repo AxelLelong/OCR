@@ -12,7 +12,7 @@
 
 void rotate(SDL_Surface* surface, double degree)
 {
-    Uint32* pixels = surface->pixels;
+    /*Uint32* pixels = surface->pixels;
     if (pixels == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
     unsigned int w = surface->w;
@@ -67,6 +67,55 @@ void rotate(SDL_Surface* surface, double degree)
             && right < w)
         {
             pixels[i] = interpolation(top,bottom,left,right,newX,newY,_pixels,format,h);
+        }
+    }
+    free(_pixels);
+    SDL_UnlockSurface(surface);*/
+    Uint32* pixels = surface->pixels;
+    if (pixels == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+    int w = surface->w;
+    int h = surface->h;
+    SDL_PixelFormat* format = surface->format;
+    if (format == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+    SDL_LockSurface(surface);
+
+    double midX = ((double)w / 2.0);
+    double midY = ((double)h / 2.0);
+
+    double angle = degree * M_PI / 180.0;
+
+    Uint32* _pixels = malloc(w*h*sizeof(Uint32));
+    if (_pixels == NULL)
+        errx(EXIT_FAILURE, "Ca bug dans rotate");
+    for (int i = 0; i < w*h; ++i)
+    {
+        _pixels[i] = pixels[i];
+    }
+    for (int x = 0; x < w; x++)
+    {
+        for (int y = 0; y < h; y++)
+        {
+            double newX, newY;
+            // Calculate new position with matrix rotation
+            newX = ((double)(cos(angle) * ((double)(i/w) - midX)
+                             - sin(angle) * ((double)(i%w) - midY))
+                    + midX);
+            newY = ((double)(cos(angle) * ((double)(i%w) - midY)
+                             + sin(angle) * ((double)(i/w) - midX))
+                    + midY);
+
+            if (0 <= newX && newX < w && 0 <= newY && newY < h)
+            {
+                Uint8 r, g, b;
+                SDL_GetRGB(_pixels[newX*w+newY], format, &r, &g, &b);
+                pixels[x*w+y] = SDL_MapRGB(format, r, g, b);
+            }
+            else
+            {
+                pixels[x*w+y] = SDL_MapRGB(format, 0, 0, 0);
+            }
         }
     }
     free(_pixels);
