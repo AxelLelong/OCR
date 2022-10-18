@@ -99,20 +99,10 @@ void rotate(SDL_Surface* surface, double degree)
         {
             double newX, newY;
             // Calculate new position with matrix rotation
-<<<<<<< HEAD
-            newX = ((double)(cos(angle) * ((double)x - midX)
-                             - sin(angle) * ((double)y - midY))
-                    + midX);
-            newY = ((double)(cos(angle) * ((double)x - midY)
-                             + sin(angle) * ((double)y - midX))
-=======
-            newX = ((double)(cos(angle) * ((double)(x) - midX)
-                             - sin(angle) * ((double)(y) - midY))
-                    + midX);
-            newY = ((double)(cos(angle) * ((double)(y) - midY)
-                             + sin(angle) * ((double)(x) - midX))
->>>>>>> 5c03a52 (test)
-                    + midY);
+
+            newX = ((double)(cos(angle) * ((double)x - midX) - sin(angle) * ((double)y - midY)));
+            newY = ((double)(cos(angle) * ((double)x - midY) + sin(angle) * ((double)y - midX)));
+
 
             if (0 <= newX && newX < h && 0 <= newY && newY < w)
             {
@@ -124,6 +114,17 @@ void rotate(SDL_Surface* surface, double degree)
             {
                 pixels[x*w+y] = SDL_MapRGB(format, 0, 0, 0);
             }
+
+	    top = floor(newY);
+	    bottom = top + 1;
+	    left = floor(newX);
+	    right = left + 1;
+
+	    if (top < h && bottom < h && left < w
+		&& right < w)
+	      {
+		pixels[i] = interpolation(top,bottom,left,right,newX,newY,_pixels,format,h);
+	      }
         }
     }
     free(_pixels);
