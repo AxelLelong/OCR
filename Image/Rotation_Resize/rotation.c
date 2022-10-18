@@ -99,11 +99,19 @@ void rotate(SDL_Surface* surface, double degree)
         {
             double newX, newY;
             // Calculate new position with matrix rotation
+<<<<<<< HEAD
             newX = ((double)(cos(angle) * ((double)x - midX)
                              - sin(angle) * ((double)y - midY))
                     + midX);
             newY = ((double)(cos(angle) * ((double)x - midY)
                              + sin(angle) * ((double)y - midX))
+=======
+            newX = ((double)(cos(angle) * ((double)(x) - midX)
+                             - sin(angle) * ((double)(y) - midY))
+                    + midX);
+            newY = ((double)(cos(angle) * ((double)(y) - midY)
+                             + sin(angle) * ((double)(x) - midX))
+>>>>>>> 5c03a52 (test)
                     + midY);
 
             if (0 <= newX && newX < h && 0 <= newY && newY < w)
