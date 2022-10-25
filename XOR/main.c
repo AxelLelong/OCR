@@ -7,9 +7,9 @@
 #include "NeuralNetwork.h"
 
 //nodes + num of exemples
-#define numInputs 2
-#define numHiddenNodes 2
-#define numOutputs 1
+#define numInputs 28*28
+#define numHiddenNodes 50 
+#define numOutputs 10
 #define numTrainingSets 4
 
 

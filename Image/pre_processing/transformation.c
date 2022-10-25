@@ -50,14 +50,14 @@ void transformation(SDL_Surface* surface)
     if(noise>300)
         seuil = 0.5;
     else
-        seuil = 0.375;
+        seuil = 0.5;
 
     adaptativeThreshold(pixels2,seuil,w,h, format);
-    //lissage(pixels2,pixels1,w,h,format);
+    lissage(pixels2,pixels1,w,h,format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
     for (int i = 0; i < len ; ++i)
     {
-        pixels[i] = pixels2[i];
+        pixels[i] = pixels1[i];
     }
     free(pixels1);
     free(pixels2);

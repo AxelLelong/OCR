@@ -270,6 +270,10 @@ float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)
 
 void lissage(Uint32* pixels,Uint32* pixels1,int w, int h,SDL_PixelFormat* format)
 {
+  //invert colors
+  /*for(int i = 0; i < h*w; i++)
+    negativefilter(pixels[i], format);
+  */
     //New picture
     for (int i = 0; i < w*h ; ++i)
     {
@@ -277,28 +281,31 @@ void lissage(Uint32* pixels,Uint32* pixels1,int w, int h,SDL_PixelFormat* format
         //To verify if it isn't a white in neighbors
         Uint8 rm, gm, bm;
         SDL_GetRGB(pixels[i], format, &rm, &gm, &bm);
-        int isNoWhite = (rm==0);
+        int isNoWhite = !(rm==0);
         int j = -1;
         while (isNoWhite && j<2)
         {
             int k = -1;
             while (isNoWhite && k<2)
             {
-                if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
-                    continue;
-                else
+	      if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
+		{
+		  k++;
+		  continue;
+		}
+	      else
                 {
                     Uint8 r, g, b;
                     SDL_GetRGB(pixels[i+j*w+k], format, &r, &g, &b);
                     //if we find a white pixel
-                    if (r!=0)
+                    if (r!=255)
                         isNoWhite = 0;
                 }
                 k++;
             }
             j++;
         }
-        if (!isNoWhite)
+        if (isNoWhite)
             pixels1[i] = SDL_MapRGB(format, 0, 0, 0);
         else
             pixels1[i] = SDL_MapRGB(format, 255, 255, 255);

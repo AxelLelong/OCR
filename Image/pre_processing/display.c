@@ -49,11 +49,11 @@ void event_loop(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Surface * imag
 
                 // If the window is resized, updates and redraws the image.
             case SDL_WINDOWEVENT:
-                if (event.window.event == SDL_WINDOWEVENT_RESIZED)
-                {
-                    draw(renderer,texture);
-                }
-                break;
+	      //if (event.window.event == SDL_WINDOWEVENT_RESIZED)
+	      //{
+	      draw(renderer,texture);
+	      //}
+	      break;
         }
     }
 }
