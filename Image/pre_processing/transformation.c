@@ -56,12 +56,12 @@ void transformation(SDL_Surface* surface)
     adaptativeThreshold(pixels2,seuil,w,h, format);
     lissage(pixels2,pixels1,w,h,format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
-    int** lines = HoughTransform(pixels1,250,w,h,format);
+    /*int** lines = HoughTransform(pixels1,250,w,h,format);
 
     for (int i = 0; i < len ; ++i)
     {
         pixels[i] = pixels1[i];
-    }
+	}*/
 
     free(pixels1);
     free(pixels2);
