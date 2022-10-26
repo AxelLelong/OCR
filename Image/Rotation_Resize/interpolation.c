@@ -17,16 +17,16 @@ Uint32 interpolation(unsigned int top,unsigned int bottom,unsigned int left,unsi
 {
     // Determine the values of the corners.
     Uint8 r, g, b;
-    SDL_GetRGB(pixels[top*w+left], format, &r, &g, &b);
+    SDL_GetRGB(pixels[left*w+top], format, &r, &g, &b);
     double top_left = r;
     Uint8 r1, g1, b1;
-    SDL_GetRGB(pixels[top*w+right], format, &r1, &g1, &b1);
+    SDL_GetRGB(pixels[right*w+top], format, &r1, &g1, &b1);
     double top_right = r1;
     Uint8 r2, g2, b2;
-    SDL_GetRGB(pixels[bottom*w+left], format, &r2, &g2, &b2);
+    SDL_GetRGB(pixels[left*w+bottom], format, &r2, &g2, &b2);
     double bottom_left = r2;
     Uint8 r3, g3, b3;
-    SDL_GetRGB(pixels[bottom*w+right], format, &r3, &g3, &b3);
+    SDL_GetRGB(pixels[right*w+bottom], format, &r3, &g3, &b3);
     double bottom_right = r3;
 
     // Figure out "how far" the output pixel being considered is
