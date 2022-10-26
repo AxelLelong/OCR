@@ -7,6 +7,7 @@
 #include <SDL2/SDL_image.h>
 #include "filters.h"
 #include "transformation.h"
+#include "lign_detection.h"
 
 void transformation(SDL_Surface* surface)
 {
@@ -55,10 +56,13 @@ void transformation(SDL_Surface* surface)
     adaptativeThreshold(pixels2,seuil,w,h, format);
     lissage(pixels2,pixels1,w,h,format);
     //int* pixelsLisses =  lissage(pixels2,w,h);*/
+    int** lines = HoughTransform(pixels1,250,w,h,format);
+
     for (int i = 0; i < len ; ++i)
     {
         pixels[i] = pixels1[i];
     }
+
     free(pixels1);
     free(pixels2);
     SDL_UnlockSurface(surface);
