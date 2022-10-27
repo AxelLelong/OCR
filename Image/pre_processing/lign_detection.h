@@ -11,6 +11,6 @@
 #ifndef OCR_LIGN_DETECTION_H
 #define OCR_LIGN_DETECTION_H
 
-int HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* format);
+int* HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* format, int* pics);
 
 #endif //OCR_LIGN_DETECTION_H

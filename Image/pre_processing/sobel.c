@@ -7,11 +7,9 @@
 double Convolution(SDL_Surface *image, double kernel[3][3], int row, int col)
 {
   Uint32 *pixels = image->pixels;
-  Uint32 pixel;
   if(pixels == NULL)
     errx(0,"Convolution Sobel Pixels Not Found");
   double sum = 0;
-  double px_value;
   //unsigned int r;
   Uint8 r,g,b;
   int h = (int)image->h;
@@ -20,8 +18,8 @@ double Convolution(SDL_Surface *image, double kernel[3][3], int row, int col)
     {
       for (int j = 0; j < 3; j++)
         {
-	  int x = i + row;
-	  int y = j + col;
+	  int y = i + row;
+	  int x = j + col;
 
 	  //check if we're inside of the picture
 	  if (x >= 0 && y >= 0 && x < w
@@ -74,8 +72,8 @@ void SobelEdgeDetection(SDL_Surface *image)
 	      pixel = SDL_MapRGB(image->format, 0,0,0);
 	      pixels[i*w+j] = pixel;
 	    }
-	  /*
-	  SDL_GetRGB(pixels[j*width+i], image->format,&r,&g,&b);
+	  
+	  /*SDL_GetRGB(pixels[i*w+j], image->format,&r,&g,&b);
 	  r = g_px > 128 ? 255 : 0;
 	  g = g_px > 128 ? 255 : 0;
 	  b = g_px > 128 ? 255 : 0;*/

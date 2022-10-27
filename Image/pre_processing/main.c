@@ -5,7 +5,6 @@
 #include <SDL2/SDL_image.h>
 #include "display.h"
 #include "transformation.h"
-#include "sobel.h"
 
 int main(int argc, char** argv)
 {
@@ -37,7 +36,7 @@ int main(int argc, char** argv)
 
     // - Convert the surface.
     transformation(surface);
-    SobelEdgeDetection(surface);
+
 
     // - Create a texture from the image.
     SDL_Texture* newtexture = SDL_CreateTextureFromSurface(renderer,surface);

@@ -9,12 +9,12 @@
 #include <SDL2/SDL_image.h>
 #include "lign_detection.h"
 
-int HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* format)
+int* HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* format,int* pics)
 {
     int diag = sqrt(w*w+h*h);
 
     /// - Initialise  an array of size 2*diag*θ
-    int *M = calloc(180*2*diag,sizeof(int));
+    int *M = calloc(181*2*(diag+1),sizeof(int));
 
     /// - Parcours de l'image
     for (int i = 0; i < h; ++i)
@@ -27,17 +27,20 @@ int HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* forma
             if (0!=r)
             {
                 /// - Pour chaque valeurs de θ (entre 0 et 180)
-                for (int theta = 0; theta < 180; ++theta)
+                for (int theta = 0; theta < 181; ++theta)
                 {
+
                     /// - Ajoute 1 a M[p][θ] avec p = x * cos(θ) + y * sin(θ)
                     int p = j * cos(theta) + i * sin(theta);
-                    M[p + diag + 2*diag * theta] += 1;
+		    if(i*w+j == 3011124)
+		      printf("p == %i\n | theta == %i\n",p,theta);
+                    M[p + diag + 2 * diag * theta] += 1;
                 }
             }
         }
     }
-    int pics[30][4];
-    int i;
+
+    int i = 0;
     /// - Parcours de l'accumulateur
     for (int theta = 0; theta < 180; ++theta)
     {
@@ -55,11 +58,11 @@ int HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* forma
                 int y2 = y0 - (diag*sin(theta));
 
                 /// - Stockage de chaque ligne
-                pics[i][0] = x1;
-                pics[i][1] = y1;
-                pics[i][2] = x2;
-                pics[i][3] = y2;
-                i++;
+                pics[i + 0] = x1;
+                pics[i + 1] = y1;
+                pics[i + 2] = x2;
+                pics[i + 3] = y2;
+                i+=4;
             }
         }
     }
