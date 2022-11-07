@@ -14,11 +14,16 @@ void transformation(SDL_Surface* surface)
 {
 
     Uint32* pixels = surface->pixels;
+
     if (pixels == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+    /// ---------------
     int w = surface->w;
     int h = surface->h;
     int len = w * h;
+    /// ---------------
+
     SDL_PixelFormat* format = surface->format;
     if (format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
@@ -56,8 +61,6 @@ void transformation(SDL_Surface* surface)
 
     adaptativeThreshold(pixels2,seuil,w,h, format);
     lissage(pixels2,pixels1,w,h,format);
-
-    //int* pixelsLisses =  lissage(pixels2,w,h);*/
 
 
     for (int i = 0; i < len ; ++i)
