@@ -22,5 +22,6 @@ clean:
 	${RM} ${OBJ}
 	${RM} ${DEP}
 	${RM} main
+	${RM} test_*.png
 
 # END

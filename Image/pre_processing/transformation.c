@@ -62,63 +62,71 @@ void transformation(SDL_Surface* surface)
         Uint32 tmp = pixel_to_grayscale(pixels[i],format);
         pixels[i] = contrastefilter(tmp,format);
     }
-    save_image(surface,"grayscale_contrast.png");
+    save_image(surface,"test_grayscale_contrast.png");
     /// ------------------------------------
 
 
     /// ------ LIGHT NORMALIZATION ------
     Uint8 max = get_max(pixels,len,format);
     NormLight(pixels, format, len, max);
-    save_image(surface,"light_normalisation.png");
+    save_image(surface,"test_light_normalisation.png");
     /// ---------------------------------
 
 
     /// ------ MEDIAN FILTER ------
     medianfilter(pixels,pixels1,format,w,h);
-    save_image(surface,"median_filter.png");
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels1[i];
+    }
+    save_image(surface,"test_median_filter.png");
     /// ---------------------------
 
 
     /// ------ GAUSSIAN BLUR ------
-    GaussianFlou(pixels1,pixels2,format,w,h);
-    save_image(surface,"gaussian_blur.png");
+    GaussianFlou(pixels,pixels1,format,w,h);
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels1[i];
+    }
+    save_image(surface,"test_gaussian_blur.png");
     /// ---------------------------
 
 
     /// ------ BINARISATION ------
     //global noise of the picture
-    float noise = noiseLevel(pixels2,w,h, format);
+    float noise = noiseLevel(pixels,w,h, format);
     double seuil;
     //seuil adaptatif
     if(noise>300)
         seuil = 0.5;
     else
         seuil = 0.5;
-    adaptativeThreshold(pixels2,seuil,w,h, format);
-    save_image(surface,"binarisation.png");
+    adaptativeThreshold(pixels,seuil,w,h, format);
+    save_image(surface,"test_binarisation.png");
     /// -------------------------
 
 
     /// ------ SMOOTHING ------
-    lissage(pixels2,pixels1,w,h,format);
-    save_image(surface,"smoothing.png");
+    lissage(pixels,pixels1,w,h,format);
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels1[i];
+    }
+    save_image(surface,"test_smoothing.png");
     /// -----------------------
 
 
     /// ------ SOBEL ------
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels[i] = pixels1[i];
-	}
     SobelEdgeDetection(surface);
-    save_image(surface,"sobel.png");
+    save_image(surface,"test_sobel.png");
     /// -------------------
 
 
     /// ------ HOUGH TRANSFORM ------
     /*int *lines = malloc(30*4*sizeof(int));
     HoughTransform(pixels1,250,w,h,format,lines);
-    save_image(surface,"hough_transform.png");*/
+    save_image(surface,"test_hough_transform.png");*/
     /// -----------------------------
 
 
