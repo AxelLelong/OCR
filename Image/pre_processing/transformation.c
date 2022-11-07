@@ -26,7 +26,7 @@
     SDL_DestroyTexture(newtexture);
 }*/
 
-void transformation(SDL_Surface* surface, SDL_Renderer* renderer)
+void transformation(SDL_Surface* surface)
 {
 
     /// ------ INITIALIZE VARIABLES ------
@@ -76,11 +76,13 @@ void transformation(SDL_Surface* surface, SDL_Renderer* renderer)
     /// ------ MEDIAN FILTER ------
     medianfilter(pixels,pixels1,format,w,h);
     save_image(surface,"median_filter.jpg");
+    /// ---------------------------
 
 
     /// ------ GAUSSIAN BLUR ------
     GaussianFlou(pixels1,pixels2,format,w,h);
     save_image(surface,"gaussian_blur.jpg");
+    /// ---------------------------
 
 
     /// ------ BINARISATION ------
@@ -100,6 +102,7 @@ void transformation(SDL_Surface* surface, SDL_Renderer* renderer)
     /// ------ SMOOTHING ------
     lissage(pixels2,pixels1,w,h,format);
     save_image(surface,"smoothing.jpg");
+    /// -----------------------
 
 
     /// ------ SOBEL ------
