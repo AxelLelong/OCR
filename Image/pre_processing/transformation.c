@@ -62,26 +62,26 @@ void transformation(SDL_Surface* surface)
         Uint32 tmp = pixel_to_grayscale(pixels[i],format);
         pixels[i] = contrastefilter(tmp,format);
     }
-    save_image(surface,"grayscale_contrast.jpg");
+    save_image(surface,"grayscale_contrast.png");
     /// ------------------------------------
 
 
     /// ------ LIGHT NORMALIZATION ------
     Uint8 max = get_max(pixels,len,format);
     NormLight(pixels, format, len, max);
-    save_image(surface,"light_normalisation.jpg");
+    save_image(surface,"light_normalisation.png");
     /// ---------------------------------
 
 
     /// ------ MEDIAN FILTER ------
     medianfilter(pixels,pixels1,format,w,h);
-    save_image(surface,"median_filter.jpg");
+    save_image(surface,"median_filter.png");
     /// ---------------------------
 
 
     /// ------ GAUSSIAN BLUR ------
     GaussianFlou(pixels1,pixels2,format,w,h);
-    save_image(surface,"gaussian_blur.jpg");
+    save_image(surface,"gaussian_blur.png");
     /// ---------------------------
 
 
@@ -95,13 +95,13 @@ void transformation(SDL_Surface* surface)
     else
         seuil = 0.5;
     adaptativeThreshold(pixels2,seuil,w,h, format);
-    save_image(surface,"binarisation.jpg");
+    save_image(surface,"binarisation.png");
     /// -------------------------
 
 
     /// ------ SMOOTHING ------
     lissage(pixels2,pixels1,w,h,format);
-    save_image(surface,"smoothing.jpg");
+    save_image(surface,"smoothing.png");
     /// -----------------------
 
 
@@ -111,14 +111,14 @@ void transformation(SDL_Surface* surface)
         pixels[i] = pixels1[i];
 	}
     SobelEdgeDetection(surface);
-    save_image(surface,"sobel.jpg");
+    save_image(surface,"sobel.png");
     /// -------------------
 
 
     /// ------ HOUGH TRANSFORM ------
-    int *lines = malloc(30*4*sizeof(int));
+    /*int *lines = malloc(30*4*sizeof(int));
     HoughTransform(pixels1,250,w,h,format,lines);
-    save_image(surface,"hough_transform.jpg");
+    save_image(surface,"hough_transform.png");*/
     /// -----------------------------
 
 
