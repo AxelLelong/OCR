@@ -6,7 +6,7 @@
 #define OCR_SUDOLOADER_H
 
 void Loader(char path[], int sudoku[81]);
-void Writer(char path[], int sudoku[81]);
+void Writer(int sudoku[81]);
 
 
 #endif //OCR_SUDOLOADER_H

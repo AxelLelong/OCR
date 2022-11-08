@@ -31,10 +31,10 @@ void Loader(char path[], int sudoku[81])
 
 //Convert a sudoku array in a file
 
-void Writer(char path[], int sudoku[81])
+void Writer(int sudoku[81])
 {
     //open the file
-    FILE* txt = fopen(path+"_resolved","w+");
+    FILE* txt = fopen("sudo_resolved","w+");
 
     int i = 0;
     while(i<81)
