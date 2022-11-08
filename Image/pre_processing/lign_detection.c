@@ -9,65 +9,7 @@
 #include <SDL2/SDL_image.h>
 #include "lign_detection.h"
 
-int* HoughTransform(Uint32* pixels,int seuil, int w, int h,SDL_PixelFormat* format,int* pics)
-{
-    int diag = sqrt(w*w+h*h);
 
-    /// - Initialise  an array of size 2*diag*θ
-    int *M = calloc(181*2*(diag+1),sizeof(int));
-
-    /// - Parcours de l'image
-    for (int i = 0; i < h; ++i)
-    {
-        for (int j = 0; j < w; ++j)
-        {
-            Uint8 r, g, b;
-            SDL_GetRGB(pixels[i*w+j], format, &r, &g, &b);
-            /// - Si c'est un pixel blanc
-            if (0!=r)
-            {
-                /// - Pour chaque valeurs de θ (entre 0 et 180)
-                for (int theta = 0; theta < 181; ++theta)
-                {
-
-                    /// - Ajoute 1 a M[p][θ] avec p = x * cos(θ) + y * sin(θ)
-                    int p = j * cos(theta) + i * sin(theta);
-		    if(i*w+j == 3011124)
-		      printf("p == %i\n | theta == %i\n",p,theta);
-                    M[p + diag + 2 * diag * theta] += 1;
-                }
-            }
-        }
-    }
-
-    int i = 0;
-    /// - Parcours de l'accumulateur
-    for (int theta = 0; theta < 180; ++theta)
-    {
-        for (int p = -diag; p < diag; ++p)
-        {
-            /// - Si c'est au dessus du seuil
-            if (M[p+diag+theta*diag]>seuil)
-            {
-                /// - Calcul des coordonées de la ligne
-                int x0 = p*cos(theta);
-                int y0 = p*sin(theta);
-                int x1 = x0 + (diag*cos(theta));
-                int y1 = y0 + (diag*sin(theta));
-                int x2 = x0 - (diag*cos(theta));
-                int y2 = y0 - (diag*sin(theta));
-
-                /// - Stockage de chaque ligne
-                pics[i + 0] = x1;
-                pics[i + 1] = y1;
-                pics[i + 2] = x2;
-                pics[i + 3] = y2;
-                i+=4;
-            }
-        }
-    }
-    return pics;
-}
 int **initMatriceInt(int x, int y)
 {
     int **matrice = NULL;
@@ -96,7 +38,7 @@ void freeMatriceInt(int **matrice, int height)
     free(matrice);
 }
 
-int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFormat* format,int draw,double *max_Theta)
+int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int draw,double *max_Theta,int *lenliste)
 {
     // Calculate the diagonal of the image
     const double diagonal = sqrt(w * w + h * h);
@@ -143,7 +85,7 @@ int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFo
     // We intialize the accumulator with all the value
     // In the same time, we search for the max value in the accumulator
 
-    unsigned int max = 0;
+    int max = 0;
     double rho;
     int croppedRho;
     for (int y = 0; y < h; y++)
@@ -173,10 +115,11 @@ int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFo
 
     // Finding edges
     // Computing threshold
-    int lineThreshold = max * 0.4;
+    int lineThreshold = max * 0.6;
 
     // Create line return line array
-    int ** allLines = initMatriceInt(nbTheta + 1, nbRho + 1);
+    int ** allLines = NULL;
+    int lenal = 0;
 
     double tempMaxTheta = 0.0;
     unsigned int histogram[181] = { 0 };
@@ -185,7 +128,6 @@ int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFo
     int prev = accumulator[0][0];
     int prev_theta = 0, prev_rho = 0;
     int boolIsIncreasing = 1;
-
     Uint32 pixel = SDL_MapRGB(format, 40, 40, 200);
 
     for (int theta = 0; theta <= nbTheta; theta++)
@@ -206,6 +148,7 @@ int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFo
             {
                 boolIsIncreasing = 0;
             }
+            //condition inutile
             else if (val < prev)
             {
                 prev = val;
@@ -237,24 +180,27 @@ int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFo
                 int xEnd = x - (int)(diagonal * (-s));
                 int yEnd = y - (int)(diagonal * c);
 
-                double theta = t;
+                //double Theta = t;
 
+                lenal++;
+                int *Lines = malloc(4*sizeof(int));
+                Lines[0] = xStart;
+                Lines[1] = yStart;
+                Lines[2] = xEnd;
+                Lines[3] = yEnd;
+                allLines = realloc(allLines,lenal*sizeof(Lines));
+                allLines[lenal-1] = Lines;
                 // Draw Lines on the copyImage matrice
                 if (draw)
-                    draw_line(drawImage, width, height, &line, &pixel, 1, draw);
+                    draw_line(pixels, w, h, xStart,yStart,xEnd,yEnd, pixel, 1, draw,format);
 
-                // Add line on our return list
-                void *p = Line_tovptr(line);
-                append(&allLines, p);
             }
         }
     }
-
     // Free cos and sin arrays
     free(arrThetas);
     free(arrRhos);
-    freeMatrice(accumulator, nbTheta + 1);
-
+    freeMatriceInt(accumulator, nbTheta + 1);
     // Find best angle
     unsigned int angle = 0;
     for (unsigned int i = 0; i < 181; i++)
@@ -262,8 +208,92 @@ int** houghtransform(Uint32* pixels, Image *drawImage, int w, int h, SDL_PixelFo
         if (histogram[i] > histogram[angle])
             angle = i;
     }
-
     *max_Theta = angle * M_PI / 180.0;
+    *lenliste = lenal;
     return allLines;
 }
 
+
+void draw_line(Uint32* pixels, int w, int h, int xStart,int yStart,int xEnd,int yEnd, Uint32 color,
+               int thickness, int draw,SDL_PixelFormat* format)
+{
+    Uint8 r, g, b;
+    SDL_GetRGB(color, format, &r, &g, &b);
+    // printf("Drawing line\n");
+    int x0 = xStart;
+    int y0 = yStart;
+
+    int x1 = xEnd;
+    int y1 = yEnd;
+
+    int dx = abs(x1 - x0);
+    int sx = x0 < x1 ? 1 : -1;
+    int dy = -abs(y1 - y0);
+    int sy = y0 < y1 ? 1 : -1;
+
+    int err = dx + dy;
+
+    while (1)
+    {
+        if (0 <= x0 && x0 < w && 0 <= y0 && y0 < h)
+        {
+            if (draw)
+            {
+                pixels[y0*w+x0] = SDL_MapRGB(format,r,g,b);
+
+                if (thickness == 2)
+                {
+                    if (0 <= (x0 + 1) && (x0 + 1) < w && 0 <= (y0 + 1)
+                        && (y0 + 1) < h)
+                    {
+                        pixels[(y0+1)*w+(x0+1)] = SDL_MapRGB(format,r,g,b);
+                    }
+                    if (0 <= (x0 - 1) && (x0 - 1) < w && 0 <= (y0 - 1)
+                        && (y0 - 1) < h)
+                    {
+                        pixels[(y0-1)*w+(x0-1)] = SDL_MapRGB(format,r,g,b);
+                    }
+                }
+            }
+        }
+
+        if (x0 == x1 && y0 == y1)
+            break;
+
+        int e2 = 2 * err;
+
+        if (e2 >= dy)
+        {
+            err += dy;
+            x0 += sx;
+        }
+        if (e2 <= dx)
+        {
+            err += dx;
+            y0 += sy;
+        }
+    }
+}
+
+/*
+** int LineSimpl(int** allLines, int* len, int Threshold)
+{
+    int lenRes = 0;
+    **int res = NULL;
+
+    for(int i = 0; i<len-1,i++)
+    {
+        for(int j = i+1; j < len; j++)
+        {
+            if(*(*allLines+j)==NULL)
+                continue;
+            if(abs((*allLines+i)[0]-(*allLines+j)[0])<Threshold &&
+               abs((*allLines+i)[1]-(*allLines+j)[1])<Threshold &&
+               abs((*allLines+i)[2]-(*allLines+j)[2])<Threshold &&
+               abs((*allLines+i)[3]-(*allLines+j)[3])<Threshold)
+            {
+                
+            }
+        }
+    }
+    }*/

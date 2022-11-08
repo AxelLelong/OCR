@@ -3,6 +3,8 @@
 //
 
 #include <err.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "filters.h"
@@ -124,9 +126,10 @@ void transformation(SDL_Surface* surface)
 
 
     /// ------ HOUGH TRANSFORM ------
-    /*int *lines = malloc(30*4*sizeof(int));
-    HoughTransform(pixels1,250,w,h,format,lines);
-    save_image(surface,"test_hough_transform.png");*/
+    double *max_Theta = malloc(sizeof(double));
+    int *lenliste = malloc(sizeof(int));
+    int** allLines = houghtransform(pixels,w, h, format,1,max_Theta,lenliste);
+    save_image(surface,"test_hough_transform.png");
     /// -----------------------------
 
 
