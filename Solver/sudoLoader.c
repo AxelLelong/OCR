@@ -34,7 +34,7 @@ void Loader(char path[], int sudoku[81])
 void Writer(char path[], int sudoku[81])
 {
     //open the file
-    FILE* txt = fopen(path,"w+");
+    FILE* txt = fopen(path+"_resolved","w+");
 
     int i = 0;
     while(i<81)
