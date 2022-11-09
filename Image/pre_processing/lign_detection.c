@@ -115,7 +115,7 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
 
     // Finding edges
     // Computing threshold
-    int lineThreshold = max * 0.6;
+    int lineThreshold = max * 0.4;
 
     // Create line return line array
     int ** allLines = NULL;
