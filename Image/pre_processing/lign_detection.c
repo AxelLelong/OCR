@@ -275,25 +275,37 @@ void draw_line(Uint32* pixels, int w, int h, int xStart,int yStart,int xEnd,int 
     }
 }
 
-/*
-** int LineSimpl(int** allLines, int* len, int Threshold)
-{
-    int lenRes = 0;
-    **int res = NULL;
 
-    for(int i = 0; i<len-1,i++)
+int** LineSimpl(int** allLines, int* len, int Threshold) {
+    int lenRes = 0;
+    int **res = NULL;
+
+    for (int i = 0; i < *len - 1; i++)
     {
-        for(int j = i+1; j < len; j++)
+        if ((*allLines + i) == NULL)
+            continue;
+        for (int j = i + 1; j < *len; j++)
         {
-            if(*(*allLines+j)==NULL)
+            if ((*allLines + j) == NULL)
                 continue;
-            if(abs((*allLines+i)[0]-(*allLines+j)[0])<Threshold &&
-               abs((*allLines+i)[1]-(*allLines+j)[1])<Threshold &&
-               abs((*allLines+i)[2]-(*allLines+j)[2])<Threshold &&
-               abs((*allLines+i)[3]-(*allLines+j)[3])<Threshold)
+            /// - If the two lines are pretty the same
+            if (abs((*allLines + i)[0] - (*allLines + j)[0]) < Threshold &&
+                abs((*allLines + i)[1] - (*allLines + j)[1]) < Threshold &&
+                abs((*allLines + i)[2] - (*allLines + j)[2]) < Threshold &&
+                abs((*allLines + i)[3] - (*allLines + j)[3]) < Threshold)
             {
-                
+                /// - Put in allLines[i] the average of the two lines
+                (*allLines + i)[0] = ((*allLines + i)[0] + (*allLines + j)[0]) / 2;
+                (*allLines + i)[1] = ((*allLines + i)[1] + (*allLines + j)[1]) / 2;
+                (*allLines + i)[2] = ((*allLines + i)[2] + (*allLines + j)[2]) / 2;
+                (*allLines + i)[3] = ((*allLines + i)[3] + (*allLines + j)[3]) / 2;
+                free(*(*allLines + j));
+                (*allLines + j) = NULL;
             }
+            lenRes++;
+            res = realloc(res,lenRes*sizeof(*allLines + i));
+            (*res+lenRes-1) = (*allLines + i);
         }
     }
-    }*/
+    return res;
+}
