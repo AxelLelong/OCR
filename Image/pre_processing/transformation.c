@@ -66,18 +66,6 @@ void transformation(SDL_Surface* surface)
     }
     save_image(surface,"test_grayscale_contrast.png");
 
-    /*
-    for(int i = 0;i<len;i++)
-    {
-        pixels[i] = pixel_to_grayscale(pixels[i],format);
-    }
-    save_image(surface,"test_grayscale.png");
-    for(int i = 0;i<len;i++)
-    {
-        pixels[i] = pixel_to_grayscale(pixels[i],format);
-    }
-    save_image(surface,"test_contrast.png");
-     */
     /// ------------------------------------
 
 

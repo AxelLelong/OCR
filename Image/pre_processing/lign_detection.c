@@ -276,7 +276,7 @@ void draw_line(Uint32* pixels, int w, int h, int xStart,int yStart,int xEnd,int 
 }
 
 
-int** LineSimpl(int** allLines, int* len, int Threshold) {
+/*int** LineSimpl(int** allLines, int* len, int Threshold) {
     int lenRes = 0;
     int **res = NULL;
 
@@ -308,4 +308,4 @@ int** LineSimpl(int** allLines, int* len, int Threshold) {
         }
     }
     return res;
-}
+    }*/
