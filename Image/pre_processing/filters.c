@@ -184,7 +184,7 @@ void adaptativeThreshold(Uint32* pixels,double seuil, int w ,int h, SDL_PixelFor
 {
     Uint32* integral_image = malloc(w*h*sizeof(Uint32));
     if (integral_image == NULL)
-        errx(EXIT_FAILURE, "C'est de la faute de integral_image pendant le mallocul");
+        errx(EXIT_FAILURE, "C'est de la faute de integral_image pendant le malloc");
 
     int s2 = fmax(w, h) / 16;
     long sum = 0;
