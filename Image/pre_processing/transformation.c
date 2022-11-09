@@ -101,10 +101,10 @@ void transformation(SDL_Surface* surface)
     float noise = noiseLevel(pixels,w,h, format);
     double seuil;
     //seuil adaptatif
-    if(noise>300)
+    if(noise>20)
         seuil = 0.5;
     else
-        seuil = 0.5;
+        seuil = 0.15;
     adaptativeThreshold(pixels,seuil,w,h, format);
     save_image(surface,"test_binarisation.png");
     /// -------------------------
