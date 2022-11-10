@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     SDL_Texture* newtexture = SDL_CreateTextureFromSurface(renderer,surface);
     if (newtexture == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    
+
     // - Dispatch the events.
     event_loop(renderer,newtexture,surface,"test_final.png");
 

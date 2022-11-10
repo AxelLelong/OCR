@@ -13,21 +13,6 @@
 #include "sobel.h"
 #include "display.h"
 
-/*void saveTMPimage(SDL_Surface* surface, SDL_Renderer* renderer, char *path)
-{
-    SDL_Texture* newtexture = SDL_CreateTextureFromSurface(renderer,surface);
-    if (newtexture == NULL)
-        errx(EXIT_FAILURE, "%s", SDL_GetError());
-
-    printf("<--💾 Saving output to %s\n", path);
-
-    if (IMG_SavePNG(image_surface, path) != 0)
-        errx(EXIT_FAILURE, "could not save the image to '%s': %s.\n", path,
-             SDL_GetError());
-
-    SDL_DestroyTexture(newtexture);
-}*/
-
 void transformation(SDL_Surface* surface)
 {
 
@@ -129,7 +114,13 @@ void transformation(SDL_Surface* surface)
     /// ------ HOUGH TRANSFORM ------
     double *max_Theta = malloc(sizeof(double));
     int *lenliste = malloc(sizeof(int));
-    int** allLines = houghtransform(pixels,w, h, format,1,max_Theta,lenliste);
+    int** allLines = houghtransform(pixels,w, h, format,0,max_Theta,lenliste);
+    int lenLines;
+    int** lines = LineSimpl(allLines, lenliste, len/61095, &lenLines);
+    for(int i = 0;i<lenLines;i++)
+      {
+	draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
+      }
     save_image(surface,"test_hough_transform.png");
     /// -----------------------------
 
