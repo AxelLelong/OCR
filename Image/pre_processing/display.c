@@ -12,10 +12,15 @@
 // texture: Texture that contains the image.
 void draw(SDL_Renderer* renderer, SDL_Texture* texture)
 {
+ 
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
     SDL_RenderClear(renderer);
+
     SDL_RenderCopy(renderer,texture,NULL,NULL);
+
     SDL_RenderPresent(renderer);
+
 }
 
 void save_image(SDL_Surface *image_surface, char *path)
@@ -38,6 +43,7 @@ void event_loop(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Surface * imag
 
     while (1)
     {
+
         SDL_WaitEvent(&event);
 
         switch (event.type)
@@ -51,7 +57,9 @@ void event_loop(SDL_Renderer* renderer, SDL_Texture* texture, SDL_Surface * imag
             case SDL_WINDOWEVENT:
 	      //if (event.window.event == SDL_WINDOWEVENT_RESIZED)
 	      //{
+
 	      draw(renderer,texture);
+
 	      //}
 	      break;
         }

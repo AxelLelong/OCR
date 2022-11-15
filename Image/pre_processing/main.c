@@ -9,8 +9,8 @@
 int main(int argc, char** argv)
 {
     // Checks the number of arguments.
-    if (argc != 3)
-        errx(EXIT_FAILURE, "Usage: image-file save-path");
+    if (argc != 2)
+        errx(EXIT_FAILURE, "Usage: image-file");
     // Initializes the SDL.
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
@@ -42,9 +42,9 @@ int main(int argc, char** argv)
     SDL_Texture* newtexture = SDL_CreateTextureFromSurface(renderer,surface);
     if (newtexture == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    
+
     // - Dispatch the events.
-    event_loop(renderer,newtexture,surface,argv[2]);
+    event_loop(renderer,newtexture,surface,"test_final.png");
 
     // - Free the surface.
     SDL_FreeSurface(surface);

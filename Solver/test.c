@@ -35,6 +35,6 @@ int main(int argc, char** argv)
     //Solve the sudoku
     int isSolve = Solve(sudoku);
     if (isSolve)
-        Writer(argv[1],sudoku);
+        Writer(sudoku);
     return 0;
 }
