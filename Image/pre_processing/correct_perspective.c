@@ -10,6 +10,7 @@
 #include <SDL2/SDL_image.h>
 #include "lign_detection.h"
 #include "square_detection.h"
+#include "correct_perspective.h"
 #include "matrix.h"
 
 
@@ -73,9 +74,6 @@ void correctPerspective(int** square,SDL_Surface* surface, int width , int heigh
     Uint32* pixels = surface->pixels;
     if (pixels == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    Uint32* _pixels = new_img->pixels;
-    if (_pixels == NULL)
-        errx(EXIT_FAILURE, "%s", SDL_GetError());
     int src[4][2] = { { square[0][0], square[0][1] },
                       { square[1][0], square[1][1] },
                       { square[2][0], square[2][1] },
@@ -102,9 +100,13 @@ void correctPerspective(int** square,SDL_Surface* surface, int width , int heigh
 
     SDL_Surface* new_img = SDL_CreateRGBSurface(SDL_SWSURFACE, max_edge_length, max_edge_length, 32, 0, 0, 0, 0);
 
-    for (unsigned int i = 0; i < new_img->h; i++)
+    Uint32* _pixels = new_img->pixels;
+    if (_pixels == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+    for (int i = 0; i < new_img->h; i++)
     {
-        for (unsigned int j = 0; j < new_img->w; j++)
+        for (int j = 0; j < new_img->w; j++)
         {
             double ut = i;
             double vt = j;

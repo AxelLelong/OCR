@@ -11,7 +11,7 @@
 #include "transformation.h"
 #include "lign_detection.h"
 #include "square_detection.h"
-#include "correct_perspertive.h"
+#include "correct_perspective.h"
 #include "sobel.h"
 #include "display.h"
 
