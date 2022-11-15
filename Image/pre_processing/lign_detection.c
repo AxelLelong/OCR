@@ -115,7 +115,7 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
 
     // Finding edges
     // Computing threshold
-    int lineThreshold = max * 0.4;
+    int lineThreshold = max * 0.5;
 
     // Create line return line array
     int ** allLines = NULL;
@@ -281,35 +281,35 @@ int** LineSimpl(int** allLines, int* len, int Threshold, int* lenRes)
     *lenRes = 0;
     int **res = NULL;
 
-    for (int i = 0; i < *len - 1; i++)
+    for (int i = 0; i < *len; i++)
     {
-      
-        if ((*allLines + i) == NULL)
-            continue;
-
-        for (int j = i + 1; j < *len; j++)
+        if (allLines[i][0] != -1)
         {
-            if ((*allLines + j) == NULL)
-                continue;
-            /// - If the two lines are pretty the same
-            if (abs(allLines[i][0] - allLines[j][0]) < Threshold &&
-                abs(allLines[i][1] - allLines[j][1]) < Threshold &&
-                abs(allLines[i][2] - allLines[j][2]) < Threshold &&
-                abs(allLines[i][3] - allLines[j][3]) < Threshold)
+            for (int j = 0; j < *len; j++)
             {
-                /// - Put in allLines[i] the average of the two lines
-	      allLines[i][0] = (allLines[i][0] + allLines[j][0]) / 2;
-	      allLines[i][1] = (allLines[i][1] + allLines[j][1]) / 2;
-	      allLines[i][2] = (allLines[i][2] + allLines[j][2]) / 2;
-	      allLines[i][3] = (allLines[i][3] + allLines[j][3]) / 2;
-	      //free(allLines[j]);
-	      //allLines[j] = NULL;
-	      }
-	    
+                if (allLines[j][0]!=-1 && i != j)
+                {
+                    /// - If the two lines are pretty the same
+                    if (abs(allLines[i][0] - allLines[j][0]) < Threshold &&
+                        abs(allLines[i][1] - allLines[j][1]) < Threshold &&
+                        abs(allLines[i][2] - allLines[j][2]) < Threshold &&
+                        abs(allLines[i][3] - allLines[j][3]) < Threshold)
+                    {
+                        /// - Put in allLines[i] the average of the two lines
+                        allLines[i][0] = (allLines[i][0] + allLines[j][0]) / 2;
+                        allLines[i][1] = (allLines[i][1] + allLines[j][1]) / 2;
+                        allLines[i][2] = (allLines[i][2] + allLines[j][2]) / 2;
+                        allLines[i][3] = (allLines[i][3] + allLines[j][3]) / 2;
+                        //free(allLines[j]);
+                        allLines[j][0] = -1;
+                    }
+                }
+            }
+            (*lenRes)++;
+            res = realloc(res,(*lenRes)*sizeof(allLines[i]));
+            res[*lenRes-1] = (allLines[i]);
         }
-	(*lenRes)++;
-	res = realloc(res,(*lenRes)*sizeof(allLines[i]));
-	res[*lenRes-1] = (allLines[i]);
     }
     return res;
 }
+

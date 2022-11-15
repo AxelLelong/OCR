@@ -116,14 +116,41 @@ void transformation(SDL_Surface* surface)
     double *max_Theta = malloc(sizeof(double));
     int *lenliste = malloc(sizeof(int));
     int** allLines = houghtransform(pixels,w, h, format,0,max_Theta,lenliste);
-    int lenLines;
-    int** lines = LineSimpl(allLines, lenliste, len/61095, &lenLines);
-    for(int i = 0;i<lenLines;i++)
+    for (int i = 0; i < len ; ++i)
     {
-	    draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
+        pixels1[i] = pixels[i];
+    }
+    printf("%d\n",*lenliste);
+    int lenRes;
+    for(int i = 0;i<*lenliste;i++)
+    {
+        draw_line(pixels, w, h, allLines[i][0],allLines[i][1],allLines[i][2],allLines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
     save_image(surface,"test_hough_transform.png");
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels1[i];
+    }
+
+    int** lines = LineSimpl(allLines, lenliste, 50,&lenRes);
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels1[i] = pixels[i];
+    }
+    for(int i = 0;i<lenRes;i++)
+    {
+        draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
+    }
+    save_image(surface,"test_simplify.png");
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels1[i];
+    }
     /// -----------------------------
+
+    int** square = findSquare(lines,w,h,&lenRes);
+    compute_Square(square);
+    drawSquare(square, pixels, w,h, 2,format,1);
 
 
     free(pixels1);

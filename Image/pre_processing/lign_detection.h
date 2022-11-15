@@ -14,5 +14,5 @@
 int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int draw,double *max_Theta,int* lenliste);
 void draw_line(Uint32* pixels, int w, int h, int xStart,int yStart,int xEnd,int yEnd, Uint32 color,
                int thickness, int draw,SDL_PixelFormat* format);
-int** LineSimpl(int** allLines, int* len, int Threshold, int* lenRes);
+int** LineSimpl(int** linelist, int* len, int Threshold, int* lenRes);
 #endif //OCR_LIGN_DETECTION_H

@@ -10,9 +10,8 @@
 #include "lign_detection.h"
 #include "square_detection.h"
 
-int[2] getIntersection(int* line1,int* line2, int width, int height)
+int* getIntersection(int* line1,int* line2, int width, int height,int* dot)
 {
-    int dot[2];
     if ((line1[2] - line1[0]) != 0
         && (line2[2] - line2[0]) != 0)
     {
@@ -46,15 +45,39 @@ int[2] getIntersection(int* line1,int* line2, int width, int height)
     return dot;
 }
 
-int*** findSquare(int** lineList, int width, int height, Uint32* pixels,
-                  int draw, int len)
+int getLineLength(int* line)
+{
+    return sqrt((line[2] - line[0]) * (line[2] - line[0])
+                + ((line[3] - line[1]) * (line[3] - line[1])));
+}
+
+int getPerimeter(int** square)
+{
+    // Get perimeter of the square
+    return getLineLength(square[3]) + getLineLength(square[1])
+           + getLineLength(square[0]) + getLineLength(square[2]);
+}
+
+int** sortSquares(int** square1, int** square2)
+{
+    if(square2 == NULL)
+        return square1;
+
+    int Factor1 = getPerimeter(square1);
+    int Factor2 = getPerimeter(square2);
+    if(Factor1 < Factor2)
+        return square2;
+    return square1;
+}
+
+int** findSquare(int** lineList, int width, int height, int* len)
 {
     int** squareFinal = NULL;
     double squareFactor = 40;
     // FIRST COLUMN
-    for (unsigned int h = 0; h<len; h++)
+    for (int h = 0; h<*len; h++)
     {
-        for (unsigned int i = 0; i<len; i++)
+        for (int i = 0; i<*len; i++)
         {
             if (i == h)
                 continue;
@@ -62,30 +85,32 @@ int*** findSquare(int** lineList, int width, int height, Uint32* pixels,
             int* line1 = lineList[h];
             int* line2 = lineList[i];
             // Get all line that actualLine have a intersection point with
-            int dot1[2] = getIntersection(line1, line2, width, height);
+            int dot1[2] = {0,0};
+            getIntersection(line1, line2, width, height, dot1);
 
             if (dot1[0] != -1)
             {
                 // ALL INTERSECTED EDGES
-                for (unsigned int j = 0; j<len; j++)
+                for (int j = 0; j<*len; j++)
                 {
                     if (i == j)
                         continue;
 
                     int* line3 = lineList[j];
-
-                    int dot2[2] = getIntersection(line2, line3, width, height);
+                    int dot2[2] = {0,0};
+                    getIntersection(line2, line3, width, height,dot2);
 
                     if (dot2[0] != -1)
                     {
                         // ALL INTERSECTED EDGES
-                        for (unsigned int k = 0; k<len; k++)
+                        for (int k = 0; k<*len; k++)
                         {
                             if (k == j)
                                 continue;
 
                             int* line4 = lineList[k];
-                            int dot3[2] = getIntersection(line3, line4, width, height);
+                            int dot3[2] = {0,0};
+                            getIntersection(line3, line4, width, height, dot3);
 
                             if (dot3[0] != -1)
                             {
@@ -93,7 +118,8 @@ int*** findSquare(int** lineList, int width, int height, Uint32* pixels,
                                     continue;
 
                                 // DOES K have intersection with h
-                                int dot4[2] = getIntersection(line4, line1, width, height);
+                                int dot4[2] = {0,0};
+                                getIntersection(line4, line1, width, height, dot4);
 
                                 if (dot4[0] != -1)
                                 {
@@ -127,19 +153,11 @@ int*** findSquare(int** lineList, int width, int height, Uint32* pixels,
                                     square[3] = fourthLine;
 
                                     // Not a square
-                                    if (!isSquare(square, width, height,
-                                                  squareFactor))
+                                    if (!isSquare(square,squareFactor))
                                     {
                                         continue;
                                     }
                                     squareFinal = sortSquares(square, squareFinal);
-                                    compute_Square(&square);
-
-                                    if (draw)
-                                    {
-                                        drawSquare(&square, image, width,
-                                                   height, 2);
-                                    }
                                 }
                             }
                         }
@@ -151,14 +169,13 @@ int*** findSquare(int** lineList, int width, int height, Uint32* pixels,
     return squareFinal;
 }
 
-int isSquare(int** square, unsigned int width, unsigned int height,
-             double SQUARE_FACTOR)
+int isSquare(int** square,double SQUARE_FACTOR)
 {
     // Avoid warning
     //(void)width;
     //(void)height;
 
-    unsigned int lenLeft = getLineLength(square[3]));
+    unsigned int lenLeft = getLineLength(square[3]);
 
     unsigned int lenright = getLineLength(square[1]);
 
@@ -190,27 +207,186 @@ int isSquare(int** square, unsigned int width, unsigned int height,
     return 1;
 }
 
-int getLineLength(int* line)
+void drawSquare(int** square, Uint32* pixels, int width, int height,
+                int thickness,SDL_PixelFormat* format,int draw)
 {
-    return sqrt((line[2] - line[0]) * (line[2] - line[0])
-                + ((line[3] - line[1]) * (line[3] - line[1])));
+    Uint32 pixel = SDL_MapRGB(format, 255, 0, 255);
+    draw_line(pixels, width, height, square[3][0],square[3][1],square[3][2],square[3][3], pixel, thickness, draw,format);
+    draw_line(pixels, width, height, square[2][0],square[2][1],square[2][2],square[2][3], pixel, thickness, draw,format);
+    draw_line(pixels, width, height, square[0][0],square[0][1],square[0][2],square[0][3], pixel, thickness, draw,format);
+    draw_line(pixels, width, height, square[1][0],square[1][1],square[1][2],square[1][3], pixel, thickness, draw,format);
 }
 
-int getPerimeter(int** square)
+void compute_Square(int** square)
 {
-    // Get perimeter of the square
-    return getLineLength(square[3]) + getLineLength(square[1])
-           + getLineLength(square[0]) + getLineLength(square[2]);
-}
+    int dot1[2] = {square[0][0],square[0][1]};
+    int dot2[2] = {square[1][0],square[1][1]};
+    int dot3[2] = {square[2][0],square[2][1]};
+    int dot4[2] = {square[3][0],square[3][1]};
 
-int** sortSquares(int** square1, int** square2)
-{
-    if(square2 == NULL)
-        return square1;
+    // Compute addition
+    int cord1 = dot1[0] + dot1[1];
+    int cord2 = dot2[0] + dot2[1];
+    int cord3 = dot3[0] + dot3[1];
+    int cord4 = dot4[0] + dot4[1];
 
-    int Factor1 = getPerimeter(square1);
-    int Factor2 = getPerimeter(square2);
-    if(Factor1 < Factor2)
-        return square2;
-    return square1;
+    int mark[4] = { 0, 0, 0, 0 };
+    int index = 0;
+
+    // Compare them and get all dot
+    int min = cord1;
+    int* topLeft = dot1;
+    if (cord2 < min)
+    {
+        min = cord2;
+        topLeft = dot2;
+        index = 1;
+    }
+    if (cord3 < min)
+    {
+        min = cord3;
+        topLeft = dot3;
+        index = 2;
+    }
+    if (cord4 < min)
+    {
+        min = cord4;
+        topLeft = dot4;
+        index = 3;
+    }
+    mark[index] = 1;
+
+    // Compute max
+    int max = cord1;
+    int* bottomRight = dot1;
+    index = 0;
+    if (cord2 > max)
+    {
+        max = cord2;
+        bottomRight = dot2;
+        index = 1;
+    }
+    if (cord3 > max)
+    {
+        max = cord3;
+        bottomRight = dot3;
+        index = 2;
+    }
+    if (cord4 > max)
+    {
+        max = cord4;
+        bottomRight = dot4;
+        index = 3;
+    }
+    mark[index] = 1;
+
+    int* topRight = dot1;
+    int* bottomLeft = dot1;
+    if (mark[0] == 0 && mark[1] == 0)
+    {
+        if (dot1[0] < dot2[0])
+        {
+            bottomLeft = dot1;
+            topRight = dot2;
+        }
+        else
+        {
+            bottomLeft = dot2;
+            topRight = dot1;
+        }
+    }
+
+    if (mark[0] == 0 && mark[2] == 0)
+    {
+        if (dot1[0] < dot3[0])
+        {
+            bottomLeft = dot1;
+            topRight = dot3;
+        }
+        else
+        {
+            bottomLeft = dot3;
+            topRight = dot1;
+        }
+    }
+
+    if (mark[0] == 0 && mark[3] == 0)
+    {
+        if (dot1[0] < dot4[0])
+        {
+            bottomLeft = dot1;
+            topRight = dot4;
+        }
+        else
+        {
+            bottomLeft = dot4;
+            topRight = dot1;
+        }
+    }
+
+    if (mark[1] == 0 && mark[2] == 0)
+    {
+        if (dot2[0] < dot3[0])
+        {
+            bottomLeft = dot2;
+            topRight = dot3;
+        }
+        else
+        {
+            bottomLeft = dot3;
+            topRight = dot2;
+        }
+    }
+
+    if (mark[1] == 0 && mark[3] == 0)
+    {
+        if (dot2[0] < dot4[0])
+        {
+            bottomLeft = dot2;
+            topRight = dot4;
+        }
+        else
+        {
+            bottomLeft = dot4;
+            topRight = dot2;
+        }
+    }
+
+    if (mark[2] == 0 && mark[3] == 0)
+    {
+        if (dot3[0] < dot4[0])
+        {
+            bottomLeft = dot3;
+            topRight = dot4;
+        }
+        else
+        {
+            bottomLeft = dot4;
+            topRight = dot3;
+        }
+    }
+
+    // Set each start and end point of the line in the square
+    square[0][0] = topLeft[0];
+    square[0][1] = topLeft[1];
+    square[0][2] = topRight[0];
+    square[0][3] = topRight[1];
+
+
+    square[1][0] = topRight[0];
+    square[1][1] = topRight[1];
+    square[1][2] = bottomRight[0];
+    square[1][3] = bottomRight[1];
+
+
+    square[2][0] = bottomRight[0];
+    square[2][1] = bottomRight[1];
+    square[2][2] = bottomLeft[0];
+    square[2][3] = bottomLeft[1];
+
+    square[3][0] = bottomLeft[0];
+    square[3][1] = bottomLeft[1];
+    square[3][2] = topLeft[0];
+    square[3][3] = topLeft[1];
+
 }
