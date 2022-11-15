@@ -152,6 +152,8 @@ void transformation(SDL_Surface* surface)
     compute_Square(square);
     drawSquare(square, pixels, w,h, 2,format,1);
 
+    correctPerspective(square, surface, w,h, format);
+
 
     free(pixels1);
     free(pixels2);
