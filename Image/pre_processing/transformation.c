@@ -10,6 +10,7 @@
 #include "filters.h"
 #include "transformation.h"
 #include "lign_detection.h"
+#include "square_detection.h"
 #include "sobel.h"
 #include "display.h"
 
@@ -118,9 +119,9 @@ void transformation(SDL_Surface* surface)
     int lenLines;
     int** lines = LineSimpl(allLines, lenliste, len/61095, &lenLines);
     for(int i = 0;i<lenLines;i++)
-      {
-	draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
-      }
+    {
+	    draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
+    }
     save_image(surface,"test_hough_transform.png");
     /// -----------------------------
 
