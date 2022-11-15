@@ -108,6 +108,10 @@ void transformation(SDL_Surface* surface)
 
 
     /// ------ SOBEL ------
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels2[i] = pixels[i];
+    }
     SobelEdgeDetection(surface);
     save_image(surface,"test_sobel.png");
     /// -------------------
@@ -121,7 +125,6 @@ void transformation(SDL_Surface* surface)
     {
         pixels1[i] = pixels[i];
     }
-    printf("%d\n",*lenliste);
     int lenRes;
     for(int i = 0;i<*lenliste;i++)
     {
@@ -149,11 +152,22 @@ void transformation(SDL_Surface* surface)
     }
     /// -----------------------------
 
+
+    ///-------DETECTION_CARRE---------
     int** square = findSquare(lines,w,h,&lenRes);
     compute_Square(square);
     drawSquare(square, pixels, w,h, 2,format,1);
 
+    save_image(surface,"test_carre.png");
+    ///--------------------------------
+
+    ///------CORRECT_PERSPECTIVE-------
+    for (int i = 0; i < len ; ++i)
+    {
+        pixels[i] = pixels2[i];
+    }
     correctPerspective(square, surface, w,h);
+    ///--------------------------------
 
 
     free(pixels1);

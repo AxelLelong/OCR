@@ -121,14 +121,14 @@ void correctPerspective(int** square,SDL_Surface* surface, int width , int heigh
             int x = (int)(new_coordinates[0] / new_coordinates[2]);
             int y = (int)(new_coordinates[1] / new_coordinates[2]);
 
-            if (x >= 0 && y >= 0 && x < height
-                && y < width)
+            if (x >= 0 && y >= 0 && x < width
+                && y < height)
             {
-                _pixels[i*new_img->w+j] = pixels[x*width+y];
+                _pixels[j*new_img->w+i] = pixels[y*width+x];
             }
             else
             {
-                _pixels[i*new_img->w+j] = SDL_MapRGB(new_img->format, 0, 0, 0);
+                _pixels[j*new_img->w+i] = SDL_MapRGB(new_img->format, 0, 0, 0);
             }
         }
     }
