@@ -172,5 +172,10 @@ void transformation(SDL_Surface* surface)
 
     free(pixels1);
     free(pixels2);
+    free(lenliste);
+    free(lines);
+    free(allLines);
+    free(square);
+    free(max_Theta);
     SDL_UnlockSurface(surface);
 }
