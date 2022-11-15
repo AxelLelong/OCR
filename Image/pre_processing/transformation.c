@@ -11,6 +11,7 @@
 #include "transformation.h"
 #include "lign_detection.h"
 #include "square_detection.h"
+#include "correct_perspertive.h"
 #include "sobel.h"
 #include "display.h"
 
@@ -152,7 +153,7 @@ void transformation(SDL_Surface* surface)
     compute_Square(square);
     drawSquare(square, pixels, w,h, 2,format,1);
 
-    correctPerspective(square, surface, w,h, format);
+    correctPerspective(square, surface, w,h);
 
 
     free(pixels1);

@@ -5,6 +5,9 @@
 #ifndef TRANSFORMATION_C_MATRIX_H
 #define TRANSFORMATION_C_MATRIX_H
 
+#define _MAX 9
+#define N 9
+
 void Minor(double minorMatrix[9][9], int colMatrix, int sizeMatrix, double newMinorMatrix[9][9]);
 double Determinte(double minorMatrix[9][9], int sizeMatrix);
 void Transpose(double cofactorMatrix[9][9], double sizeMatrix, double determinte, double coutMatrix[9][9], double transposeMatrix[9][9]);

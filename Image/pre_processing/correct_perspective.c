@@ -68,8 +68,14 @@ void perspectiveMatrix(int src[4][2], double dst[4][2], double** transformation_
     free(H);
 }
 
-void correctPerspective(int** square,SDL_Surface* surface, int width , int height, SDL_PixelFormat* format)
+void correctPerspective(int** square,SDL_Surface* surface, int width , int height)
 {
+    Uint32* pixels = surface->pixels;
+    if (pixels == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+    Uint32* _pixels = new_img->pixels;
+    if (_pixels == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
     int src[4][2] = { { square[0][0], square[0][1] },
                       { square[1][0], square[1][1] },
                       { square[2][0], square[2][1] },
@@ -96,9 +102,9 @@ void correctPerspective(int** square,SDL_Surface* surface, int width , int heigh
 
     SDL_Surface* new_img = SDL_CreateRGBSurface(SDL_SWSURFACE, max_edge_length, max_edge_length, 32, 0, 0, 0, 0);
 
-    for (unsigned int i = 0; i < new_img->height; i++)
+    for (unsigned int i = 0; i < new_img->h; i++)
     {
-        for (unsigned int j = 0; j < new_img->width; j++)
+        for (unsigned int j = 0; j < new_img->w; j++)
         {
             double ut = i;
             double vt = j;
@@ -116,11 +122,11 @@ void correctPerspective(int** square,SDL_Surface* surface, int width , int heigh
             if (x >= 0 && y >= 0 && x < height
                 && y < width)
             {
-                img->pixels[i][j] = surface->pixels[x][y];
+                _pixels[i*new_img->w+j] = pixels[x*width+y];
             }
             else
             {
-                img->pixels[i][j] = SDL_MapRGB(new_format, 0, 0, 0);
+                _pixels[i*new_img->w+j] = SDL_MapRGB(new_img->format, 0, 0, 0);
             }
         }
     }
