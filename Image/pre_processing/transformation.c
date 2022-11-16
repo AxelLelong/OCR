@@ -9,11 +9,12 @@
 #include <SDL2/SDL_image.h>
 #include "filters.h"
 #include "transformation.h"
-#include "lign_detection.h"
-#include "square_detection.h"
-#include "correct_perspective.h"
-#include "sobel.h"
-#include "display.h"
+#include "../Detection/lign_detection.h"
+#include "../Detection/square_detection.h"
+#include "../Perspective/correct_perspective.h"
+#include "../Detection/sobel.h"
+#include "../Display/display.h"
+#include "../Segmentation/split.h"
 
 void transformation(SDL_Surface* surface)
 {
@@ -164,11 +165,15 @@ void transformation(SDL_Surface* surface)
     ///------CORRECT_PERSPECTIVE-------
     for (int i = 0; i < len ; ++i)
     {
-        pixels[i] = pixels2[i];
+        pixels[i] = negativefilter(pixels2[i], format);
     }
     correctPerspective(square, surface, w,h);
     ///--------------------------------
 
+    ///---------SEGMENTATION-----------
+    SDL_Surface** segmentation = malloc(81*sizeof(SDL_Surface*));
+    split(surface, segmentation);
+    ///--------------------------------
 
     free(pixels1);
     free(pixels2);
@@ -177,5 +182,6 @@ void transformation(SDL_Surface* surface)
     free(allLines);
     free(square);
     free(max_Theta);
+    free(segmentation);
     SDL_UnlockSurface(surface);
 }

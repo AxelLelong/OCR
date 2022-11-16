@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <SDL2/SDL_image.h>
-#include "display.h"
+#include "../Display/display.h"
 #include "transformation.h"
 
 int main(int argc, char** argv)

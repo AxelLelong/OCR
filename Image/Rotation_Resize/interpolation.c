@@ -40,8 +40,7 @@ Uint32 interpolation(unsigned int top,unsigned int bottom,unsigned int left,unsi
 
     // Combine bottom_left and bottom_right into one large, horizontal
     // block.
-    double bottom_block =
-            bottom_left + horizontal_progress * (bottom_right - bottom_left);
+    double bottom_block = bottom_left + horizontal_progress * (bottom_right - bottom_left);
 
     // Combine the top_block and bottom_block using vertical
     // interpolation and return as the resulting pixel.

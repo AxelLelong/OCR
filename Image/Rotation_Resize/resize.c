@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <math.h>
-#include "interpolation.h"
-#include "rotation.h"
 #include <SDL2/SDL_image.h>
+#include "interpolation.h"
+#include "resize.h"
 
-void resize(SDL_Surface* surface, unsigned int new_w, unsigned int new_h)
+SDL_Surface* resize(SDL_Surface* surface, unsigned int new_w, unsigned int new_h)
 {
     Uint32* pixels = surface->pixels;
     if (pixels == NULL)
@@ -26,10 +26,9 @@ void resize(SDL_Surface* surface, unsigned int new_w, unsigned int new_h)
     SDL_PixelFormat* new_format = new_img->format;
     if (new_format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    SDL_LockSurface(surface);
-    for (int i = 0; i < new_h; i++)
+    for (int i = 0; i < new_w; i++)
     {
-        for (int j = 0; j < new_w; j++)
+        for (int j = 0; j < new_h; j++)
         {
             double old_x = i / x_scale;
             double old_y = j / y_scale;
@@ -42,13 +41,11 @@ void resize(SDL_Surface* surface, unsigned int new_w, unsigned int new_h)
             if (top < h && left < w && bottom < h
                 && right < w)
             {
-                Uint32 pixel = interpolation(
-                        top, bottom, left, right, old_x, old_y, pixels,new_format,w);
-                _pixels[i*w+j] = pixel;
+                Uint32 pixel = interpolation(top, bottom, left, right, old_x, old_y, pixels,new_format,w);
+                _pixels[j*w+i] = pixel;
             }
         }
     }
-    *surface = *new_img;
-    SDL_UnlockSurface(surface);
-    free(new_img);
+    SDL_FreeSurface(surface);
+    return new_img;
 }

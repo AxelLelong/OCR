@@ -8,7 +8,7 @@ LDLIBS = `pkg-config --libs sdl2 SDL2_image` -lm
 
 all: main
 
-SRC = lign_detection.c sobel.c filters.c main.c transformation.c display.c square_detection.c correct_perspective.c matrix.c
+SRC = ../Detection/lign_detection.c ../Detection/sobel.c filters.c main.c transformation.c ../Display/display.c ../Detection/square_detection.c ../Perspective/correct_perspective.c ../Perspective/matrix.c ../Segmentation/split.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 

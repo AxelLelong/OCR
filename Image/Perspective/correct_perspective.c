@@ -8,8 +8,8 @@
 #include <SDL2/SDL.h>
 #include <math.h>
 #include <SDL2/SDL_image.h>
-#include "lign_detection.h"
-#include "square_detection.h"
+#include "../Detection/lign_detection.h"
+#include "../Detection/square_detection.h"
 #include "correct_perspective.h"
 #include "matrix.h"
 
