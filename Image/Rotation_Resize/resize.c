@@ -26,9 +26,9 @@ SDL_Surface* resize(SDL_Surface* surface, unsigned int new_w, unsigned int new_h
     SDL_PixelFormat* new_format = new_img->format;
     if (new_format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
-    for (int i = 0; i < new_w; i++)
+    for (unsigned int i = 0; i < new_w; i++)
     {
-        for (int j = 0; j < new_h; j++)
+        for (unsigned int j = 0; j < new_h; j++)
         {
             double old_x = i / x_scale;
             double old_y = j / y_scale;
@@ -42,7 +42,7 @@ SDL_Surface* resize(SDL_Surface* surface, unsigned int new_w, unsigned int new_h
                 && right < w)
             {
                 Uint32 pixel = interpolation(top, bottom, left, right, old_x, old_y, pixels,new_format,w);
-                _pixels[j*w+i] = pixel;
+                _pixels[j*new_w+i] = pixel;
             }
         }
     }

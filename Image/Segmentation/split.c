@@ -12,6 +12,13 @@
 #include "../Display/display.h"
 #include "split.h"
 
+void savesquare(SDL_Surface* surface, unsigned int iall)
+{
+    char str[12];
+    snprintf(str, sizeof(str), "%s%d.png", "test_", iall, unit);
+    saveImage(surface, str);
+}
+
 SDL_Surface* cropImage(SDL_Surface* surface, SDL_Rect* rect)
 {
     Uint32* _pixels = surface->pixels;
@@ -68,7 +75,7 @@ void split(SDL_Surface* surface, SDL_Surface** segmentation)
                 //----------------------------------------------
 
                 segmentation[iall] = imageresized;
-                save_image(imageresized,"test_%d.png",iall);
+                savesquare(imageresized,iall);
             }
             else
             {
