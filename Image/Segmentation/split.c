@@ -15,8 +15,8 @@
 void savesquare(SDL_Surface* surface, unsigned int iall)
 {
     char str[12];
-    snprintf(str, sizeof(str), "%s%d.png", "test_", iall, unit);
-    saveImage(surface, str);
+    snprintf(str, sizeof(str), "%s%d.png", "test_", iall+1);
+    save_image(surface, str);
 }
 
 SDL_Surface* cropImage(SDL_Surface* surface, SDL_Rect* rect)
