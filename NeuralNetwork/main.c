@@ -6,15 +6,44 @@
 #include "Maths.h"
 #include "NeuralNetwork.h"
 #include "TrainAndShow.h"
+#include "GuessFunction.h"
 
 //nodes + num of examples
 #define numInputs (28*28)
-#define numHiddenNodes 50 
+#define numHiddenNodes 81
 #define numOutputs 10
 #define numTrainingSets 4
 
+//Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
+void mainNN (int train, int verbose, int show, int load, int all)
+{
+    if (show)
+    {
+        if (train)
+            errx(0, "NeuralNetwork: can't train and show result");
+        else
+            show = 1;
+    }
+    else if(!train && !show)
+        errx(0,"NeuralNetwork: must train or show, please choose an option");
+    else if (train || show)
+        TrainAndShow(train, verbose, show, load);
+    //condition if we want to do all the way
+    else if (all)
+    {
+        double **images_list = malloc(sizeof(double)*numHiddenNodes);
+        int *sudoNumList = malloc(sizeof(int)*numHiddenNodes);
+        //TODO____Function to get the images list of arrays
+        for (size_t i = 0; i < numHiddenNodes; i++)
+        {
+            sudoNumList[i] = Guess(images_list[i]);
+        }
+        //TODO____Function to write in the text doc
+    }
+}
 
-int main (int argc, char** argv)
+
+/*int main (int argc, char** argv)
 {
   if(argc < 2)
   {
@@ -53,5 +82,5 @@ int main (int argc, char** argv)
 
 
   return 1;
-}
+}*/
 
