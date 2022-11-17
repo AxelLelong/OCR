@@ -131,7 +131,8 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
     }
 
     /// - DETECTION NOISE
-    int* max = {-1};
+    int max = -1;
+    int maxIndex = -1;
     int nbToSuppr = 0;
     int* toSuppr = NULL;
     int* tab = calloc(28*28,sizeof(int));
@@ -142,16 +143,16 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
         {
             int n = detectNoise(pixels, format, i, tab);
 
-            if (n>max[0] || n < 10)
+            if (n>max || n < 10)
             {
-                if (max[0]!=-1)
+                if (max!=-1)
                 {
                     nbToSuppr++;
                     toSuppr = realloc(toSuppr, nbToSuppr* sizeof(int));
-                    toSuppr[nbToSuppr - 1] = max[1];
+                    toSuppr[nbToSuppr - 1] = maxIndex;
                 }
-                max[0] = n;
-                max[1] = i;
+                max= n;
+                maxIndex = i;
             }
             else
             {
