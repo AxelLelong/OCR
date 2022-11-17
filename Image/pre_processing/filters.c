@@ -155,6 +155,7 @@ void GaussianFlou(Uint32* pixels,Uint32* pixels1,SDL_PixelFormat* format,int w, 
     if (neigh == NULL)
         errx(EXIT_FAILURE, "PROBLEM in GaussianFlou");
 
+    /// - Put the pixel and his neighbors in array
     for (int i = 0; i < w*h; ++i)
     {
         int inDaList = 0;
@@ -289,26 +290,20 @@ float noiseLevel(Uint32* pixels,int w, int h, SDL_PixelFormat* format)
 
 void lissage(Uint32* pixels,Uint32* pixels1,int w, int h,SDL_PixelFormat* format)
 {
-  //invert colors
-  /*for(int i = 0; i < h*w; i++)
-    negativefilter(pixels[i], format);
-  */
-    //New picture
     for (int i = 0; i < w*h ; ++i)
     {
-
-        //To verify if it isn't a white in neighbors
         Uint8 rm, gm, bm;
         SDL_GetRGB(pixels[i], format, &rm, &gm, &bm);
         /// - If it's a white pixel
         int isNoWhite = !(rm==0);
         int j = -1;
+        /// - If a neighbor is black
         while (isNoWhite && j<2)
         {
             int k = -1;
             while (isNoWhite && k<2)
             {
-                /// - If we are on a corner or an edge
+                /// - If we are on a corner or an edge we continue
 	            if ((i%w==0&&k==-1)||(i%w==w-1&&k==1)||(i<w&&j==-1)||(i>=w*(h-1)&&j==1))
 		          {
 		              k++;
@@ -329,7 +324,48 @@ void lissage(Uint32* pixels,Uint32* pixels1,int w, int h,SDL_PixelFormat* format
         /// - If a neighbors is black, the pixel becomes black
         if (isNoWhite)
             pixels1[i] = SDL_MapRGB(format, 0, 0, 0);
-        else
-            pixels1[i] = SDL_MapRGB(format, 255, 255, 255);
     }
+
+    /// - FONCTION DE LISSAGE A TESTER SVP
+    /*
+    for (int i = 0; i < w*h ; ++i)
+    {
+        Uint8 rm, gm, bm;
+        SDL_GetRGB(pixels[i], format, &rm, &gm, &bm);
+        /// - If it's a white pixel
+        if (rm != 0)
+        {
+            int j = -1;
+            /// - If a neighbor is black
+            while (j < 2)
+            {
+                int k = -1;
+                while (k < 2)
+                {
+                    /// - If we are on a corner or an edge we continue
+                    if ((i % w == 0 && k == -1) || (i % w == w - 1 && k == 1) || (i < w && j == -1) ||
+                        (i >= w * (h - 1) && j == 1))
+                    {
+                        k++;
+                        continue;
+                    }
+                    else
+                    {
+                        Uint8 r, g, b;
+                        SDL_GetRGB(pixels[i + j * w + k], format, &r, &g, &b);
+                        /// - If we find a black pixel
+                        if (r != 255)
+                        {
+                            pixels1[i] = SDL_MapRGB(format, 0, 0, 0);
+                            break;
+                        }
+                    }
+                    k++;
+                }
+                if (k!=2)
+                    break;
+                j++;
+            }
+        }
+    }*/
 }

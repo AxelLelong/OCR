@@ -6,7 +6,7 @@ int IsBoardValid(int sudoku[81])
 {
     int isValid = 1;
 
-    // Verification lignes -------------------------------------------------------
+    /// ------ VERIFICATION LINES ------
 
     size_t i = 0;
     while(isValid == 1 && i < 9)
@@ -36,7 +36,7 @@ int IsBoardValid(int sudoku[81])
      }
 
 
-    // Verification colonnes ---------------------------------------------------------
+    /// ------ VERIFICATION COLUMNS ------
 
     i = 0;
     while(isValid == 1 && i < 9)
@@ -65,7 +65,7 @@ int IsBoardValid(int sudoku[81])
         i++;
     }
 
-    // Verification cases ----------------------------------------------------------
+    /// ------ VERIFICATION SQUARE ------
 
     i = 0;
 
@@ -108,7 +108,7 @@ int IsBoardValid(int sudoku[81])
     return isValid;
 }
 
-//test if the board is full and valid
+/// - Test if the board is full AND valid
 int IsSolved(int sudoku[81])
 {
     int isFull = 1;
@@ -131,7 +131,7 @@ int IsSolved(int sudoku[81])
 }
 
 
-//Solve the sudoku by testing all possibilities recursively
+/// - Solve the sudoku by testing all possibilities recursively
 int Solve(int sudoku[81])
 {
     if (!IsBoardValid(sudoku))
@@ -142,6 +142,7 @@ int Solve(int sudoku[81])
     int i = 0;
     int j;
 
+    /// - Find the first free box
     while (i < 9)
     {
         j = 0;
@@ -161,13 +162,14 @@ int Solve(int sudoku[81])
 
     int k = 1;
     int isSolve = 0;
+    /// - Test all values and call the function for the next box
     while (!isSolve && k<=9)
     {
         sudoku[i*9+j] = k;
         isSolve = Solve(sudoku);
         k += 1;
     }
-
+    /// - If the error is before this box, we have to reset these box
     if (!isSolve)
     {
         sudoku[i*9+j] = 0;
