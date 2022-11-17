@@ -108,7 +108,7 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
     for (int i = 0; i < 28*28; ++i)
     {
         SDL_GetRGB(pixels[i], format, &r, &g, &b);
-        if (r>127)
+        if ((r+g+b)/3>127)
             pixels[i] = SDL_MapRGB(format, 255, 255, 255);
         else
             pixels[i] = SDL_MapRGB(format, 0, 0, 0);
@@ -151,7 +151,7 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
         {
             int n = detectNoise(pixels, format, i, tab);
 
-            if (n>max || n < 10)
+            if (n>max)
             {
                 if (max!=-1)
                 {
@@ -176,6 +176,8 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
     {
         clearNoise(pixels,format,toSuppr[i]);
     }
+    if (max<15)
+        clearNoise(pixels,format,maxIndex);
 }
 
 void split(SDL_Surface* surface, SDL_Surface** segmentation)
