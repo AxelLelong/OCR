@@ -42,6 +42,132 @@ SDL_Surface* cropImage(SDL_Surface* surface, SDL_Rect* rect)
     }
     return new_img;
 }
+void clearLine(Uint32* pixels, SDL_PixelFormat* format, int i)
+{
+    for (int j = 0; j < 28; ++j)
+    {
+        pixels[i*28+j] = SDL_MapRGB(format, 255, 255, 255);
+    }
+}
+
+void clearCol(Uint32* pixels, SDL_PixelFormat* format, int i)
+{
+    for (int j = 0; j < 28; ++j)
+    {
+        pixels[j*28+i] = SDL_MapRGB(format, 255, 255, 255);
+    }
+}
+
+void clearNoise(Uint32* pixels, SDL_PixelFormat* format, int i)
+{
+    pixels[i] = SDL_MapRGB(format, 255, 255, 255);
+    for (int j = -1; j < 2; ++j) {
+        for (int k = -1; k < 2; ++k) {
+            Uint8 r, g, b;
+            /// - if we are not on an edge or a corner
+            if (!((i % 28 == 0 && k == -1) || (i % 28 == 27 && k == 1) || (i < 28 && j == -1) ||
+                  (i >= 28 * 27 && j == 1))) {
+
+                SDL_GetRGB(pixels[i + j * 28 + k], format, &r, &g, &b);
+                if (r == 0)
+                    clearNoise(pixels, format, i + j * 28 + k);
+            }
+        }
+    }
+
+}
+
+int detectNoise(Uint32* pixels, SDL_PixelFormat* format, int i, int* tab)
+{
+    int n = 0;
+    tab[i] = 1;
+    for (int j = -1; j < 2; ++j)
+    {
+        for (int k = -1; k < 2; ++k)
+        {
+            Uint8 r, g, b;
+            /// - if we are not on an edge or a corner
+            if (!((i % 28 == 0 && k == -1) || (i % 28 == 27 && k == 1) || (i < 28 && j == -1) ||
+            (i >= 28 * 27 && j == 1)))
+            {
+
+                SDL_GetRGB(pixels[i + j * 28 + k], format, &r, &g, &b);
+                if (r==0 && tab[i + j * 28 + k]==0)
+                    n += detectNoise(pixels,format,i + j * 28 + k,tab);
+            }
+        }
+    }
+    return n + 1;
+
+}
+
+void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
+{
+    Uint8 r, g, b;
+
+    /// - DETECTION LINES & COLUMNS
+    int histLines[28] = {0};
+    int histCols[28] = {0};
+    for (int i = 0; i < 28; ++i)
+    {
+        for (int j = 0; j < 28; ++j)
+        {
+            SDL_GetRGB(pixels[i*28+j], format, &r, &g, &b);
+            if (r==0)
+            {
+                histLines[i] += 1;
+                histCols[j] += 1;
+            }
+        }
+    }
+
+    /// - DELETE LINES & COLUMNS
+    for (int i = 0; i < 28; ++i)
+    {
+        if (histLines[i]>20)
+            clearLine(pixels,format,i);
+        if (histCols[i]>20)
+            clearCol(pixels,format,i);
+    }
+
+    /// - DETECTION NOISE
+    int* max = {-1};
+    int nbToSuppr = 0;
+    int* toSuppr = NULL;
+    int* tab = calloc(28*28,sizeof(int));
+    for (int i = 0; i < 28*28; ++i)
+    {
+        SDL_GetRGB(pixels[i], format, &r, &g, &b);
+        if (tab[i]==0 && r==0)
+        {
+            int n = detectNoise(pixels, format, i, tab);
+
+            if (n>max[0] || n < 10)
+            {
+                if (max[0]!=-1)
+                {
+                    nbToSuppr++;
+                    toSuppr = realloc(toSuppr, nbToSuppr* sizeof(int));
+                    toSuppr[nbToSuppr - 1] = max[1];
+                }
+                max[0] = n;
+                max[1] = i;
+            }
+            else
+            {
+                nbToSuppr++;
+                toSuppr = realloc(toSuppr, nbToSuppr* sizeof(int));
+                toSuppr[nbToSuppr-1] = i;
+            }
+        }
+    }
+
+    /// - DELETE NOISE
+    for (int i = 0; i < nbToSuppr; ++i)
+    {
+        clearNoise(pixels,format,toSuppr[i]);
+    }
+}
 
 void split(SDL_Surface* surface, SDL_Surface** segmentation)
 {
@@ -72,7 +198,12 @@ void split(SDL_Surface* surface, SDL_Surface** segmentation)
 
 
                 //------------Clear image_resized----------------
-                //----------------------------------------------
+                Uint32* pixels = imageresized->pixels;
+                if (pixels == NULL)
+                    errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+
+                clearNumber(pixels,imageresized->format);
 
                 segmentation[iall] = imageresized;
                 savesquare(imageresized,iall);
