@@ -324,11 +324,13 @@ void lissage(Uint32* pixels,Uint32* pixels1,int w, int h,SDL_PixelFormat* format
         /// - If a neighbors is black, the pixel becomes black
         if (isNoWhite)
             pixels1[i] = SDL_MapRGB(format, 0, 0, 0);
+        else
+            pixels1[i] = SDL_MapRGB(format, 255, 255, 255);
     }
 
     /// - FONCTION DE LISSAGE A TESTER SVP
-    /*
-    for (int i = 0; i < w*h ; ++i)
+
+    /*for (int i = 0; i < w*h ; ++i)
     {
         Uint8 rm, gm, bm;
         SDL_GetRGB(pixels[i], format, &rm, &gm, &bm);
