@@ -60,8 +60,8 @@ void split(SDL_Surface* surface, SDL_Surface** segmentation)
         {
             if (y + yincrem <= height && x + xincrem <= width)
             {
-                block.x = x;
-                block.y = y;
+                block.x = y;
+                block.y = x;
                 block.w = xincrem;
                 block.h = yincrem;
 
