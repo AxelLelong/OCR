@@ -136,8 +136,12 @@ void transformation(SDL_Surface* surface)
     {
         pixels[i] = pixels1[i];
     }
+    /// -----------------------------
 
+
+    /// ------ LINES SIMPLIFICATION ------
     int** lines = LineSimpl(allLines, lenliste, 50,&lenRes);
+    // Draw lines
     for (int i = 0; i < len ; ++i)
     {
         pixels1[i] = pixels[i];
@@ -154,26 +158,28 @@ void transformation(SDL_Surface* surface)
     /// -----------------------------
 
 
-    ///-------DETECTION_CARRE---------
+    /// ------ DETECTION CARRE ------
     int** square = findSquare(lines,w,h,&lenRes);
     compute_Square(square);
     drawSquare(square, pixels, w,h, 2,format,1);
 
     save_image(surface,"test_carre.png");
-    ///--------------------------------
+    ///------------------------------
 
-    ///------CORRECT_PERSPECTIVE-------
+
+    /// ------ CORRECT PERSPECTIVE ------
     for (int i = 0; i < len ; ++i)
     {
         pixels[i] = negativefilter(pixels2[i], format);
     }
     correctPerspective(square, surface, w,h);
-    ///--------------------------------
+    ///----------------------------------
 
-    ///---------SEGMENTATION-----------
+
+    /// ------ SEGMENTATION & CLEAR ------
     SDL_Surface** segmentation = malloc(81*sizeof(SDL_Surface*));
     split(surface, segmentation);
-    ///--------------------------------
+    ///-----------------------------------
 
     free(pixels1);
     free(pixels2);
