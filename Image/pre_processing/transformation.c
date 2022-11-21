@@ -16,6 +16,13 @@
 #include "../Display/display.h"
 #include "../Segmentation/split.h"
 
+void Convert8To32(Uint8 pixels8,Uint32 pixels32, int len, SDL_PixelFormat* format)
+{
+    for (int i = 0; i < len; ++i)
+    {
+        pixels32[i] = SDL_MapRGB(format, pixels8[i], pixels8[i], pixels8[i]);
+    }
+}
 void transformation(SDL_Surface* surface)
 {
 
@@ -36,11 +43,11 @@ void transformation(SDL_Surface* surface)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
     SDL_LockSurface(surface);
 
-    Uint32* pixels1 = malloc(len*sizeof(Uint32));
+    Uint8* pixels1 = malloc(len*sizeof(Uint8));
     if (pixels1 == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de pixels1 pendant le malloc");
 
-    Uint32* pixels2 = malloc(len*sizeof(Uint32));
+    Uint8* pixels2 = malloc(len*sizeof(Uint8));
     if (pixels2 == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de pixels2 pendant le malloc");
     /// -----------------------
@@ -49,9 +56,10 @@ void transformation(SDL_Surface* surface)
     /// ------ GRAYSCALE & CONTRASTE -------
     for(int i = 0;i<len;i++)
     {
-        Uint32 tmp = pixel_to_grayscale(pixels[i],format);
-        pixels[i] = contrastefilter(tmp,format);
+        Uint8 tmp = pixel_to_grayscale(pixels[i],format);
+        pixels1[i] = contrastefilter(tmp,format);
     }
+    Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_grayscale_contrast.png");
 
     /// ------------------------------------
@@ -59,51 +67,43 @@ void transformation(SDL_Surface* surface)
 
     /// ------ LIGHT NORMALIZATION ------
     Uint8 max = get_max(pixels,len,format);
-    NormLight(pixels, format, len, max);
+    NormLight(pixels1, len, max);
+    Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_light_normalisation.png");
     /// ---------------------------------
 
 
     /// ------ MEDIAN FILTER ------
-    medianfilter(pixels,pixels1,format,w,h);
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels[i] = pixels1[i];
-    }
+    medianfilter(pixels1,pixels2,w,h);
+    Convert8To32(pixels2, pixels, len, format);
     save_image(surface,"test_median_filter.png");
     /// ---------------------------
 
 
     /// ------ GAUSSIAN BLUR ------
-    GaussianFlou(pixels,pixels1,format,w,h);
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels[i] = pixels1[i];
-    }
+    GaussianFlou(pixels2,pixels1,w,h);
+    Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_gaussian_blur.png");
     /// ---------------------------
 
 
     /// ------ BINARISATION ------
     //global noise of the picture
-    float noise = noiseLevel(pixels,w,h, format);
+    float noise = noiseLevel(pixels1,w,h);
     double seuil;
     //seuil adaptatif
     if(noise>20)
         seuil = 0.5;
     else
         seuil = 0.15;
-    adaptativeThreshold(pixels,seuil,w,h, format);
+    adaptativeThreshold(pixels1,seuil,w,h);
     save_image(surface,"test_binarisation.png");
     /// -------------------------
 
 
     /// ------ SMOOTHING ------
-    lissage(pixels,pixels1,w,h,format);
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels[i] = pixels1[i];
-    }
+    lissage(pixels1,pixels2,w,h);
+    Convert8To32(pixels2, pixels, len, format);
     save_image(surface,"test_smoothing.png");
     /// -----------------------
 
