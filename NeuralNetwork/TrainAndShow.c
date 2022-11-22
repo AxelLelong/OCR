@@ -2,14 +2,17 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Maths.h"
 #include "NeuralNetwork.h"
 #include "TrainAndShow.h"
+#include "GetImages.h"
 
 #define numInputs (28*28)
 #define numHiddenNodes 50
 #define numOutputs 10
-#define numTrainingSets 4
+#define numTrainingSets 10
 
 
 void TrainAndShow (int train, int verbose, int show, int load)
@@ -29,14 +32,40 @@ void TrainAndShow (int train, int verbose, int show, int load)
   double* hiddenWeights = malloc(numInputs * numHiddenNodes*sizeof(double));
   double* outputWeights = malloc(numHiddenNodes * numOutputs*sizeof(double));
 
+  char *sets[1] = {"00"};
 
-  double training_inputs[numTrainingSets * numInputs] =
-    {0.0f, 0.0f,
-     0.0f, 1.0f,
-     1.0f, 0.0f,
-     1.0f, 1.0f
-    };
+  int set = rand() % 1;
 
+  double training_inputs[numTrainingSets * numInputs];
+
+  char path[13];
+
+  Uint8 r,g,b;
+
+
+  for(int i = 0; i < 10; i++)
+    {
+      sprintf(path,"Train/%s%i.png",sets[set],i);
+      printf("path for image == %s\n",path);
+      SDL_Surface *image = GetImages(path);
+      if(image == NULL)
+	printf("null bug\n");
+      //TODO NULL BUG
+
+      //VERIFY THAT THE ARRAY IS GOOD
+      Uint32 *pixels = image->pixels;
+      printf("before\n");
+
+      for(int j = 0; j < 28*28; j++)
+	{
+	  printf("on the %i pixels of the %i image\n",j,i);
+	  SDL_GetRGB(pixels[j],image->format,&r,&g,&b);
+	  training_inputs[i*numInputs + j] = (g == 255 ? 255 : 0);
+	}
+
+    }
+
+  //TODO
   double training_outputs[numTrainingSets * numOutputs] =
     {0.0f,
      1.0f,

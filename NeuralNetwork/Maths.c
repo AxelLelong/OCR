@@ -20,3 +20,6 @@ double der_sigmoid(double x)
 {
 	return x * (1 - x);
 }
+
+
+//TODO, ADD RELU FUNTION AND DERIVATED

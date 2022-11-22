@@ -3,8 +3,16 @@
 #include <time.h>
 #include <err.h>
 #include <string.h>
+#include "NeuralNetwork/main.h"
 
-void main (int argc, char** argv)
+int main (int argc, char** argv)
 {
-    //TODO
+  argv[0] = argv[0];
+  argc = argc;
+
+  //NN TESTS
+
+  mainNN(1,1,0,0,0);
+  
+  return 0;
 }
