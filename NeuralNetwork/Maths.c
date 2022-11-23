@@ -8,7 +8,7 @@
 /// <returns>the sigmoid of x</returns>
 double sigmoid(double x)
 {
-  return 1 / (1 + exp(-x));
+    return 1 / (1 + exp(-x));
 }
 
 /// <summary>
@@ -18,8 +18,15 @@ double sigmoid(double x)
 /// <returns>the derivate of x</returns>
 double der_sigmoid(double x)
 {
-	return x * (1 - x);
+    return x * (1 - x);
 }
 
+double RELU(double x)
+{
+    return fmax(0,x);
+}
 
-//TODO, ADD RELU FUNTION AND DERIVATED
+double der_RELU(double x)
+{
+    return x < 0 ? 0 : 1
+}
