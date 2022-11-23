@@ -12,11 +12,12 @@
 
 SDL_Surface* GetImages(char *path)
 {
+
   SDL_Surface * source = IMG_Load(path);
-   
+
   SDL_Surface* surface = SDL_ConvertSurfaceFormat
             (source, SDL_PIXELFORMAT_RGB888, 0);
-  
+
   SDL_FreeSurface(source);
   return surface;
 }

@@ -15,7 +15,7 @@
 #define numTrainingSets 10
 
 
-void TrainAndShow (int train, int verbose, int show, int load)
+void TrainAndShow (int train, int verbose, int show, int load, char* set)
 {
   time_t t;
   srand((unsigned) time(&t));
@@ -28,51 +28,45 @@ void TrainAndShow (int train, int verbose, int show, int load)
 
   double* hiddenLayerBias = malloc(numHiddenNodes*sizeof(double));
   double* outputLayerBias = malloc(numOutputs*sizeof(double));
-  
+
   double* hiddenWeights = malloc(numInputs * numHiddenNodes*sizeof(double));
   double* outputWeights = malloc(numHiddenNodes * numOutputs*sizeof(double));
 
-  char *sets[1] = {"00"};
-
-  int set = rand() % 1;
-
   double training_inputs[numTrainingSets * numInputs];
 
-  char path[13];
+  char path[27];
 
   Uint8 r,g,b;
 
-
   for(int i = 0; i < 10; i++)
     {
-      sprintf(path,"Train/%s%i.png",sets[set],i);
-      printf("path for image == %s\n",path);
-      SDL_Surface *image = GetImages(path);
-      if(image == NULL)
-	printf("null bug\n");
-      //TODO NULL BUG
+        sprintf(path,"NeuralNetwork/Train/%s%i.png",set,i);
 
-      //VERIFY THAT THE ARRAY IS GOOD
-      Uint32 *pixels = image->pixels;
-      printf("before\n");
+        SDL_Surface *image = GetImages(path);
 
-      for(int j = 0; j < 28*28; j++)
-	{
-	  printf("on the %i pixels of the %i image\n",j,i);
-	  SDL_GetRGB(pixels[j],image->format,&r,&g,&b);
-	  training_inputs[i*numInputs + j] = (g == 255 ? 255 : 0);
-	}
+        Uint32 *pixels = image->pixels;
+
+        for(int j = 0; j < 28*28; j++)
+        {
+            SDL_GetRGB(pixels[j],image->format,&r,&g,&b);
+            training_inputs[i*numInputs + j] = (g == 255 ? 255 : 0);
+        }
 
     }
 
-  //TODO
   double training_outputs[numTrainingSets * numOutputs] =
     {0.0f,
      1.0f,
-     1.0f,
-     0.0f
+     2.0f,
+     3.0f,
+     4.0f,
+     5.0f,
+     6.0f,
+     7.0f,
+     8.0f,
+     9.0f,
     };
-  
+
   //load weights
   if(load)
   {
@@ -169,8 +163,8 @@ void TrainAndShow (int train, int verbose, int show, int load)
     setup_Weight(numHiddenNodes, numOutputs, outputWeights);
     setup_Output_Bias(numOutputs, outputLayerBias);
   }
-  int TrainingSetOrder[] = {0,1,2,3};
-  
+  int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
+
   int numberOfEpochs = 10000;
 
   if (show)
@@ -201,7 +195,7 @@ void TrainAndShow (int train, int verbose, int show, int load)
                      training_inputs[i * numInputs + 0], training_inputs[i * numInputs + 1],
                      outputLayer[0], training_outputs[i * numOutputs + 0]);
           }
-	
+
 
           //Backpropagation
           if(train)
@@ -239,7 +233,7 @@ void TrainAndShow (int train, int verbose, int show, int load)
       }
   }
   //save weights
-	
+
   f = fopen("Weights/WH", "w");
   for(size_t i = 0; i < numInputs * numHiddenNodes; i++)
       fprintf(f, "%f\n", hiddenWeights[i]);
@@ -291,7 +285,7 @@ void TrainAndShow (int train, int verbose, int show, int load)
       }
       fputs(" ]\n", stdout);
   }
-  
+
   fputs ("Final Outputs Bias \n", stdout);
   for(int j = 0; j < numOutputs; j++)
   {
