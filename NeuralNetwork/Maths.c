@@ -28,5 +28,5 @@ double RELU(double x)
 
 double der_RELU(double x)
 {
-    return x < 0 ? 0 : 1
+    return x < 0 ? 0 : 1;
 }

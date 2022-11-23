@@ -10,8 +10,8 @@
 #include "GetImages.h"
 
 #define numInputs (28*28)
-#define numHiddenNodes 50
-#define numOutputs 10
+#define numHiddenNodes 81
+#define numOutputs 1
 #define numTrainingSets 10
 
 
@@ -49,7 +49,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
         for(int j = 0; j < 28*28; j++)
         {
             SDL_GetRGB(pixels[j],image->format,&r,&g,&b);
-            training_inputs[i*numInputs + j] = (g == 255 ? 255 : 0);
+            training_inputs[i*numInputs + j] = (g == 255 ? 0 : 1);
         }
 
     }
@@ -70,7 +70,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   //load weights
   if(load)
   {
-      f = fopen("Weights/WH","r");
+      f = fopen("NeuralNetwork/Weights/WH","r");
       char c;
       char reset_num[10];
       char num[10];
@@ -94,7 +94,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
       fclose(f);
       memcpy(num, reset_num, sizeof(char));
 
-      f = fopen("Weights/BH","r");
+      f = fopen("NeuralNetwork/Weights/BH","r");
       i = 0;
       j = 0;
       while((c = fgetc(f)) != EOF)
@@ -115,7 +115,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
       fclose(f);
       memcpy(num, reset_num, sizeof(char));
 
-      f = fopen("Weights/WO","r");
+      f = fopen("NeuralNetwork/Weights/WO","r");
       i = 0;
       j = 0;
       while((c = fgetc(f)) != EOF)
@@ -136,7 +136,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
       fclose(f);
       memcpy(num, reset_num, sizeof(char));
 
-      f = fopen("Weights/BO","r");
+      f = fopen("NeuralNetwork/Weights/BO","r");
       i = 0;
       j = 0;
       while((c = fgetc(f)) != EOF)
@@ -165,14 +165,15 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
 
-  int numberOfEpochs = 10000;
-
+  int numberOfEpochs = 1000;
+  
   if (show)
       numberOfEpochs = 1;
 
   // Train the neural network
   for(int epoch = 0; epoch < numberOfEpochs; epoch++)
   {
+      printf("------------EPOCH %i---------------\n",epoch);
       if(train)
       {
           //shuffle the order of examples
@@ -186,14 +187,13 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
           //ForwardPass
           // Compute hidden layer activation
           Compute_Hidden(numInputs, numHiddenNodes, hiddenLayer, hiddenLayerBias, training_inputs, hiddenWeights, i);
-	      //Compute output layer activation
-	      Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
+          //Compute output layer activation
+          Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
 
           if(verbose || show)
           {
-              printf("Input : %g %g | Output : %g | Predicted Output : %g \n",
-                     training_inputs[i * numInputs + 0], training_inputs[i * numInputs + 1],
-                     outputLayer[0], training_outputs[i * numOutputs + 0]);
+              printf("Number : %d | Wanted Output : %g | Predicted Output : %g\n",
+                     i,training_outputs[i],outputLayer[0]);
           }
 
 
@@ -207,7 +207,8 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
               for(int j = 0; j < numOutputs; j++)
               {
                   double error = (training_outputs[i * numOutputs + j] - outputLayer[j]);
-                  deltaOutput[j] = error * der_sigmoid(outputLayer[j]);
+                  printf("Error computed for %i == %f\n",i,error * der_RELU(outputLayer[j]));
+                  deltaOutput[j] = error * der_RELU(outputLayer[j]);
               }
 
               //compute change in out hidden weights
@@ -221,9 +222,8 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
                   {
                       error += deltaOutput[k] * outputWeights[j * numOutputs + k];
                   }
-                  deltaHidden[j] = error * der_sigmoid(hiddenLayer[j]);
+                  deltaHidden[j] = error * der_RELU(hiddenLayer[j]);
               }
-
               //Apply changes in output Weights
               apply_output(numHiddenNodes, numOutputs, deltaOutput, hiddenLayer, outputLayerBias, outputWeights);
 
@@ -234,28 +234,29 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   //save weights
 
-  f = fopen("Weights/WH", "w");
-  for(size_t i = 0; i < numInputs * numHiddenNodes; i++)
+  f = fopen("NeuralNetwork/Weights/WH", "w");
+  for(int i = 0; i < numInputs * numHiddenNodes; i++)
+  {
       fprintf(f, "%f\n", hiddenWeights[i]);
+  }
   fclose(f);
 
-  f = fopen("Weights/BH", "w");
+  f = fopen("NeuralNetwork/Weights/BH", "w");
   for(size_t i = 0; i < numHiddenNodes; i++)
       fprintf(f, "%f\n", hiddenLayerBias[i]);
   fclose(f);
 
-  f = fopen("Weights/WO", "w");
+  f = fopen("NeuralNetwork/Weights/WO", "w");
   for(size_t i = 0; i < numHiddenNodes * numOutputs; i++)
       fprintf(f, "%f\n", outputWeights[i]);
   fclose(f);
 
-  f = fopen("Weights/BO", "w");
+  f = fopen("NeuralNetwork/Weights/BO", "w");
   for(size_t i = 0; i < numOutputs; i++)
       fprintf(f, "%f\n", outputLayerBias[i]);
   fclose(f);
-
+/*
   //print Final Weights after done training
-
   fputs ("Final Hidden Weights \n", stdout);
   for(int j = 0; j < numHiddenNodes; j++)
   {
@@ -293,7 +294,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
       printf("%f ", outputLayerBias[j]);
       fputs(" ]\n", stdout);
   }
-
+*/
   free(hiddenLayer);
   free(outputLayer);
   free(hiddenLayerBias);

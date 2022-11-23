@@ -9,11 +9,13 @@
 #define numHiddenNodes 2
 #define numOutputs 1
 #define numTrainingSets 4*/
-#define lr 0.1
+#define lr 0.005
 
 //init weights randomly
-double init_weights() {return ((double)rand()) / ((double)RAND_MAX); }
-
+double init_weights()
+{
+    return ((double)rand() / RAND_MAX)*2.0-1.0;// * 2.0 - 1.0;
+}
 //shuffle an array
 void shuffle(int *array, size_t n) {
 
@@ -59,7 +61,7 @@ void Compute_Hidden(int Inputs, int Hidden, double* Layer, double* Bias, double*
 	}
 
 	//update
-	Layer[j] = sigmoid(activation);
+	Layer[j] = RELU(activation);
       }
 }
 
@@ -68,13 +70,13 @@ void Compute_Output(int Hidden, int Outputs, double* Bias, double* Layer, double
   for(int j = 0; j < Outputs; j++){
     //bias already in the computation, we only have to add the weights, sigmoid etc..
     double activation = Bias[j];
-    
+
     for(int k = 0; k < Hidden; k++){
-      activation += HiddenLayer[k] * Weights[k * Outputs + j];  
+      activation += HiddenLayer[k] * Weights[k * Outputs + j];
     }
 
     //update
-    Layer[j] = sigmoid(activation);
+    Layer[j] = RELU(activation);
   }
 }
 
