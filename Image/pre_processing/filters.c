@@ -84,7 +84,7 @@ Uint8 take_median(Uint8* neigh)
 
             j--;
         }
-	    neigh[j] = v;
+        neigh[j] = v;
     }
     /// - We return the median value
     return neigh[4];
@@ -108,7 +108,6 @@ void medianfilter(Uint8* pixels, Uint8* pixels1,int w, int h)
         {
             for (int k = -1; k < 2; ++k)
             {
-                Uint8 r, g, b;
                 /// - if we are on a edge or a corner, some value are 0
                 if ((i % w == 0 && k == -1) || (i % w == w - 1 && k == 1) || (i < w && j == -1) ||
                     (i >= w * (h - 1) && j == 1))
@@ -172,7 +171,7 @@ void GaussianFlou(Uint8* pixels,Uint8* pixels1,int w, int h)
 
 void adaptativeThreshold(Uint8* pixels,double seuil, int w ,int h)
 {
-    Uint8* integral_image = malloc(w*h*sizeof(Uint8));
+    Uint32* integral_image = malloc(w*h*sizeof(Uint32));
     if (integral_image == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de integral_image pendant le malloc");
 
@@ -209,6 +208,7 @@ void adaptativeThreshold(Uint8* pixels,double seuil, int w ,int h)
                   - integral_image[x2 * w + (y1 - 1)]
                   - integral_image[(x1 - 1) * w + y2]
                   + integral_image[(x1 - 1) * w + (y1 - 1)];
+            //printf("count = %d , sum = %lu \n",count,sum);
             if (pixels[i*w+j] * count < sum * (1.0 - seuil))
             {
                 pixels[i*w+j] = 0;
@@ -237,7 +237,6 @@ float noiseLevel(Uint8* pixels,int w, int h)
         {
             for (int k = -1; k < 2; ++k)
             {
-                Uint8 r, g, b;
                 if ((i % w == 0 && k == -1) || (i % w == w - 1 && k == 1) || (i < w && j == -1) ||
                     (i >= w * (h - 1) && j == 1))
                     neigh[inDaList] = 0;

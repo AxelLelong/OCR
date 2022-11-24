@@ -16,14 +16,17 @@
 #include "../Display/display.h"
 #include "../Segmentation/split.h"
 
-void Convert8To32(Uint8 pixels8,Uint32 pixels32, int len, SDL_PixelFormat* format)
+
+void Convert8To32(Uint8* pixels8,Uint32* pixels32, int len, SDL_PixelFormat* format)
 {
     for (int i = 0; i < len; ++i)
     {
         pixels32[i] = SDL_MapRGB(format, pixels8[i], pixels8[i], pixels8[i]);
     }
 }
-void transformation(SDL_Surface* surface)
+
+void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
+
 {
 
     /// ------ INITIALIZE VARIABLES ------
@@ -50,14 +53,13 @@ void transformation(SDL_Surface* surface)
     Uint8* pixels2 = malloc(len*sizeof(Uint8));
     if (pixels2 == NULL)
         errx(EXIT_FAILURE, "C'est de la faute de pixels2 pendant le malloc");
-    /// -----------------------
 
-
+    save_image(surface,"test_rotation.png");
     /// ------ GRAYSCALE & CONTRASTE -------
     for(int i = 0;i<len;i++)
     {
         Uint8 tmp = pixel_to_grayscale(pixels[i],format);
-        pixels1[i] = contrastefilter(tmp,format);
+        pixels1[i] = contrastefilter(tmp);
     }
     Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_grayscale_contrast.png");
@@ -66,7 +68,7 @@ void transformation(SDL_Surface* surface)
 
 
     /// ------ LIGHT NORMALIZATION ------
-    Uint8 max = get_max(pixels,len,format);
+    Uint8 max = get_max(pixels1,len);
     NormLight(pixels1, len, max);
     Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_light_normalisation.png");
@@ -97,6 +99,7 @@ void transformation(SDL_Surface* surface)
     else
         seuil = 0.15;
     adaptativeThreshold(pixels1,seuil,w,h);
+    Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_binarisation.png");
     /// -------------------------
 
@@ -108,11 +111,15 @@ void transformation(SDL_Surface* surface)
     /// -----------------------
 
 
-    /// ------ SOBEL ------
+    /// ------ STOCK PIXELS ------
     for (int i = 0; i < len ; ++i)
     {
-        pixels2[i] = pixels[i];
+        pixels1[i] = pixels2[i];
     }
+    /// --------------------------
+
+
+    /// ------ SOBEL ------
     SobelEdgeDetection(surface);
     save_image(surface,"test_sobel.png");
     /// -------------------
@@ -121,59 +128,53 @@ void transformation(SDL_Surface* surface)
     /// ------ HOUGH TRANSFORM ------
     double *max_Theta = malloc(sizeof(double));
     int *lenliste = malloc(sizeof(int));
-    int** allLines = houghtransform(pixels,w, h, format,0,max_Theta,lenliste);
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels1[i] = pixels[i];
-    }
+    int** allLines = houghtransform(pixels2,w, h,max_Theta,lenliste);
+    Convert8To32(pixels2, pixels, len, format);
     int lenRes;
     for(int i = 0;i<*lenliste;i++)
     {
         draw_line(pixels, w, h, allLines[i][0],allLines[i][1],allLines[i][2],allLines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
     save_image(surface,"test_hough_transform.png");
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels[i] = pixels1[i];
-    }
+    /// -----------------------------
 
+
+    /// ------ LINES SIMPLIFICATION ------
     int** lines = LineSimpl(allLines, lenliste, 50,&lenRes);
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels1[i] = pixels[i];
-    }
+    // Draw Lines
+    Convert8To32(pixels2, pixels, len, format);
     for(int i = 0;i<lenRes;i++)
     {
         draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
     save_image(surface,"test_simplify.png");
-    for (int i = 0; i < len ; ++i)
-    {
-        pixels[i] = pixels1[i];
-    }
     /// -----------------------------
 
 
-    ///-------DETECTION_CARRE---------
+    /// ------ DETECTION CARRE ------
     int** square = findSquare(lines,w,h,&lenRes);
     compute_Square(square);
+    // Draw Squares
+    Convert8To32(pixels2, pixels, len, format);
     drawSquare(square, pixels, w,h, 2,format,1);
 
     save_image(surface,"test_carre.png");
-    ///--------------------------------
+    ///------------------------------
 
-    ///------CORRECT_PERSPECTIVE-------
+
+    /// ------ CORRECT PERSPECTIVE ------
     for (int i = 0; i < len ; ++i)
     {
-        pixels[i] = negativefilter(pixels2[i], format);
+        pixels2[i] = negativefilter(pixels1[i]);
     }
+    Convert8To32(pixels2, pixels, len, format);
     correctPerspective(square, surface, w,h);
-    ///--------------------------------
+    ///----------------------------------
 
-    ///---------SEGMENTATION-----------
-    SDL_Surface** segmentation = malloc(81*sizeof(SDL_Surface*));
+
+    /// ------ SEGMENTATION & CLEAR ------
     split(surface, segmentation);
-    ///--------------------------------
+    ///-----------------------------------
 
     free(pixels1);
     free(pixels2);

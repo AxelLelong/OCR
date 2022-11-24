@@ -38,7 +38,7 @@ void freeMatriceInt(int **matrice, int height)
     free(matrice);
 }
 
-int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int draw,double *max_Theta,int *lenliste)
+int** houghtransform(Uint8* pixels,int w, int h,double *max_Theta,int *lenliste)
 {
     // Calculate the diagonal of the image
     const double diagonal = sqrt(w * w + h * h);
@@ -92,9 +92,7 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
     {
         for (int x = 0; x < w; x++)
         {
-            Uint8 r, g, b;
-            SDL_GetRGB(pixels[y*w+x], format, &r, &g, &b);
-            if (r == 255)
+            if (pixels[y*w+x] == 255)
             {
                 for (int theta = 0; theta <= nbTheta; theta++)
                 {
@@ -128,7 +126,6 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
     int prev = accumulator[0][0];
     int prev_theta = 0, prev_rho = 0;
     int boolIsIncreasing = 1;
-    Uint32 pixel = SDL_MapRGB(format, 40, 40, 200);
 
     for (int theta = 0; theta <= nbTheta; theta++)
     {
@@ -190,10 +187,6 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
                 Lines[3] = yEnd;
                 allLines = realloc(allLines,lenal*sizeof(Lines));
                 allLines[lenal-1] = Lines;
-                // Draw Lines on the copyImage matrice
-                if (draw)
-                    draw_line(pixels, w, h, xStart,yStart,xEnd,yEnd, pixel, 1, draw,format);
-
             }
         }
     }

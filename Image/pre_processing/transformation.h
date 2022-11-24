@@ -5,6 +5,6 @@
 #ifndef TRANSFORMATION_H
 #define TRANSFORMATION_H
 
-void transformation(SDL_Surface* surface);
+void transformation(SDL_Surface* surface, SDL_Surface** segmentation);
 
 #endif //TRANSFORMATION_H

@@ -1,6 +1,6 @@
 #ifndef GETIMMAGES_H
 #define GETIMMAGES_H
 
-double* GetImages(char *path);
+SDL_Surface* GetImages(char *path);
 
 #endif

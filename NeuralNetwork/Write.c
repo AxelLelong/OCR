@@ -4,6 +4,6 @@
 
 void Write (double *sudo)
 {
-    //TODO
+  sudo = sudo;
 }
 
