@@ -16,7 +16,7 @@
 #include "../Display/display.h"
 #include "../Segmentation/split.h"
 
-void transformation(SDL_Surface* surface)
+void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
 {
 
     /// ------ INITIALIZE VARIABLES ------
@@ -177,7 +177,6 @@ void transformation(SDL_Surface* surface)
 
 
     /// ------ SEGMENTATION & CLEAR ------
-    SDL_Surface** segmentation = malloc(81*sizeof(SDL_Surface*));
     split(surface, segmentation);
     ///-----------------------------------
 

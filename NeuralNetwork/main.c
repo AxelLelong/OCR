@@ -12,12 +12,12 @@
 #define numInputs (28*28)
 #define numHiddenNodes 81
 #define numOutputs 10
-#define numTrainingSets 1
+#define numTrainingSets 2
 
 //Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
 void mainNN (int train, int verbose, int show, int load, int all)
 {
-    char* sets [1] = {"00"};
+    char* sets [2] = {"00","01"};
     if (show)
     {
         if (train)
@@ -29,7 +29,10 @@ void mainNN (int train, int verbose, int show, int load, int all)
         errx(0,"NeuralNetwork: must train or show, please choose an option");
     else if (train || show)
         for(int i = 0; i < numTrainingSets; i++)
+        {
             TrainAndShow(train, verbose, show, load, sets[i]);
+            printf("set %i done\n",i);
+        }
     //condition if we want to do all the way
     else if (all)
     {

@@ -2,27 +2,27 @@
 
 CC = gcc
 CPPFLAGS =
-CFLAGS = `pkg-config --libs sdl2 SDL2_image` -Wall -Wextra -Werror
+CFLAGS = `pkg-config --cflags sdl2 SDL2_image` `pkg-config --cflags gtk+-3.0` -Wall -Wextra -Werror
 LDFLAGS = -lm
-LDLIBS = `pkg-config --libs sdl2 SDL2_image`
-EXEC = main
+LDLIBS = `pkg-config --libs sdl2 SDL2_image` `pkg-config --libs gtk+-3.0`
+EXEC = OCR
 
 all: main
-#all :
-#	gcc -Wall -Wextra -Werror -lm -o main NeuralNetwork.c Maths.c Maths.h
-SRC = NeuralNetwork/GetImages.c NeuralNetwork/GuessFunction.c NeuralNetwork/main.c NeuralNetwork/TrainAndShow.c NeuralNetwork/Write.c NeuralNetwork/Maths.c NeuralNetwork/NeuralNetwork.c
+
+SRC = NeuralNetwork/GetImages.c NeuralNetwork/GuessFunction.c NeuralNetwork/main.c NeuralNetwork/TrainAndShow.c NeuralNetwork/Write.c NeuralNetwork/Maths.c NeuralNetwork/NeuralNetwork.c Image/Detection/lign_detection.c Image/Detection/sobel.c Image/pre_processing/filters.c Image/pre_processing/transformation.c Image/Display/display.c Image/Detection/square_detection.c Image/Perspective/correct_perspective.c Image/Perspective/matrix.c Image/Segmentation/split.c Image/Rotation_Resize/resize.c Image/Rotation_Resize/interpolation.c
 OBJ = ${SRC:.c=.o}
 DEP = ${SRC:.c=.d}
 
 main : ${OBJ}
 
--include ${DEP} 
+-include ${DEP}
 
 .PHONY: clean
 
 clean:
 	${RM} ${OBJ}
 	${RM} ${DEP}
-	${RM} main
+	${RM} main OCR
+	${RM} test_*
 
 # END
