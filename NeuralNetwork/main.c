@@ -3,6 +3,8 @@
 #include <time.h>
 #include <err.h>
 #include <string.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "Maths.h"
 #include "NeuralNetwork.h"
 #include "TrainAndShow.h"
@@ -11,11 +13,12 @@
 //nodes + num of examples
 #define numInputs (28*28)
 #define numHiddenNodes 81
-#define numOutputs 10
-#define numTrainingSets 2
+#define numOutputs 1
+#define numTrainingSets 1
+
 
 //Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
-void mainNN (int train, int verbose, int show, int load, int all)
+int* mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** images_list)
 {
     char* sets [2] = {"00","01"};
     if (show)
@@ -25,8 +28,6 @@ void mainNN (int train, int verbose, int show, int load, int all)
         else
             show = 1;
     }
-    else if(!train && !show)
-        errx(0,"NeuralNetwork: must train or show, please choose an option");
     else if (train || show)
         for(int i = 0; i < numTrainingSets; i++)
         {
@@ -36,15 +37,14 @@ void mainNN (int train, int verbose, int show, int load, int all)
     //condition if we want to do all the way
     else if (all)
     {
-        double **images_list = malloc(sizeof(double)*numHiddenNodes);
-        int *sudoNumList = malloc(sizeof(int)*numHiddenNodes);
-        //TODO____Function to get the images list of arrays
-        for (size_t i = 0; i < numHiddenNodes; i++)
+        int *sudoNumList = malloc(sizeof(int)*81);
+        for (size_t i = 0; i < 81; i++)
         {
-            sudoNumList[i] = Guess(images_list[i]);
+	  sudoNumList[i] = round(Guess(images_list[i]));
         }
-        //TODO____Function to write in the text doc
+	return sudoNumList;
     }
+    return NULL;
 }
 
 

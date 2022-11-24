@@ -1,30 +1,49 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <err.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include "NeuralNetwork.h"
 
 #define numInputs (28*28)
 #define numHiddenNodes 81
-#define numOutputs 10
+#define numOutputs 1
 
 
-int Guess (double *Input)
+int Guess(SDL_Surface *Input)
 {
+  Uint8 r,g,b;
+
+  double inputs[numInputs];
+  
+  Uint32* pixels = Input->pixels;
+  if (pixels == NULL)
+    errx(EXIT_FAILURE, "%s", SDL_GetError());
+  
+  for(int j = 0; j < 28*28; j++)
+    {
+      SDL_GetRGB(pixels[j],Input->format,&r,&g,&b);
+      inputs[j] = (g == 255 ? 0 : 1);
+    }
+
+  
   //const double lr = 0.1f;
   FILE *f;
 
   //definition of tables
-  double* hiddenLayer = malloc(numHiddenNodes*sizeof(double));
-  double* outputLayer = malloc(numOutputs*sizeof(double));
+  double* hiddenLayer = calloc(numHiddenNodes,sizeof(double));
+  double* outputLayer = calloc(numOutputs,sizeof(double));
 
-  double* hiddenLayerBias = malloc(numHiddenNodes*sizeof(double));
-  double* outputLayerBias = malloc(numOutputs*sizeof(double));
+  double* hiddenLayerBias = calloc(numHiddenNodes,sizeof(double));
+  double* outputLayerBias = calloc(numOutputs,sizeof(double));
 
-  double* hiddenWeights = malloc(numInputs * numHiddenNodes*sizeof(double));
-  double* outputWeights = malloc(numHiddenNodes * numOutputs*sizeof(double));
+  double* hiddenWeights = calloc(numInputs * numHiddenNodes,sizeof(double));
+  double* outputWeights = calloc(numHiddenNodes * numOutputs,sizeof(double));
+
 
   //load weights
-  f = fopen("Weights/WH","r");
+  f = fopen("NeuralNetwork/Weights/WH","r");
   char c;
   char reset_num[10];
   char num[10];
@@ -48,7 +67,7 @@ int Guess (double *Input)
   fclose(f);
   memcpy(num, reset_num, sizeof(char));
 
-  f = fopen("Weights/BH","r");
+  f = fopen("NeuralNetwork/Weights/BH","r");
   i = 0;
   j = 0;
   while((c = fgetc(f)) != EOF)
@@ -68,7 +87,7 @@ int Guess (double *Input)
       fclose(f);
       memcpy(num, reset_num, sizeof(char));
 
-      f = fopen("Weights/WO","r");
+      f = fopen("NeuralNetwork/Weights/WO","r");
       i = 0;
       j = 0;
       while((c = fgetc(f)) != EOF)
@@ -89,7 +108,7 @@ int Guess (double *Input)
       fclose(f);
       memcpy(num, reset_num, sizeof(char));
 
-      f = fopen("Weights/BO","r");
+      f = fopen("NeuralNetwork/Weights/BO","r");
       i = 0;
       j = 0;
       while((c = fgetc(f)) != EOF)
@@ -111,13 +130,19 @@ int Guess (double *Input)
   }
 
 
-  // Guess the number //
+  printf("after load\n");
 
+  // Guess the number //
   //ForwardPass
   // Compute hidden layer activation
-  Compute_Hidden(numInputs, numHiddenNodes, hiddenLayer, hiddenLayerBias, Input, hiddenWeights, i);
+
+  Compute_Hidden(numInputs, numHiddenNodes, hiddenLayer, hiddenLayerBias, inputs, hiddenWeights, 0);
+    
   //Compute output layer activation
   Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
+
+
+  double res = outputLayer[0];
 
   free(hiddenLayer);
   free(outputLayer);
@@ -126,6 +151,6 @@ int Guess (double *Input)
   free(hiddenWeights);
   free(outputWeights);
 
-  return outputLayer[0];
+  return res;
 }
 

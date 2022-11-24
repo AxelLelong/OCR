@@ -76,6 +76,8 @@ void Compute_Output(int Hidden, int Outputs, double* Bias, double* Layer, double
     }
 
     //update
+    double a = fmax(0,activation);
+    printf("j == %i || a == %f\n",j,a);
     Layer[j] = RELU(activation);
   }
 }
