@@ -1,6 +1,6 @@
 #ifndef GUESS_H
 #define GUESS_H
 
-int Guess(double *Input);
+int Guess(SDL_Surface *Input);
 
 #endif

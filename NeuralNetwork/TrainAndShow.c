@@ -173,8 +173,9 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   // Train the neural network
   for(int epoch = 0; epoch < numberOfEpochs; epoch++)
   {
+    if(verbose)
       printf("------------EPOCH %i---------------\n",epoch);
-      if(train)
+    if(train)
       {
           //shuffle the order of examples
           shuffle(TrainingSetOrder, numTrainingSets);

@@ -61,31 +61,39 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         Uint8 tmp = pixel_to_grayscale(pixels[i],format);
         pixels1[i] = contrastefilter(tmp);
     }
+
     Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_grayscale_contrast.png");
+
 
     /// ------------------------------------
 
 
     /// ------ LIGHT NORMALIZATION ------
+
     Uint8 max = get_max(pixels1,len);
     NormLight(pixels1, len, max);
     Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_light_normalisation.png");
+
     /// ---------------------------------
 
 
     /// ------ MEDIAN FILTER ------
+
     medianfilter(pixels1,pixels2,w,h);
     Convert8To32(pixels2, pixels, len, format);
     save_image(surface,"test_median_filter.png");
+
     /// ---------------------------
 
 
     /// ------ GAUSSIAN BLUR ------
+
     GaussianFlou(pixels2,pixels1,w,h);
     Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_gaussian_blur.png");
+
     /// ---------------------------
 
 
@@ -98,16 +106,20 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         seuil = 0.5;
     else
         seuil = 0.15;
+
     adaptativeThreshold(pixels1,seuil,w,h);
     Convert8To32(pixels1, pixels, len, format);
     save_image(surface,"test_binarisation.png");
+
     /// -------------------------
 
 
     /// ------ SMOOTHING ------
+
     lissage(pixels1,pixels2,w,h);
     Convert8To32(pixels2, pixels, len, format);
     save_image(surface,"test_smoothing.png");
+
     /// -----------------------
 
 
@@ -121,7 +133,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
 
     /// ------ SOBEL ------
     SobelEdgeDetection(surface);
-    save_image(surface,"test_sobel.png");
+    //save_image(surface,"test_sobel.png");
     /// -------------------
 
 
@@ -136,6 +148,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         draw_line(pixels, w, h, allLines[i][0],allLines[i][1],allLines[i][2],allLines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
     save_image(surface,"test_hough_transform.png");
+
     /// -----------------------------
 
 
@@ -148,6 +161,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
     save_image(surface,"test_simplify.png");
+
     /// -----------------------------
 
 
@@ -158,7 +172,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     Convert8To32(pixels2, pixels, len, format);
     drawSquare(square, pixels, w,h, 2,format,1);
 
-    save_image(surface,"test_carre.png");
+    //save_image(surface,"test_carre.png");
     ///------------------------------
 
 
@@ -183,6 +197,6 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     free(allLines);
     free(square);
     free(max_Theta);
-    free(segmentation);
+    //free(segmentation);
     SDL_UnlockSurface(surface);
 }

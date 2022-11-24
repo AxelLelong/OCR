@@ -1,5 +1,7 @@
 #include "Maths.h"
 #include <math.h>
+#include <stdio.h>
+
 
 /// <summary>
 /// The sigmoid function

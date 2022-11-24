@@ -217,7 +217,7 @@ void split(SDL_Surface* surface, SDL_Surface** segmentation)
                 clearNumber(pixels,imageresized->format);
 
                 segmentation[iall] = imageresized;
-                savesquare(imageresized,iall);
+                //savesquare(imageresized,iall);
             }
             else
             {
