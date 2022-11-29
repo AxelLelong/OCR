@@ -28,7 +28,7 @@
           </object>
           <packing>
             <property name="x">5</property>
-            <property name="y">325</property>
+            <property name="y">280</property>
           </packing>
         </child>
         <child>
@@ -49,12 +49,13 @@
             <property name="label" translatable="yes">RUN</property>
             <property name="width-request">110</property>
             <property name="visible">True</property>
+            <property name="sensitive">False</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
           </object>
           <packing>
             <property name="x">5</property>
-            <property name="y">363</property>
+            <property name="y">315</property>
           </packing>
         </child>
         <child>
@@ -92,6 +93,20 @@
           <packing>
             <property name="x">462</property>
             <property name="y">361</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="resolve">
+            <property name="label" translatable="yes">Resolve</property>
+            <property name="width-request">110</property>
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+          </object>
+          <packing>
+            <property name="x">5</property>
+            <property name="y">350</property>
           </packing>
         </child>
       </object>

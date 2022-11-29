@@ -2,7 +2,6 @@
 #include "stdio.h"
 
 //Convert a sudoku file in an array, then we can solve it
-
 void Loader(char path[], int sudoku[81])
 {
 

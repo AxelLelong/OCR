@@ -18,7 +18,7 @@
 
 
 //Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
-int* mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** images_list)
+void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** images_list, int *sudoNumList)
 {
     char* sets [2] = {"00","01"};
     if (show)
@@ -37,14 +37,15 @@ int* mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
     //condition if we want to do all the way
     else if (all)
     {
-        int *sudoNumList = malloc(sizeof(int)*81);
+        double *res = calloc(1,sizeof(double));
         for (size_t i = 0; i < 81; i++)
         {
-	  sudoNumList[i] = round(Guess(images_list[i]));
+            Guess(images_list[i],res);
+            *res = round(*res);
+            sudoNumList[i] = *res;
         }
-	return sudoNumList;
+
     }
-    return NULL;
 }
 
 

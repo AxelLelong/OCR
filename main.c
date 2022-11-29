@@ -7,6 +7,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "NeuralNetwork/main.h"
+#include "Solver/sudoLoader.h"
 #include "Image/Rotation_Resize/rotation.h"
 #include "Image/pre_processing/transformation.h"
 #include "Image/Display/display.h"
@@ -17,6 +18,7 @@ typedef struct UserInterface
     GtkButton* load;                    // Load button
     GtkButton *run;
     GtkButton *quit;
+    GtkButton *resolve;
     GtkButton *save;
     GtkImage* image;
     GtkSpinButton* rotation;
@@ -82,6 +84,8 @@ void UI_load_image(GtkButton *button, gpointer user_data)
 
     GtkWidget* dialog;
 
+    gtk_widget_set_sensitive(GTK_WIDGET(UI->run),1);
+    gtk_widget_set_sensitive(GTK_WIDGET(UI->resolve),0);
     //create file chooser dialog
     dialog = gtk_file_chooser_dialog_new("Choose a file",
                                          UI->window,
@@ -126,6 +130,9 @@ void Process_image(GtkButton *button, gpointer user_data)
     button = button;
     UserInterface* UI = user_data;
 
+    gtk_widget_set_sensitive(GTK_WIDGET(UI->resolve),1);
+    gtk_widget_set_sensitive(GTK_WIDGET(UI->run),0);
+
     // - Create a surface from the colored image.
     SDL_Surface* surface = load_image(UI->image_path);
     if (surface == NULL)
@@ -139,12 +146,23 @@ void Process_image(GtkButton *button, gpointer user_data)
     UI->image_path = ("test_processed.png");
 }
 
+//----------------------RUN AND COMPUTE RESULT-------------
+
+void UI_resolve(GtkButton* button, gpointer user_data)
+{
+    button = button;
+    UserInterface* UI = user_data;
+
+    int *sudoNumList = malloc(sizeof(int)*81);
+    mainNN(0,0,0,1,1,UI->segmentation,sudoNumList);
+    Writer(sudoNumList);
+}
+
 
 //----------------------MAIN-------------------------------
 
 int main ()
 {
-
     // Initializes GTK.
     gtk_init(NULL, NULL);
 
@@ -166,6 +184,7 @@ int main ()
     GtkButton* save = GTK_BUTTON(gtk_builder_get_object(builder, "save"));
     GtkButton* quit = GTK_BUTTON(gtk_builder_get_object(builder, "quit"));
     GtkButton* run = GTK_BUTTON(gtk_builder_get_object(builder, "run"));
+    GtkButton* resolve = GTK_BUTTON(gtk_builder_get_object(builder, "resolve"));
     GtkImage* image = GTK_IMAGE(gtk_builder_get_object(builder, "image_displayed"));
     GtkSpinButton* rota =  GTK_SPIN_BUTTON(gtk_builder_get_object(builder, "rota"));
 
@@ -176,6 +195,7 @@ int main ()
         .save = save,
         .quit = quit,
         .run = run,
+        .resolve = resolve,
         .image = image,
         .rotation = rota,
         .image_path = NULL,
@@ -187,6 +207,7 @@ int main ()
     g_signal_connect(save, "clicked", G_CALLBACK(Save_Rota), &UI);
     g_signal_connect(load, "clicked", G_CALLBACK(UI_load_image), &UI);
     g_signal_connect(run, "clicked", G_CALLBACK(Process_image), &UI);
+    g_signal_connect(resolve, "clicked", G_CALLBACK(UI_resolve), &UI);
     g_signal_connect(rota, "value_changed", G_CALLBACK(Rotate_image), &UI);
 
     // Runs the main loop.

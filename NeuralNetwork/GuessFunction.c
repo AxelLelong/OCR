@@ -11,23 +11,23 @@
 #define numOutputs 1
 
 
-int Guess(SDL_Surface *Input)
+void Guess(SDL_Surface *Input, double *res)
 {
   Uint8 r,g,b;
 
   double inputs[numInputs];
-  
+
   Uint32* pixels = Input->pixels;
   if (pixels == NULL)
     errx(EXIT_FAILURE, "%s", SDL_GetError());
-  
+
   for(int j = 0; j < 28*28; j++)
     {
       SDL_GetRGB(pixels[j],Input->format,&r,&g,&b);
       inputs[j] = (g == 255 ? 0 : 1);
     }
 
-  
+
   //const double lr = 0.1f;
   FILE *f;
 
@@ -129,28 +129,28 @@ int Guess(SDL_Surface *Input)
       fclose(f);
   }
 
-
-  printf("after load\n");
-
   // Guess the number //
   //ForwardPass
   // Compute hidden layer activation
 
   Compute_Hidden(numInputs, numHiddenNodes, hiddenLayer, hiddenLayerBias, inputs, hiddenWeights, 0);
-    
+
   //Compute output layer activation
   Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
 
-
-  double res = outputLayer[0];
+  *res = outputLayer[0];
 
   free(hiddenLayer);
+
   free(outputLayer);
+
   free(hiddenLayerBias);
+
   free(outputLayerBias);
+
   free(hiddenWeights);
+
   free(outputWeights);
 
-  return res;
 }
 

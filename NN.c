@@ -12,15 +12,15 @@ int main ()
 {
   mainNN(1,1,0,0,0,NULL);
 
-  SDL_Surface* images_list[1];
+  /*SDL_Surface* images_list[1];
 
-  SDL_Surface* image = GetImages("NeuralNetwork/Train/001.png");
+  SDL_Surface* image = GetImages("NeuralNetwork/Train/008.png");
 
   images_list[0] = image;
-  
+
   int* res = mainNN(0,0,0,1,1,images_list);
 
-  printf("%i",res[0]);
+  printf("%i",res[0]);*/
 
   return 0;
 }
