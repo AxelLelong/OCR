@@ -8,7 +8,7 @@
 
 #define numInputs (28*28)
 #define numHiddenNodes 81
-#define numOutputs 1
+#define numOutputs 10
 
 
 void Guess(SDL_Surface *Input, double *res)
@@ -138,7 +138,17 @@ void Guess(SDL_Surface *Input, double *res)
   //Compute output layer activation
   Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
 
-  *res = outputLayer[0];
+  double max = 0;
+  for(double i = 0; i < 10; i++)
+      if(max < outputLayer[(int)(i)])
+      {
+          max = outputLayer[(int)(i)];
+          *res = i;
+      }
+
+  printf("Predicted Output %f\n"
+         ,*res);
+
 
   free(hiddenLayer);
 

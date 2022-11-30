@@ -10,7 +10,7 @@
 
 int main ()
 {
-  mainNN(1,1,0,0,0,NULL);
+    mainNN(1,1,0,0,0,NULL,NULL);
 
   /*SDL_Surface* images_list[1];
 

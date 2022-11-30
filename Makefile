@@ -2,7 +2,7 @@
 
 CC = gcc
 CPPFLAGS =
-CFLAGS = `pkg-config --cflags sdl2 SDL2_image` `pkg-config --cflags gtk+-3.0` -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = `pkg-config --cflags sdl2 SDL2_image` `pkg-config --cflags gtk+-3.0` -Wall -Wextra -Werror
 LDFLAGS = -lm
 LDLIBS = `pkg-config --libs sdl2 SDL2_image` `pkg-config --libs gtk+-3.0`
 EXEC = OCR

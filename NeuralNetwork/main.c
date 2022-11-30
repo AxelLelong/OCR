@@ -14,13 +14,14 @@
 #define numInputs (28*28)
 #define numHiddenNodes 81
 #define numOutputs 1
-#define numTrainingSets 1
+#define numTrainingSets 5
 
 
 //Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
 void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** images_list, int *sudoNumList)
 {
-    char* sets [2] = {"00","01"};
+    char* sets [5] = {"00","01","02","03","04"};
+    load = load;
     if (show)
     {
         if (train)
@@ -29,11 +30,14 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
             show = 1;
     }
     else if (train || show)
-        for(int i = 0; i < numTrainingSets; i++)
+    {
+        TrainAndShow(train, verbose, show, 0, sets[0]);
+        for(int i = 1; i < numTrainingSets; i++)
         {
-            TrainAndShow(train, verbose, show, load, sets[i]);
+            TrainAndShow(train, verbose, show, 1, sets[i]);
             printf("set %i done\n",i);
         }
+    }
     //condition if we want to do all the way
     else if (all)
     {

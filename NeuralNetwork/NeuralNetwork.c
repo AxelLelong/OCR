@@ -9,7 +9,7 @@
 #define numHiddenNodes 2
 #define numOutputs 1
 #define numTrainingSets 4*/
-#define lr 0.005
+#define lr 0.01
 
 //init weights randomly
 double init_weights()
@@ -61,7 +61,7 @@ void Compute_Hidden(int Inputs, int Hidden, double* Layer, double* Bias, double*
 	}
 
 	//update
-	Layer[j] = RELU(activation);
+	Layer[j] = sigmoid(activation);
       }
 }
 
@@ -76,7 +76,7 @@ void Compute_Output(int Hidden, int Outputs, double* Bias, double* Layer, double
     }
 
     //update
-    Layer[j] = RELU(activation);
+    Layer[j] = sigmoid(activation);
   }
 }
 

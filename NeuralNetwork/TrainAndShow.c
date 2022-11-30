@@ -11,7 +11,7 @@
 
 #define numInputs (28*28)
 #define numHiddenNodes 81
-#define numOutputs 1
+#define numOutputs 10
 #define numTrainingSets 10
 
 
@@ -55,20 +55,20 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
     }
 
   double training_outputs[numTrainingSets * numOutputs] =
-    {0.0f,
-     1.0f,
-     2.0f,
-     3.0f,
-     4.0f,
-     5.0f,
-     6.0f,
-     7.0f,
-     8.0f,
-     9.0f,
+    {1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,
+     0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,
+     0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,
+     0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,
+     0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,0.0f,
+     0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,0.0f,
+     0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,0.0f,
+     0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,0.0f,
+     0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,0.0f,
+     0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,0.0f,1.0f,
     };
 
   //load weights
-  if(load)
+  if(load == 1)
   {
       f = fopen("NeuralNetwork/Weights/WH","r");
       char c;
@@ -165,7 +165,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
 
-  int numberOfEpochs = 100;
+  int numberOfEpochs = 1000;
 
   if (show)
       numberOfEpochs = 1;
@@ -193,8 +193,13 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
 
           if(verbose || show)
           {
-              printf("Number : %d | Wanted Output : %g | Predicted Output : %g\n",
-                     i,training_outputs[i],outputLayer[0]);
+              printf("Number : %d\n",i);
+
+              for(int ab = 0; ab < 10; ab++)
+              {
+                  printf("Wanted Output : %g | Predicted Output : %g\n",
+                         training_outputs[i*10+ab],outputLayer[ab]);
+              }
           }
 
 
@@ -208,8 +213,8 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
               for(int j = 0; j < numOutputs; j++)
               {
                   double error = (training_outputs[i * numOutputs + j] - outputLayer[j]);
-                  printf("Error computed for %i == %f\n",i,error * der_RELU(outputLayer[j]));
-                  deltaOutput[j] = error * der_RELU(outputLayer[j]);
+                  printf("Error computed for %i == %f\n",j,error * der_sigmoid(outputLayer[j]));
+                  deltaOutput[j] = error * der_sigmoid(outputLayer[j]);
               }
 
               //compute change in out hidden weights
@@ -223,7 +228,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
                   {
                       error += deltaOutput[k] * outputWeights[j * numOutputs + k];
                   }
-                  deltaHidden[j] = error * der_RELU(hiddenLayer[j]);
+                  deltaHidden[j] = error * der_sigmoid(hiddenLayer[j]);
               }
               //Apply changes in output Weights
               apply_output(numHiddenNodes, numOutputs, deltaOutput, hiddenLayer, outputLayerBias, outputWeights);
@@ -256,46 +261,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   for(size_t i = 0; i < numOutputs; i++)
       fprintf(f, "%f\n", outputLayerBias[i]);
   fclose(f);
-/*
-  //print Final Weights after done training
-  fputs ("Final Hidden Weights \n", stdout);
-  for(int j = 0; j < numHiddenNodes; j++)
-  {
-      fputs ("[ ", stdout);
-      for(int k = 0; k < numInputs; k++)
-      {
-          printf("%f ", hiddenWeights[k * numHiddenNodes + j]);
-      }
-      fputs(" ]\n", stdout);
-  }
 
-  fputs ("Final Hidden Bias \n", stdout);
-  for(int j = 0; j < numHiddenNodes; j++)
-  {
-      fputs ("[ ", stdout);
-      printf("%f ", hiddenLayerBias[j]);
-      fputs(" ]\n", stdout);
-  }
-
-  fputs ("Final Outputs Weights \n", stdout);
-  for(int j = 0; j < numOutputs; j++)
-  {
-      fputs ("[ ", stdout);
-      for(int k = 0; k < numHiddenNodes; k++)
-      {
-          printf("%f ", outputWeights[k * numOutputs + j]);
-      }
-      fputs(" ]\n", stdout);
-  }
-
-  fputs ("Final Outputs Bias \n", stdout);
-  for(int j = 0; j < numOutputs; j++)
-  {
-      fputs ("[ ", stdout);
-      printf("%f ", outputLayerBias[j]);
-      fputs(" ]\n", stdout);
-  }
-*/
   free(hiddenLayer);
   free(outputLayer);
   free(hiddenLayerBias);
