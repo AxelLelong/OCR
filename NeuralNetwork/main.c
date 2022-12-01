@@ -20,7 +20,8 @@
 //Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
 void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** images_list, int *sudoNumList)
 {
-    char* sets [5] = {"00","01","02","03","04"};
+    char* sets[6] = {"00","01","02","03","04","05"};
+    int order[6] = {0,1,2,3,4,5};
     load = load;
     if (show)
     {
@@ -31,11 +32,23 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
     }
     else if (train || show)
     {
+        shuffle(order, 6);
         TrainAndShow(train, verbose, show, 0, sets[0]);
         for(int i = 1; i < numTrainingSets; i++)
         {
-            TrainAndShow(train, verbose, show, 1, sets[i]);
+            TrainAndShow(train, verbose, show, 1, sets[order[i]]);
             printf("set %i done\n",i);
+        }
+
+        for(int j = 0; j < 100; j++)
+        {
+            printf("\n=====%i SUFFLED=====\n",j);
+            shuffle(order, 6);
+            for(int i = 0; i < numTrainingSets; i++)
+            {
+                TrainAndShow(train, verbose, show, 1, sets[order[i]]);
+                printf("set %i done\n",i);
+            }
         }
     }
     //condition if we want to do all the way

@@ -141,6 +141,12 @@ void Process_image(GtkButton *button, gpointer user_data)
     transformation(surface, UI->segmentation);
 
     save_image(surface,"test_processed.png");
+    char path[6];
+    for(int i = 0; i < 81;i++)
+    {
+        sprintf(path,"%i.png",i);
+        save_image(UI->segmentation[i],path);
+    }
 
     update_image(UI->image, "test_processed.png");
     UI->image_path = ("test_processed.png");

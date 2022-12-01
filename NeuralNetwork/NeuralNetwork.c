@@ -9,7 +9,7 @@
 #define numHiddenNodes 2
 #define numOutputs 1
 #define numTrainingSets 4*/
-#define lr 0.01
+#define lr 0.001
 
 //init weights randomly
 double init_weights()

@@ -17,6 +17,7 @@
 
 void TrainAndShow (int train, int verbose, int show, int load, char* set)
 {
+  verbose = 0;
   time_t t;
   srand((unsigned) time(&t));
   //const double lr = 0.1f;
@@ -165,7 +166,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
 
-  int numberOfEpochs = 1000;
+  int numberOfEpochs = 100;
 
   if (show)
       numberOfEpochs = 1;
@@ -191,7 +192,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
           //Compute output layer activation
           Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
 
-          if(verbose || show)
+          if(epoch == 99)
           {
               printf("Number : %d\n",i);
 
@@ -213,7 +214,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
               for(int j = 0; j < numOutputs; j++)
               {
                   double error = (training_outputs[i * numOutputs + j] - outputLayer[j]);
-                  printf("Error computed for %i == %f\n",j,error * der_sigmoid(outputLayer[j]));
+                  //printf("Error computed for %i == %f\n",j,error * der_sigmoid(outputLayer[j]));
                   deltaOutput[j] = error * der_sigmoid(outputLayer[j]);
               }
 
