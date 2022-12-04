@@ -13,7 +13,7 @@
 //nodes + num of examples
 #define numInputs (28*28)
 #define numHiddenNodes 81
-#define numOutputs 1
+#define numOutputs 10
 #define numTrainingSets 5
 
 
@@ -49,7 +49,7 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
                 TrainAndShow(train, verbose, show, 1, sets[order[i]]);
                 printf("set %i done\n",i);
             }
-        }
+	}
     }
     //condition if we want to do all the way
     else if (all)

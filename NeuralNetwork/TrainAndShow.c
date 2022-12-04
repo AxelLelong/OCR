@@ -17,6 +17,7 @@
 
 void TrainAndShow (int train, int verbose, int show, int load, char* set)
 {
+  set = set;
   verbose = 0;
   time_t t;
   srand((unsigned) time(&t));
@@ -35,13 +36,15 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
 
   double training_inputs[numTrainingSets * numInputs];
 
-  char path[27];
+  char path[28];
 
   Uint8 r,g,b;
 
   for(int i = 0; i < 10; i++)
     {
-        sprintf(path,"NeuralNetwork/Train/%s%i.png",set,i);
+      int d = rand()%1;
+      int u = rand()%6;
+      sprintf(path,"NeuralNetwork/Train/%i%i%i.png",d,u,i);
 
         SDL_Surface *image = GetImages(path);
 
@@ -166,7 +169,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
 
-  int numberOfEpochs = 100;
+  int numberOfEpochs = 2000;
 
   if (show)
       numberOfEpochs = 1;
@@ -192,7 +195,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
           //Compute output layer activation
           Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
 
-          if(epoch == 99)
+          if(epoch == numberOfEpochs-1)
           {
               printf("Number : %d\n",i);
 
