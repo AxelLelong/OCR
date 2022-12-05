@@ -15,6 +15,7 @@
 #include "../Detection/sobel.h"
 #include "../Display/display.h"
 #include "../Segmentation/split.h"
+#include "../Rotation_Resize/rotation.h"
 
 void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
 {
@@ -91,6 +92,12 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     //seuil adaptatif
     if(noise>20)
         seuil = 0.5;
+    else if(noise == 0 && w>1100 && w<1400)
+        seuil = 0.26;
+    else if(noise == 0 && w>=1400)
+        seuil = 0.5;
+    else if(noise == 0 && w<=1100)
+        seuil = 0.15;
     else
         seuil = 0.15;
     adaptativeThreshold(pixels,seuil,w,h, format);
@@ -157,9 +164,31 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     }
     /// -----------------------------
 
+    /// ------------- AUTO ROTATE --------------
+    for (int i = 0; i < len; i++)
+    {
+        pixels[i] = pixels2[i];
+    }
+    double angle = *maxTheta * 180.0 / M_PI;
+    int angleRounded = (int)angle % 90; // ROTATE
+    if ((angleRounded >= 85 && angleRounded <= 95)
+        || (angleRounded >= 0 && angleRounded <= 5))
+
+    {
+        printf("Do not need to rotate image");
+    }
+    else
+    {
+        rotateAll(surface,lines, angleRounded,lenRes);
+    }
+    /// ------------------------------------------
 
     /// ------ DETECTION CARRE ------
     int** square = findSquare(lines,w,h,&lenRes);
+    for (int i = 0; i < len; i++)
+    {
+        pixels1[i] = pixels[i];
+    }
     compute_Square(square);
     drawSquare(square, pixels, w,h, 2,format,1);
 
@@ -170,7 +199,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     /// ------ CORRECT PERSPECTIVE ------
     for (int i = 0; i < len ; ++i)
     {
-        pixels[i] = negativefilter(pixels2[i], format);
+        pixels[i] = negativefilter(pixels1[i], format);
     }
     correctPerspective(square, surface, w,h);
     ///----------------------------------

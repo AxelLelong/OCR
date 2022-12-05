@@ -115,7 +115,7 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
 
     // Finding edges
     // Computing threshold
-    int lineThreshold = max * 0.5;
+    int lineThreshold = max * 0.45;
 
     // Create line return line array
     int ** allLines = NULL;
@@ -164,7 +164,7 @@ int** houghtransform(Uint32* pixels,int w, int h, SDL_PixelFormat* format,int dr
                 if (t > tempMaxTheta)
                 {
                     tempMaxTheta = t;
-                    rounded_angle = (unsigned int)(t * M_PI / 180.0);
+                    rounded_angle = (unsigned int)(t * 180.0 / M_PI);
                     histogram[rounded_angle]++;
                 }
 

@@ -52,3 +52,42 @@ void rotate(SDL_Surface* surface, double degree)
     SDL_UnlockSurface(surface);
     free(new_img);
 }
+
+void rotateAll(SDL_Surface* surface, int** lines, double angleDegree,int len)
+{
+    rotate(image, 360 - angleDegree);
+
+    double angle = (360 - angleDegree) * M_PI / 180.0;
+    angle -= 5.095;
+    const double middleX = ((double)image->width / 2.0);
+    const double middleY = ((double)image->height / 2.0);
+
+    double newX;
+    double newY;
+
+    for (int i = 0;i<len;i++)
+    {
+        newX = ((double)(cos(angle) * ((double)lines[i][0] - middleX)
+                         - sin(angle) * ((double)lines[i][1] - middleY))
+                + middleX);
+
+        newY = ((double)(cos(angle) * ((double)lines[i][1] - middleY)
+                         + sin(angle) * ((double)lines[i][0] - middleX))
+                + middleY);
+
+        lines[i][0] = (int)newX;
+        lines[i][1] = (int)newY;
+
+        // Calculate new position end
+        newX = ((double)(cos(angle) * ((double)lines[i][2] - middleX)
+                         - sin(angle) * ((double)lines[i][3] - middleY))
+                + middleX);
+
+        newY = ((double)(cos(angle) * ((double)lines[i][3] - middleY)
+                         + sin(angle) * ((double)lines[i][2] - middleX))
+                + middleY);
+
+        lines[i][2] = (int)newX;
+        lines[i][3] = (int)newY;
+    }
+}

@@ -216,6 +216,19 @@ void split(SDL_Surface* surface, SDL_Surface** segmentation)
 
                 clearNumber(pixels,imageresized->format);
 
+                //---------------lissage chiffre-----------------
+                int len = imageresized->w*imageresized->h;
+                Uint32* pixels1 = malloc(len*sizeof(Uint32));
+                if (pixels1 == NULL)
+                    errx(EXIT_FAILURE, "C'est de la faute de pixels1 pendant le malloc");
+                lissage(pixels,pixels1,imageresized->w,imageresized->h,format);
+                for (int i = 0; i < len ; ++i)
+                {
+                    pixels[i] = pixels1[i];
+                }
+                free(pixels1);
+                //------------------------------------------------
+
                 segmentation[iall] = imageresized;
                 //savesquare(imageresized,iall);
             }
