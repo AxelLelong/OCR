@@ -64,7 +64,7 @@ void rotateA(SDL_Surface* surface, double degree)
     double middleX = ((double)w / 2.0);
     double middleY = ((double)h / 2.0);
 
-    double angle = angleDegree * M_PI / 180.0;
+    double angle = degree * M_PI / 180.0;
 
     SDL_Surface* new_img = SDL_CreateRGBSurface(SDL_SWSURFACE, w, h, 32, 0, 0, 0, 0);
 
@@ -75,7 +75,7 @@ void rotateA(SDL_Surface* surface, double degree)
     if (new_format == NULL)
         errx(EXIT_FAILURE, "%s", SDL_GetError());
     SDL_LockSurface(surface);
-    for (int x = 0; x < w*h; x++)
+    for (unsigned int x = 0; x < w*h; x++)
     {
         _pixels[x] = SDL_MapRGB(new_format, 0,0,0);
     }
