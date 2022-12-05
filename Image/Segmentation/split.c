@@ -11,6 +11,7 @@
 #include "../Rotation_Resize/resize.h"
 #include "../Display/display.h"
 #include "split.h"
+#include "../pre_processing/filters.h"
 
 void savesquare(SDL_Surface* surface, unsigned int iall)
 {
@@ -221,10 +222,10 @@ void split(SDL_Surface* surface, SDL_Surface** segmentation)
                 Uint32* pixels1 = malloc(len*sizeof(Uint32));
                 if (pixels1 == NULL)
                     errx(EXIT_FAILURE, "C'est de la faute de pixels1 pendant le malloc");
-                lissage(pixels,pixels1,imageresized->w,imageresized->h,format);
+                lissage(pixels,pixels1,imageresized->w,imageresized->h,imageresized->format);
                 for (int i = 0; i < len ; ++i)
                 {
-                    pixels[i] = pixels1[i];
+                    pixels[i] = negativefilter(pixels1[i], imageresized->format);
                 }
                 free(pixels1);
                 //------------------------------------------------

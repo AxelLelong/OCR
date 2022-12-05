@@ -169,7 +169,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         pixels[i] = pixels2[i];
     }
-    double angle = *maxTheta * 180.0 / M_PI;
+    double angle = *max_Theta * 180.0 / M_PI;
     int angleRounded = (int)angle % 90; // ROTATE
     if ((angleRounded >= 85 && angleRounded <= 95)
         || (angleRounded >= 0 && angleRounded <= 5))
