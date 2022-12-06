@@ -141,7 +141,7 @@ void Process_image(GtkButton *button, gpointer user_data)
     transformation(surface, UI->segmentation);
 
     save_image(surface,"test_processed.png");
-    char path[6];
+    char path[21];
     for(int i = 0; i < 81;i++)
     {
         sprintf(path,"test_%i.png",i);
@@ -150,6 +150,10 @@ void Process_image(GtkButton *button, gpointer user_data)
 
     update_image(UI->image, "test_processed.png");
     UI->image_path = ("test_processed.png");
+
+    int *sudoNumList = malloc(sizeof(int)*81);
+    mainNN(0,0,0,1,1,UI->segmentation,sudoNumList);
+    Writer(sudoNumList);
 }
 
 //----------------------RUN AND COMPUTE RESULT-------------
@@ -158,10 +162,7 @@ void UI_resolve(GtkButton* button, gpointer user_data)
 {
     button = button;
     UserInterface* UI = user_data;
-
-    int *sudoNumList = malloc(sizeof(int)*81);
-    mainNN(0,0,0,1,1,UI->segmentation,sudoNumList);
-    Writer(sudoNumList);
+    UI = UI;
 }
 
 

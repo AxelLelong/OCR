@@ -32,23 +32,14 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
     }
     else if (train || show)
     {
-        shuffle(order, 7);
         TrainAndShow(train, verbose, show, 0, sets[0]);
-        for(int i = 1; i < numTrainingSets; i++)
-        {
-            TrainAndShow(train, verbose, show, 1, sets[order[i]]);
-            printf("set %i done\n",i);
-        }
 
-        for(int j = 0; j < 100; j++)
+        for(int j = 0; j < 200; j++)
         {
-            printf("\n=====%i SUFFLED=====\n",j);
-            shuffle(order, 7);
-            for(int i = 0; i < numTrainingSets; i++)
-            {
-                TrainAndShow(train, verbose, show, 1, sets[order[i]]);
-                printf("set %i done\n",i);
-            }
+            printf("\n=====%i ITERATION=====\n",j);
+
+            TrainAndShow(train, verbose, show, 1, sets[order[0]]);
+
 	}
     }
     //condition if we want to do all the way
