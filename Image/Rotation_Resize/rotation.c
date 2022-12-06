@@ -114,7 +114,10 @@ void rotateA(SDL_Surface* surface, double degree)
                 && right < w)
             {
                 Uint32 pixel = interpolation(top, bottom, left, right, newX, newY, pixels,new_format,w);
-                _pixels[y*w+x] = pixel;
+                Uint8 r, g, b;
+                SDL_GetRGB(pixel, new_format, &r, &g, &b);
+                Uint32 color = SDL_MapRGB(new_format, 255-r,255-g ,255-b );
+                _pixels[y*w+x] = color;
             }
         }
     }
@@ -126,38 +129,35 @@ void rotateA(SDL_Surface* surface, double degree)
 void rotateAll(SDL_Surface* surface, int** lines, double angleDegree,int len)
 {
     rotateA(surface, angleDegree);
-
     double angle = (angleDegree) * M_PI / 180.0;
     angle += 5.095;
+
     const double middleX = ((double)surface->w / 2.0);
     const double middleY = ((double)surface->h / 2.0);
 
-    double newX;
-    double newY;
-
     for (int i = 0;i<len;i++)
     {
-        newX = ((double)(cos(angle) * ((double)lines[i][0] - middleX)
+        double beginX = ((double)(cos(angle) * ((double)lines[i][0] - middleX)
                          - sin(angle) * ((double)lines[i][1] - middleY))
                 + middleX);
 
-        newY = ((double)(cos(angle) * ((double)lines[i][1] - middleY)
+        double beginY = ((double)(cos(angle) * ((double)lines[i][1] - middleY)
                          + sin(angle) * ((double)lines[i][0] - middleX))
                 + middleY);
 
-        lines[i][0] = (int)newX;
-        lines[i][1] = (int)newY;
+        lines[i][0] = (int)beginX;
+        lines[i][1] = (int)beginY;
 
         // Calculate new position end
-        newX = ((double)(cos(angle) * ((double)lines[i][2] - middleX)
+        double endX = ((double)(cos(angle) * ((double)lines[i][2] - middleX)
                          - sin(angle) * ((double)lines[i][3] - middleY))
                 + middleX);
 
-        newY = ((double)(cos(angle) * ((double)lines[i][3] - middleY)
+        double endY = ((double)(cos(angle) * ((double)lines[i][3] - middleY)
                          + sin(angle) * ((double)lines[i][2] - middleX))
                 + middleY);
 
-        lines[i][2] = (int)newX;
-        lines[i][3] = (int)newY;
-    }
+        lines[i][2] = (int)endX;
+        lines[i][3] = (int)endY;
+        }
 }

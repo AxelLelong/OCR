@@ -121,7 +121,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         pixels2[i] = pixels[i];
     }
     SobelEdgeDetection(surface);
-    //save_image(surface,"test_sobel.png");
+    save_image(surface,"test_sobel.png");
     /// -------------------
 
 
@@ -157,7 +157,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         draw_line(pixels, w, h, lines[i][0],lines[i][1],lines[i][2],lines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
-    //save_image(surface,"test_simplify.png");
+    save_image(surface,"test_simplify.png");
     for (int i = 0; i < len ; ++i)
     {
         pixels[i] = pixels1[i];
@@ -169,6 +169,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         pixels[i] = pixels2[i];
     }
+    save_image(surface,"test_beforerot.png");
     double angle = *max_Theta * 180.0 / M_PI;
     int angleRounded = (int)angle % 90; // ROTATE
     if ((angleRounded >= 85 && angleRounded <= 95)
@@ -181,6 +182,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         rotateAll(surface,lines, angleRounded,lenRes);
     }
+    save_image(surface,"test_afterrot.png");
     /// ------------------------------------------
 
     /// ------ DETECTION CARRE ------
@@ -192,7 +194,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     compute_Square(square);
     drawSquare(square, pixels, w,h, 2,format,1);
 
-    //save_image(surface,"test_carre.png");
+    save_image(surface,"test_carre.png");
     ///------------------------------
 
 
@@ -202,6 +204,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         pixels[i] = negativefilter(pixels1[i], format);
     }
     correctPerspective(square, surface, w,h);
+    save_image(surface,"test_pers.png");
     ///----------------------------------
 
 

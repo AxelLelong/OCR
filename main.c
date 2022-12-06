@@ -144,7 +144,7 @@ void Process_image(GtkButton *button, gpointer user_data)
     char path[6];
     for(int i = 0; i < 81;i++)
     {
-        sprintf(path,"%i.png",i);
+        sprintf(path,"test_%i.png",i);
         save_image(UI->segmentation[i],path);
     }
 

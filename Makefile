@@ -23,6 +23,5 @@ clean:
 	${RM} ${OBJ}
 	${RM} ${DEP}
 	${RM} main OCR
-	${RM} test_* sudo_resolved
-
+	${RM} test_* sudo_resolved [0-9]*.png
 # END
