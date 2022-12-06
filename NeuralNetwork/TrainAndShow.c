@@ -43,7 +43,8 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   for(int i = 0; i < 10; i++)
     {
       int d = rand()%1;
-      int u = rand()%6;
+      int u = rand()%7;
+      printf("%i%i%i.png for %i\n",d,u,i,i);
       sprintf(path,"NeuralNetwork/Train/%i%i%i.png",d,u,i);
 
         SDL_Surface *image = GetImages(path);

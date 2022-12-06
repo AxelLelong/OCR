@@ -14,14 +14,14 @@
 #define numInputs (28*28)
 #define numHiddenNodes 81
 #define numOutputs 10
-#define numTrainingSets 5
+#define numTrainingSets 7
 
 
 //Prototype of the final function for the Neural Network (get images, guess and write in a text doc)
 void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** images_list, int *sudoNumList)
 {
-    char* sets[6] = {"00","01","02","03","04","05"};
-    int order[6] = {0,1,2,3,4,5};
+  char* sets[7] = {"00","01","02","03","04","05","06"};
+  int order[7] = {0,1,2,3,4,5,6};
     load = load;
     if (show)
     {
@@ -32,7 +32,7 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
     }
     else if (train || show)
     {
-        shuffle(order, 6);
+        shuffle(order, 7);
         TrainAndShow(train, verbose, show, 0, sets[0]);
         for(int i = 1; i < numTrainingSets; i++)
         {
@@ -43,7 +43,7 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
         for(int j = 0; j < 100; j++)
         {
             printf("\n=====%i SUFFLED=====\n",j);
-            shuffle(order, 6);
+            shuffle(order, 7);
             for(int i = 0; i < numTrainingSets; i++)
             {
                 TrainAndShow(train, verbose, show, 1, sets[order[i]]);
