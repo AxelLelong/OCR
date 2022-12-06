@@ -180,7 +180,7 @@ void UI_resolve(GtkButton* button, gpointer user_data)
         if (bef[i] != 0)
         {
             char str[21];
-            sprintf(str,"Numbers/num%ib",bef[i]);
+            sprintf(str,"Numbers/num%ib.png",bef[i]);
             update_image(images[i], str);
             marquage[i] = 1;
         }
