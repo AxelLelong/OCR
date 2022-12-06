@@ -110,6 +110,978 @@
           </packing>
         </child>
         <child>
+          <object class="GtkImage" id="0">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="1">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="2">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">218</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="3">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="4">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">296</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="5">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">334</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="6">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">373</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="7">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">412</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="8">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">451</property>
+            <property name="y">-15</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="9">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="10">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="11">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">218</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="12">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="13">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">296</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="14">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">334</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="15">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">373</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="16">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">412</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="17">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">451</property>
+            <property name="y">29</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="18">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="19">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="20">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">218</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="21">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="22">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">296</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="23">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">334</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="24">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">373</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="25">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">412</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="26">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">451</property>
+            <property name="y">63</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="27">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="28">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="29">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">218</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="30">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="31">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">296</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="32">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">334</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="33">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">373</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="34">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">412</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="35">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">451</property>
+            <property name="y">102</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="36">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="37">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="38">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">218</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="39">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="40">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">296</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="41">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">334</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="42">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">373</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="43">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">412</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="44">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">451</property>
+            <property name="y">141</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="45">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">140</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="46">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">179</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="47">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">218</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="48">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="49">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">296</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="50">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">334</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="51">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">373</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="52">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">412</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="53">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">451</property>
+            <property name="y">180</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="54">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="55">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="56">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="57">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="58">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="59">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="60">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="61">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="62">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="63">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="64">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-66</property>
+            <property name="y">36</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="65">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-83</property>
+            <property name="y">44</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="66">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-99</property>
+            <property name="y">45</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="67">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-99</property>
+            <property name="y">45</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="68">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-99</property>
+            <property name="y">45</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="69">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-99</property>
+            <property name="y">45</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="70">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-102</property>
+            <property name="y">44</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="71">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-104</property>
+            <property name="y">43</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="72">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-104</property>
+            <property name="y">43</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="73">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-104</property>
+            <property name="y">40</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="74">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-104</property>
+            <property name="y">40</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="75">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-80</property>
+            <property name="y">27</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="76">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-98</property>
+            <property name="y">49</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="77">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-95</property>
+            <property name="y">40</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="78">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-98</property>
+            <property name="y">39</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="79">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-98</property>
+            <property name="y">39</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="80">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">-98</property>
+            <property name="y">39</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkImage" id="result">
             <property name="width-request">0</property>
             <property name="height-request">80</property>
@@ -119,18 +1091,6 @@
           <packing>
             <property name="x">170</property>
             <property name="y">5</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="0">
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
-            <property name="can-focus">False</property>
-            <property name="pixbuf">0.png</property>
-          </object>
-          <packing>
-            <property name="x">140</property>
-            <property name="y">-11</property>
           </packing>
         </child>
       </object>
