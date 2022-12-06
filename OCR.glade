@@ -86,7 +86,6 @@
         <child>
           <object class="GtkButton" id="save">
             <property name="label" translatable="yes">save rotation</property>
-            <property name="visible">True</property>
             <property name="can-focus">True</property>
             <property name="receives-default">True</property>
           </object>
@@ -765,8 +764,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">140</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -777,8 +776,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">179</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -789,20 +788,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="57">
-            <property name="width-request">100</property>
-            <property name="height-request">80</property>
-            <property name="can-focus">False</property>
-            <property name="pixbuf">0.png</property>
-          </object>
-          <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">218</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -813,8 +800,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">296</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -825,8 +812,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">334</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -837,8 +824,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">373</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -849,8 +836,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">412</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -861,8 +848,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">451</property>
+            <property name="y">219</property>
           </packing>
         </child>
         <child>
@@ -873,8 +860,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">140</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -885,8 +872,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-66</property>
-            <property name="y">36</property>
+            <property name="x">179</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -897,8 +884,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-83</property>
-            <property name="y">44</property>
+            <property name="x">218</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -909,8 +896,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-99</property>
-            <property name="y">45</property>
+            <property name="x">257</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -921,8 +908,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-99</property>
-            <property name="y">45</property>
+            <property name="x">296</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -933,8 +920,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-99</property>
-            <property name="y">45</property>
+            <property name="x">334</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -945,8 +932,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-99</property>
-            <property name="y">45</property>
+            <property name="x">373</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -957,8 +944,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-102</property>
-            <property name="y">44</property>
+            <property name="x">412</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -969,8 +956,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-104</property>
-            <property name="y">43</property>
+            <property name="x">451</property>
+            <property name="y">258</property>
           </packing>
         </child>
         <child>
@@ -981,8 +968,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-104</property>
-            <property name="y">43</property>
+            <property name="x">140</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -993,8 +980,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-104</property>
-            <property name="y">40</property>
+            <property name="x">179</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1005,8 +992,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-104</property>
-            <property name="y">40</property>
+            <property name="x">218</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1017,8 +1004,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-80</property>
-            <property name="y">27</property>
+            <property name="x">257</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1029,8 +1016,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-98</property>
-            <property name="y">49</property>
+            <property name="x">296</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1041,8 +1028,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-95</property>
-            <property name="y">40</property>
+            <property name="x">334</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1053,8 +1040,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-98</property>
-            <property name="y">39</property>
+            <property name="x">373</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1065,8 +1052,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-98</property>
-            <property name="y">39</property>
+            <property name="x">412</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1077,8 +1064,8 @@
             <property name="pixbuf">0.png</property>
           </object>
           <packing>
-            <property name="x">-98</property>
-            <property name="y">39</property>
+            <property name="x">451</property>
+            <property name="y">297</property>
           </packing>
         </child>
         <child>
@@ -1091,6 +1078,18 @@
           <packing>
             <property name="x">170</property>
             <property name="y">5</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkImage" id="57">
+            <property name="width-request">100</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">0.png</property>
+          </object>
+          <packing>
+            <property name="x">257</property>
+            <property name="y">218</property>
           </packing>
         </child>
       </object>

@@ -215,8 +215,12 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     free(pixels1);
     free(pixels2);
     free(lenliste);
+    for(int i = 0;i<lenRes;i++)
+        free(lines[i]);
     free(lines);
     free(allLines);
+    for(int i = 0;i<4;i++)
+        free(square[i]);
     free(square);
     free(max_Theta);
     //free(segmentation);
