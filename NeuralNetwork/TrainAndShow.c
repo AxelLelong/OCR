@@ -8,12 +8,31 @@
 #include "NeuralNetwork.h"
 #include "TrainAndShow.h"
 #include "GetImages.h"
+#include<dirent.h>
 
 #define numInputs (28*28)
 #define numHiddenNodes 81
 #define numOutputs 10
 #define numTrainingSets 10
 
+
+int CountFiles(char* path)
+{
+    int count = 0;
+    DIR *d;
+    struct dirent *dir;
+    d = opendir(path);
+    if (d)
+    {
+        while ((dir = readdir(d)) != NULL)
+        {
+            if(strcmp(dir->d_name,".") != 0 && strcmp(dir->d_name,"..") != 0)
+                count++;
+        }
+        closedir(d);
+    }
+    return count;
+}
 
 void TrainAndShow (int train, int verbose, int show, int load, char* set)
 {
@@ -42,10 +61,12 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
 
   for(int i = 0; i < 10; i++)
     {
-      int d = rand()%1;
-      int u = rand()%7;
-      printf("%i%i%i.png for %i\n",d,u,i,i);
-      sprintf(path,"NeuralNetwork/Train/%i%i%i.png",d,u,i);
+        char pat[22];
+        sprintf(pat,"NeuralNetwork/Train/%i",i);
+        int files = CountFiles(pat);
+        int number = (rand()%files)+1;
+        printf("%i.png for %i\n",number,i);
+        sprintf(path,"NeuralNetwork/Train/%i/%i.png",i,number);
 
         SDL_Surface *image = GetImages(path);
 
@@ -170,7 +191,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
 
-  int numberOfEpochs = 2000;
+  int numberOfEpochs = 3000;
 
   if (show)
       numberOfEpochs = 1;

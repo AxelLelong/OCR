@@ -177,7 +177,7 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
     {
         clearNoise(pixels,format,toSuppr[i]);
     }
-    if (max<15)
+    if (max<20)
     clearNoise(pixels,format,maxIndex);
 }
 
