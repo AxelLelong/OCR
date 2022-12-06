@@ -186,15 +186,18 @@ void UI_resolve(GtkButton* button, gpointer user_data)
         }
     }
 
-    Solve(UI->sudoMat);
-
-    for(int i = 0; i<81;i++)
+    int solve = Solve(UI->sudoMat);
+    if (solve)
     {
-        if (marquage[i] == 0)
+        Writer(UI->sudoMat);
+        for (int i = 0; i < 81; i++)
         {
-            char str[21];
-            sprintf(str,"Numbers/num%ir",bef[i]);
-            update_image(images[i], str);
+            if (marquage[i] == 0)
+            {
+                char str[21];
+                sprintf(str, "Numbers/num%ir", bef[i]);
+                update_image(images[i], str);
+            }
         }
     }
 
