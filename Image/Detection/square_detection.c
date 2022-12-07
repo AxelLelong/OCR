@@ -61,18 +61,50 @@ int getPerimeter(int** square)
 int** sortSquares(int** square1, int** square2)
 {
     if(square2 == NULL)
-        return square1;
+    {
+        int* firstLine = calloc(4,sizeof(int));
+        int* secondLine = calloc(4,sizeof(int));
+        int* thirdLine = calloc(4,sizeof(int));
+        int* fourthLine = calloc(4,sizeof(int));
+        square2 = malloc(4*sizeof(firstLine));
+        square2[0] = firstLine;
+        square2[1] = secondLine;
+        square2[2] = thirdLine;
+        square2[3] = fourthLine;
+    }
 
     int Factor1 = getPerimeter(square1);
     int Factor2 = getPerimeter(square2);
-    if(Factor1 < Factor2)
-        return square2;
-    return square1;
+    if(Factor1 > Factor2)
+    {
+        square2[0][0] = square1[0][0];
+        square2[0][1] = square1[0][1];
+        square2[0][2] = square1[0][2];
+        square2[0][3] = square1[0][3];
+        square2[1][0] = square1[1][0];
+        square2[1][1] = square1[1][1];
+        square2[1][2] = square1[1][2];
+        square2[1][3] = square1[1][3];
+        square2[2][0] = square1[2][0];
+        square2[2][1] = square1[2][1];
+        square2[2][2] = square1[2][2];
+        square2[2][3] = square1[2][3];
+        square2[3][0] = square1[3][0];
+        square2[3][1] = square1[3][1];
+        square2[3][2] = square1[3][2];
+        square2[3][3] = square1[3][3];
+    }
+    return square2;
 }
 
 int** findSquare(int** lineList, int width, int height, int* len)
 {
     int** squareFinal = NULL;
+    int* firstLine = malloc(4*sizeof(int));
+    int* secondLine = malloc(4*sizeof(int));
+    int* thirdLine = malloc(4*sizeof(int));
+    int* fourthLine = malloc(4*sizeof(int));
+    int** square = malloc(4*sizeof(firstLine));
     double squareFactor = 40;
     // FIRST COLUMN
     for (int h = 0; h<*len; h++)
@@ -123,29 +155,24 @@ int** findSquare(int** lineList, int width, int height, int* len)
 
                                 if (dot4[0] != -1)
                                 {
-                                    int** square = malloc(4*sizeof(line1));
-                                    int* firstLine = malloc(4*sizeof(int));
                                     firstLine[0] = dot1[0];
                                     firstLine[1] = dot1[1];
                                     firstLine[2] = dot2[0];
                                     firstLine[3] = dot2[1];
                                     square[0] = firstLine;
 
-                                    int* secondLine = malloc(4*sizeof(int));
                                     secondLine[0] = dot2[0];
                                     secondLine[1] = dot2[1];
                                     secondLine[2] = dot3[0];
                                     secondLine[3] = dot3[1];
                                     square[1] = secondLine;
 
-                                    int* thirdLine = malloc(4*sizeof(int));
                                     thirdLine[0] = dot3[0];
                                     thirdLine[1] = dot3[1];
                                     thirdLine[2] = dot4[0];
                                     thirdLine[3] = dot4[1];
                                     square[2] = thirdLine;
 
-                                    int* fourthLine = malloc(4*sizeof(int));
                                     fourthLine[0] = dot4[0];
                                     fourthLine[1] = dot4[1];
                                     fourthLine[2] = dot1[0];
@@ -166,6 +193,11 @@ int** findSquare(int** lineList, int width, int height, int* len)
             }
         }
     }
+    free(firstLine);
+    free(secondLine);
+    free(thirdLine);
+    free(fourthLine);
+    free(square);
     return squareFinal;
 }
 
