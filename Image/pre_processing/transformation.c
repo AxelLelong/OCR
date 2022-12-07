@@ -176,7 +176,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         || (angleRounded >= 0 && angleRounded <= 5))
 
     {
-        printf("Do not need to rotate image");
+        printf("Do not need to rotate image\n");
     }
     else
     {
@@ -214,8 +214,6 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
 
     free(pixels1);
     free(pixels2);
-    /*for(int i = 0;i<lenRes;i++)
-      free(lines[i]);*/
     free(lines);
     for(int i = 0;i<*lenliste;i++)
         free(allLines[i]);
