@@ -191,7 +191,7 @@ void TrainAndShow (int train, int verbose, int show, int load, char* set)
   }
   int TrainingSetOrder[] = {0,1,2,3,4,5,6,7,8,9};
 
-  int numberOfEpochs = 500;
+  int numberOfEpochs = 1000;
 
   if (show)
       numberOfEpochs = 1;
