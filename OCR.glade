@@ -37,7 +37,7 @@
             <property name="height-request">350</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
-            <property name="pixbuf">Banque d'images/Prob01.png</property>
+            <property name="pixbuf">Banque d'images/grille_vide.png</property>
           </object>
           <packing>
             <property name="x">170</property>

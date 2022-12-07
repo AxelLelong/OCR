@@ -24,12 +24,114 @@ typedef struct UserInterface
     GtkImage* image;
     GtkImage* result;
     GtkImage** images;
+    SDL_Surface ** sur;
     GtkSpinButton* rotation;
     char* image_path;
     int* sudoMat;
     SDL_Surface** segmentation;
 
 } UserInterface;
+
+//-----------------------SAVE FINAL---------------------
+
+void save_image_final(UserInterface* UI)
+{
+    int w = 28*9;
+    SDL_Surface* new_img = SDL_CreateRGBSurface(SDL_SWSURFACE, w, w, 32, 0, 0, 0, 0);
+
+    Uint32* pix = new_img->pixels;
+    if (pix == NULL)
+        errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+    int pos_d = 0;
+    int pos_lig_d = -28;
+    SDL_LockSurface(new_img);
+    for(int i = 0;i<81;i++)
+    {
+        pos_d = 28*i%(28*9);
+        if(i%9 == 0)
+            pos_lig_d+=28;
+
+        Uint32* number = UI->sur[i]->pixels;
+        if (number == NULL)
+            errx(EXIT_FAILURE, "%s", SDL_GetError());
+
+        int l_i = 0;
+        int pos_i = pos_d;
+        for(int j = 0;j<28;j++)
+        {
+
+            for(int x = 0; x < 28; x++)
+            {
+                pos_i = pos_d + x;
+                pix[(pos_d+(pos_i%28))+(pos_lig_d+l_i)*w] = number[j*28+x];
+            }
+
+            l_i++;
+
+        }
+    }
+
+    for(int i = 0; i < w; i++)
+    {
+        for(int j = 0; j < w; j++)
+        {
+            //CONTOUR
+            if(i < 3 || i > (9*28)-4 || j < 3 || j > (9*28)-4)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+            // BIG TRAIT COLONNE
+            if(i <= (28*9)/3+1 && i >= (28*9)/3-1)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+            if(i <= 2*((28*9)/3)+1 && i >= 2*((28*9)/3)-1)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+            //BIG TRAIT LIGNE
+            if(j <= (28*9)/3+1 && j >= (28*9)/3-1)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+            if(j <= 2*((28*9)/3)+1 && j >= 2*((28*9)/3)-1)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+            //SMALL COL
+            if(i == (28*9)/9)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(i == 2*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(i == 4*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(i == 5*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(i == 7*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(i == 8*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+            //SMALL LIGNE
+            if(j == (28*9)/9)
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(j == 2*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(j == 4*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(j == 5*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(j == 7*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+            if(j == 8*((28*9)/9))
+                pix[i*w+j] = SDL_MapRGB(new_img->format,0,0,0);
+
+
+
+        }
+    }
+    SDL_UnlockSurface(new_img);
+
+    save_image(new_img,"test_sudoku_final.png");
+    SDL_FreeSurface(new_img);
+}
+
 
 //----------------------UPDATE IMAGE--------------------
 
@@ -153,13 +255,13 @@ void Process_image(GtkButton *button, gpointer user_data)
     transformation(surface, UI->segmentation);
 
     save_image(surface,"test_processed.png");
-    char path[21];
+    //print numbers
+    /*char path[21];
     for(int i = 0; i < 81;i++)
     {
         sprintf(path,"test_%i.png",i);
         save_image(UI->segmentation[i],path);
-    }
-
+        }*/
     update_image(UI->image, "test_processed.png",350);
     UI->image_path = ("test_processed.png");
 
@@ -188,6 +290,16 @@ void UI_resolve(GtkButton* button, gpointer user_data)
             char str[21];
             sprintf(str,"Numbers/num%ib.png",bef[i]);
             update_image(images[i], str,28);
+
+            SDL_Surface * source = IMG_Load(str);
+            if (source == NULL)
+                errx(EXIT_FAILURE, "%s", SDL_GetError());
+            SDL_Surface* surface = SDL_ConvertSurfaceFormat
+                (source, SDL_PIXELFORMAT_RGB888, 0);
+            if (surface == NULL)
+                errx(EXIT_FAILURE, "%s", SDL_GetError());
+            SDL_FreeSurface(source);
+            UI->sur[i] = surface;
             marquage[i] = 1;
         }
     }
@@ -203,6 +315,16 @@ void UI_resolve(GtkButton* button, gpointer user_data)
                 char str[21];
                 sprintf(str, "Numbers/num%ir.png", bef[i]);
                 update_image(images[i], str,28);
+
+                SDL_Surface * source = IMG_Load(str);
+                if (source == NULL)
+                    errx(EXIT_FAILURE, "%s", SDL_GetError());
+                SDL_Surface* surface = SDL_ConvertSurfaceFormat
+                    (source, SDL_PIXELFORMAT_RGB888, 0);
+                if (surface == NULL)
+                    errx(EXIT_FAILURE, "%s", SDL_GetError());
+                SDL_FreeSurface(source);
+                UI->sur[i] = surface;
             }
         }
     }
@@ -217,6 +339,8 @@ void UI_resolve(GtkButton* button, gpointer user_data)
         gtk_widget_set_visible(GTK_WIDGET(UI->images[i]),1);
     }
     free(marquage);
+
+    save_image_final(UI);
 }
 //----------------------MAIN-------------------------------
 
@@ -265,6 +389,7 @@ int main ()
         .resolve = resolve,
         .image = image,
         .result = result,
+        .sur = malloc(81*sizeof(SDL_Surface*)),
         .images = images,
         .rotation = rota,
         .image_path = NULL,
@@ -284,6 +409,7 @@ int main ()
     gtk_main();
 
     free((UI.sudoMat));
+    free((UI.sur));
     free((UI.segmentation));
     free(UI.images);
 

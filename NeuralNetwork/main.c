@@ -32,9 +32,9 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
     }
     else if (train || show)
     {
-        TrainAndShow(train, verbose, show, 0, sets[0]);
+        TrainAndShow(train, verbose, show, 1, sets[0]);
 
-        for(int j = 0; j < 200; j++)
+        for(int j = 0; j < 5000; j++)
         {
             printf("\n=====%i ITERATION=====\n",j);
 

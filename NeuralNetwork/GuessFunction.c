@@ -138,6 +138,8 @@ void Guess(SDL_Surface *Input, double *res)
   //Compute output layer activation
   Compute_Output(numHiddenNodes, numOutputs, outputLayerBias, outputLayer, hiddenLayer, outputWeights);
 
+
+
   double max = 0;
   for(double i = 0; i < 10; i++)
       if(max < outputLayer[(int)(i)])
@@ -145,9 +147,9 @@ void Guess(SDL_Surface *Input, double *res)
           max = outputLayer[(int)(i)];
           *res = i;
       }
-
-  printf("Predicted Output %f\n"
-         ,*res);
+  //print predicted output
+  /*printf("Predicted Output %f\n"
+    ,*res);*/
 
 
   free(hiddenLayer);
