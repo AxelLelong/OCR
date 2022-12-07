@@ -95,6 +95,18 @@
           </packing>
         </child>
         <child>
+          <object class="GtkImage" id="result">
+            <property name="width-request">0</property>
+            <property name="height-request">80</property>
+            <property name="can-focus">False</property>
+            <property name="pixbuf">Banque d'images/grille_vide.png</property>
+          </object>
+          <packing>
+            <property name="x">170</property>
+            <property name="y">5</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkButton" id="resolve">
             <property name="label" translatable="yes">Resolve</property>
             <property name="width-request">110</property>
@@ -225,7 +237,7 @@
           </object>
           <packing>
             <property name="x">140</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -237,7 +249,7 @@
           </object>
           <packing>
             <property name="x">179</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -249,7 +261,7 @@
           </object>
           <packing>
             <property name="x">218</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -261,7 +273,7 @@
           </object>
           <packing>
             <property name="x">257</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -273,7 +285,7 @@
           </object>
           <packing>
             <property name="x">296</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -285,7 +297,7 @@
           </object>
           <packing>
             <property name="x">334</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -297,7 +309,7 @@
           </object>
           <packing>
             <property name="x">373</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -309,7 +321,7 @@
           </object>
           <packing>
             <property name="x">412</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -321,7 +333,7 @@
           </object>
           <packing>
             <property name="x">451</property>
-            <property name="y">29</property>
+            <property name="y">24</property>
           </packing>
         </child>
         <child>
@@ -1066,18 +1078,6 @@
           <packing>
             <property name="x">451</property>
             <property name="y">297</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkImage" id="result">
-            <property name="width-request">0</property>
-            <property name="height-request">80</property>
-            <property name="can-focus">False</property>
-            <property name="pixbuf">Banque d'images/grille_vide.png</property>
-          </object>
-          <packing>
-            <property name="x">170</property>
-            <property name="y">5</property>
           </packing>
         </child>
         <child>

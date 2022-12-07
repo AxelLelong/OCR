@@ -52,6 +52,7 @@ void mainNN (int train, int verbose, int show, int load, int all, SDL_Surface** 
             *res = round(*res);
             sudoNumList[i] = *res;
         }
+        free(res);
 
     }
 }

@@ -33,21 +33,20 @@ typedef struct UserInterface
 
 //----------------------UPDATE IMAGE--------------------
 
-void update_image(GtkImage* image, char* path)
+void update_image(GtkImage* image, char* path,int width)
 {
     GdkPixbuf* pix = gdk_pixbuf_new_from_file(path, NULL);
 
     //rescale
     pix = gdk_pixbuf_scale_simple (
         pix,
-        350,
-        350,
+        width,
+        width,
         GDK_INTERP_BILINEAR);
 
     //set image
     gtk_image_set_from_pixbuf(image,pix);
 }
-
 
 //----------------------ROTATION IMAGE------------------
 
@@ -66,7 +65,7 @@ void Rotate_image(GtkSpinButton* rota, gpointer user_data)
 
     save_image(surface,"test_rotation.png");
 
-    update_image(UI->image,"test_rotation.png");
+    update_image(UI->image,"test_rotation.png",350);
 }
 
 void Save_Rota(GtkButton* button, gpointer user_data)
@@ -88,6 +87,13 @@ void UI_load_image(GtkButton *button, gpointer user_data)
 
     GtkWidget* dialog;
 
+    gtk_widget_set_visible(GTK_WIDGET(UI->image),1);
+    gtk_widget_set_visible(GTK_WIDGET(UI->result),0);
+    for(int i = 0; i<81;i++)
+    {
+        gtk_widget_set_visible(GTK_WIDGET(UI->images[i]),0);
+        update_image(UI->images[i], "Numbers/0.png",28);
+    }
     gtk_widget_set_visible(GTK_WIDGET(UI->rotation),1);
     gtk_widget_set_sensitive(GTK_WIDGET(UI->run),1);
     gtk_widget_set_sensitive(GTK_WIDGET(UI->resolve),0);
@@ -120,7 +126,7 @@ void UI_load_image(GtkButton *button, gpointer user_data)
         //get pixbuf of image
         UI->image_path = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
 
-        update_image(UI->image,UI->image_path);
+        update_image(UI->image,UI->image_path,350);
     }
 
     //destroy dialog box
@@ -154,7 +160,7 @@ void Process_image(GtkButton *button, gpointer user_data)
         save_image(UI->segmentation[i],path);
     }
 
-    update_image(UI->image, "test_processed.png");
+    update_image(UI->image, "test_processed.png",350);
     UI->image_path = ("test_processed.png");
 
     mainNN(0,0,0,1,1,UI->segmentation,UI->sudoMat);
@@ -171,9 +177,9 @@ void UI_resolve(GtkButton* button, gpointer user_data)
     GtkImage** images = UI->images;
     int* marquage = calloc(81,sizeof(int));
 
-    /*
+
     Loader("sudo_resolved",bef);
-    */
+
 
     for(int i = 0; i<81;i++)
     {
@@ -181,7 +187,7 @@ void UI_resolve(GtkButton* button, gpointer user_data)
         {
             char str[21];
             sprintf(str,"Numbers/num%ib.png",bef[i]);
-            update_image(images[i], str);
+            update_image(images[i], str,28);
             marquage[i] = 1;
         }
     }
@@ -195,8 +201,8 @@ void UI_resolve(GtkButton* button, gpointer user_data)
             if (marquage[i] == 0)
             {
                 char str[21];
-                sprintf(str, "Numbers/num%ir", bef[i]);
-                update_image(images[i], str);
+                sprintf(str, "Numbers/num%ir.png", bef[i]);
+                update_image(images[i], str,28);
             }
         }
     }

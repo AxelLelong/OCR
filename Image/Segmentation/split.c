@@ -179,6 +179,8 @@ void clearNumber(Uint32* pixels, SDL_PixelFormat* format)
     }
     if (max<17)
       clearNoise(pixels,format,maxIndex);
+    free(toSuppr);
+    free(tab);
 }
 
 void split(SDL_Surface* surface, SDL_Surface** segmentation)
