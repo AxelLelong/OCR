@@ -53,7 +53,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
         Uint32 tmp = pixel_to_grayscale(pixels[i],format);
         pixels[i] = contrastefilter(tmp,format);
     }
-    //save_image(surface,"test_grayscale_contrast.png");
+    save_image(surface,"test_grayscale_contrast.png");
 
     /// ------------------------------------
 
@@ -61,7 +61,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     /// ------ LIGHT NORMALIZATION ------
     Uint8 max = get_max(pixels,len,format);
     NormLight(pixels, format, len, max);
-    //save_image(surface,"test_light_normalisation.png");
+    save_image(surface,"test_light_normalisation.png");
     /// ---------------------------------
 
 
@@ -71,7 +71,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         pixels[i] = pixels1[i];
     }
-    //save_image(surface,"test_median_filter.png");
+    save_image(surface,"test_median_filter.png");
     /// ---------------------------
 
 
@@ -81,7 +81,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         pixels[i] = pixels1[i];
     }
-    //save_image(surface,"test_gaussian_blur.png");
+    save_image(surface,"test_gaussian_blur.png");
     /// ---------------------------
 
 
@@ -101,7 +101,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     else
         seuil = 0.15;
     adaptativeThreshold(pixels,seuil,w,h, format);
-    //save_image(surface,"test_binarisation.png");
+    save_image(surface,"test_binarisation.png");
     /// -------------------------
 
 
@@ -111,7 +111,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         pixels[i] = pixels1[i];
     }
-    //save_image(surface,"test_smoothing.png");
+    save_image(surface,"test_smoothing.png");
     /// -----------------------
 
 
@@ -138,7 +138,7 @@ void transformation(SDL_Surface* surface, SDL_Surface** segmentation)
     {
         draw_line(pixels, w, h, allLines[i][0],allLines[i][1],allLines[i][2],allLines[i][3], SDL_MapRGB(format, 40, 40, 200), 1, 1,format);
     }
-    //save_image(surface,"test_hough_transform.png");
+    save_image(surface,"test_hough_transform.png");
     for (int i = 0; i < len ; ++i)
     {
         pixels[i] = pixels1[i];
